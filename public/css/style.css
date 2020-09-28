@@ -1,5 +1,5 @@
 body, html {
-	font-family:  Comfortaa Bold;
+	font-family:  Comfortaa Medium;
 	text-rendering: optimizeLegibility !important;
 	-webkit-font-smoothing: antialiased !important;
 	color: #777;
@@ -70,21 +70,22 @@ hr {
 	transition: all 0.8s;
 }
 #menu.navbar-default {
-	background-color: #fff;
+	background-color: #070707;
+    background-image: linear-gradient(to right, #06315f 0%, #5459a1 100%);
 	border-color: rgba(231, 231, 231, 0);
 	box-shadow: 0 0 10px rgba(0,0,0,0.15)
 }
 #menu a.navbar-brand {
 	font-family: Comfortaa Bold;
-	font-size: 24px;
+	font-size: 40px;
 	font-weight: 700;
-	color: #333;
-	text-transform: uppercase;
+	color: white;
+	letter-spacing: 1px;
 }
 #menu.navbar-default .navbar-nav > li > a {
 	font-family: Comfortaa Bold;
 	text-transform: uppercase;
-	color: #555;
+	color: white;
 	font-size: 15px;
 	font-weight: 400;
 	padding: 8px 2px;
@@ -98,7 +99,7 @@ hr {
 	bottom: -1px;
 	width: 0;
 	height: 2px;
-	background: linear-gradient(to right, #6372ff 0%, #5ca9fb 100%);
+	background: linear-gradient(to right, #43a886 0%, #94f3c7 100%);
 	content: "";
 	transition: width 0.2s;
 }
@@ -115,7 +116,7 @@ hr {
 	bottom: -1px !important;
 	width: 100% !important;
 	height: 2px !important;
-	background: linear-gradient(to right, #6372ff 0%, #5ca9fb 100%) !important;
+	background: linear-gradient(to right, #43a886 0%, #94f3c7 100%) !important;
 	content: "" !important;
 	transition: width 0.2s !important;
 }
