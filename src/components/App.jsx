@@ -8,6 +8,7 @@ import Gallery from './gallery';
 import Testimonials from './testimonials';
 import Team from './Team';
 import Contact from './contact';
+import Login from './contact';
 import $ from 'jquery';
 
 export class App extends Component {
@@ -45,6 +46,7 @@ export class App extends Component {
         <Testimonials  data={this.state.resumeData.Testimonials}/>
         <Team  data={this.state.resumeData.Team}/>
         <Contact  data={this.state.resumeData.Contact}/>
+        <Login></Login>
       </div>
     )
   }

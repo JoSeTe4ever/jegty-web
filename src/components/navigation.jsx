@@ -63,6 +63,11 @@ export class Navigation extends Component {
                   Contact
                 </a>
               </li>
+              <li>
+                <a href="#contact" className="page-scroll">
+                  Login / Sign up
+                </a>
+              </li>
             </ul>
           </div>
         </div>
