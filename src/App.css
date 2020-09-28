@@ -1,5 +1,9 @@
+@import './styles/base.scss';
+
+
 .App {
   text-align: center;
+  font-family:  Comfortaa Bold;
 }
 
 .App-logo {
