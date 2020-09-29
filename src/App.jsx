@@ -9,17 +9,38 @@ import Testimonials from './components/testimonials';
 import Team from './components/Team';
 import Contact from './components/contact';
 import JsonData from './data/data.json';
+import { connect } from "react-redux";
 
 export class App extends Component {
   state = {
     landingPageData: {},
+    showModal: false
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      landingPageData: {},
+      showModal: false
+    };
+
+    this.handleShow = this.handleShow.bind(this);
+    this.handleHide = this.handleHide.bind(this);
   }
   getlandingPageData() {
-    this.setState({landingPageData : JsonData})
+    this.setState({ landingPageData: JsonData, showModal: false })
   }
 
   componentDidMount() {
     this.getlandingPageData();
+  }
+
+  handleShow() {
+    this.setState({ ...this.state, showModal: true });
+  }
+
+  handleHide() {
+    this.setState({ ...this.state, showModal: false });
   }
 
   render() {
@@ -39,4 +60,8 @@ export class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  showLoginModal: state.showModal
+});
+
+export default connect(mapStateToProps)(App);
