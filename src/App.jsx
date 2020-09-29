@@ -10,7 +10,7 @@ import Team from './components/Team';
 import Contact from './components/contact';
 import JsonData from './data/data.json';
 import { connect } from "react-redux";
-
+import { showDialog } from "./redux/actions/actions"
 export class App extends Component {
   state = {
     landingPageData: {},
@@ -44,8 +44,11 @@ export class App extends Component {
   }
 
   render() {
+    const { setShowDialog , showLoginModal} = this.props;
+    debugger;
     return (
       <div>
+
         <Navigation />
         <Header data={this.state.landingPageData.Header} />
         <Features data={this.state.landingPageData.Features} />
@@ -55,13 +58,18 @@ export class App extends Component {
         <Testimonials data={this.state.landingPageData.Testimonials} />
         <Team data={this.state.landingPageData.Team} />
         <Contact data={this.state.landingPageData.Contact} />
+        <span onClick={ () => setShowDialog(true)}>{showLoginModal.toString()}CACACACA</span>
       </div>
     )
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return { setShowDialog: (isShown) => dispatch(showDialog(isShown)) }
+};
+
 const mapStateToProps = state => ({
-  showLoginModal: state.showModal
+  showLoginModal: state.showLoginModal
 });
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
