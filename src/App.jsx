@@ -58,7 +58,7 @@ export class App extends Component {
         <Testimonials data={this.state.landingPageData.Testimonials} />
         <Team data={this.state.landingPageData.Team} />
         <Contact data={this.state.landingPageData.Contact} />
-        <span onClick={ () => setShowDialog(true)}>{showLoginModal.toString()}CACACACA</span>
+        <span onClick={ () => setShowDialog(true)}>{showLoginModal.toString()}jopi</span>
       </div>
     )
   }
