@@ -6,9 +6,7 @@ import { Provider } from 'react-redux'
 import {createStore, applyMiddleware, compose} from 'redux';
 import rootReducer from './redux/reducers/rootReducer.js';
 import thunk from 'redux-thunk';
-import * as serviceWorker from './serviceWorker';
-
-
+import { BrowserRouter as Router } from "react-router-dom";
 
 const initialState = createStore(
   rootReducer,
@@ -18,13 +16,10 @@ const initialState = createStore(
 ReactDOM.render(
   <Provider store={initialState}>
     <React.StrictMode>
+    <Router>
       <App />
+    </Router>
     </React.StrictMode>
   </Provider>,
   document.getElementById('root')
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();

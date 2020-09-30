@@ -33,7 +33,6 @@ export class App extends Component {
   }
 
   render() {
-    const { showLoginModal } = this.props;
     return (
       <div>
         <Login></Login>
