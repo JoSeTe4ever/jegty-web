@@ -7,14 +7,14 @@ import { NotFound } from './NotFound';
 
 export const Dashboard = () => {
     const user = null;
-    const AdminRoute = GuardedRoute(true); // this shuold be the user logged in
+    const LoggedRoute = GuardedRoute(true); // this shuold be the user logged in
 
     return (
         <Switch>
-            <AdminRoute exact path="/" component={Home} />
-            <AdminRoute path="*">
+            <LoggedRoute exact path="/" component={Home} />
+            <LoggedRoute path="*">
                 <NotFound></NotFound>
-            </AdminRoute>
+            </LoggedRoute>
         </Switch>
     )
 }
