@@ -11,6 +11,7 @@ import { Login } from './components/Login';
 import Contact from './components/contact';
 import JsonData from './data/data.json';
 import { connect } from "react-redux";
+import { Dashboard } from './components/views/Dashboard';
 
 export class App extends Component {
   state = {
@@ -21,11 +22,12 @@ export class App extends Component {
     super(props);
     this.state = {
       landingPageData: {},
+      isLogged: false
     };
 
   }
   getlandingPageData() {
-    this.setState({ landingPageData: JsonData })
+    this.setState({ ...this.state, landingPageData: JsonData })
   }
 
   componentDidMount() {
@@ -33,7 +35,8 @@ export class App extends Component {
   }
 
   render() {
-    return (
+    const { isLogged } = this.props;
+    return !isLogged ? (
       <div>
         <Login></Login>
         <Navigation />
@@ -46,12 +49,12 @@ export class App extends Component {
         <Team data={this.state.landingPageData.Team} />
         <Contact data={this.state.landingPageData.Contact} />
       </div>
-    )
+    ) : <Dashboard></Dashboard>
   }
 }
 
 const mapStateToProps = state => ({
-  showLoginModal: state.showLoginModal
+  isLogged: state.isLogged
 });
 
 export default connect(mapStateToProps, null)(App);

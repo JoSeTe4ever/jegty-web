@@ -14,6 +14,11 @@ function rootReducer(state = initialState, action) {
         return newState;
     }
 
+    if (action.type === ActionTypes.LOG_IN) {
+        newState.isLogged = action.payload;
+        return newState;
+    }
+
     return newState;
 };
 
