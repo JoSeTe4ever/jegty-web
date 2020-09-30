@@ -7,8 +7,10 @@ import Services from './components/services';
 import Gallery from './components/gallery';
 import Testimonials from './components/testimonials';
 import Team from './components/Team';
+import { Login } from './components/Login';
 import Contact from './components/contact';
 import JsonData from './data/data.json';
+import { connect } from "react-redux";
 
 export class App extends Component {
   state = {
@@ -23,7 +25,7 @@ export class App extends Component {
 
   }
   getlandingPageData() {
-    this.setState({ landingPageData: JsonData})
+    this.setState({ landingPageData: JsonData })
   }
 
   componentDidMount() {
@@ -31,8 +33,10 @@ export class App extends Component {
   }
 
   render() {
+    const { showLoginModal } = this.props;
     return (
       <div>
+        <Login></Login>
         <Navigation />
         <Header data={this.state.landingPageData.Header} />
         <Features data={this.state.landingPageData.Features} />
@@ -47,4 +51,9 @@ export class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  showLoginModal: state.showLoginModal
+});
+
+export default connect(mapStateToProps, null)(App);
+

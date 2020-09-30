@@ -10,7 +10,6 @@ function rootReducer(state = initialState, action) {
     };
 
     if (action.type === ActionTypes.SHOW_LOG_IN_DIALOG) {
-        debugger;
         newState.showLoginModal = action.payload;
         return newState;
     }

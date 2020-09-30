@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import { Login } from "./Login"
 export class Navigation extends Component {
   render() {
     return (

@@ -42,6 +42,7 @@ export class Header extends Component {
                   <IconSvg></IconSvg>
                   <div className="subtitle pb-3">Games for teams</div>
                   <button
+                    data-toggle="modal" data-target="#myModal"
                     onClick={() => setShowDialog(true)}
                     className="btn btn-custom btn-lg page-scroll"
                   >

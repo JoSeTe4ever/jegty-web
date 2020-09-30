@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './style.css';
 
 const modalRoot = document.getElementById('modal-root');
 
@@ -25,3 +24,5 @@ class Modal extends React.Component {
     );
   }
 }
+
+export default Modal;
