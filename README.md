@@ -1,5 +1,5 @@
 # Jegty-web
-Applicación web con ReactJS y Bootstrap
+Applicación web con ReactJS 16.13.1 y Bootstrap 3
 
 ![Jegty](public/img/logo3.jpg)
 
