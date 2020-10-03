@@ -1,11 +1,11 @@
 # Jegty-web
-Applicación web con ReactJS 16.13.1 y Bootstrap 3
+Applicación web con ReactJS 16.13.1 y Bootstrap 4
 
 ![Jegty](public/img/logo3.jpg)
 
 
 Para la página principal he pillado una template típica 
-en Bootstrap 3.  
+en Bootstrap 4.  
 
 # Instalación en local
 

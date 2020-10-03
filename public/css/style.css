@@ -715,5 +715,11 @@ label {
 
 svg.logoIcon {
 	width: 100px;
-	height: 100px;
+    height: 100px;
+    display: block;
+}
+
+span.signUpLink {
+	color: blue !important;
+	cursor: pointer;
 }
