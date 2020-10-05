@@ -1,9 +1,10 @@
 import React from 'react'
+import './views.scss'
 
 export const NotFound = () => {
     return (
-        <div>
-            NotFound
+        <div className="notFound">
+            Not Found
         </div>
     )
 }
