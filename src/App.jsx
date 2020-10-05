@@ -48,6 +48,7 @@ export class App extends Component {
         <Testimonials data={this.state.landingPageData.Testimonials} />
         <Team data={this.state.landingPageData.Team} />
         <Contact data={this.state.landingPageData.Contact} />
+        <div id="modal-root"></div>
       </div>
     ) : <Dashboard></Dashboard>
   }

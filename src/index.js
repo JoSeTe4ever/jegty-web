@@ -8,19 +8,34 @@ import rootReducer from './redux/reducers/rootReducer.js';
 import thunk from 'redux-thunk';
 import { BrowserRouter as Router } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
+import { persistStore, persistReducer } from 'redux-persist'
+import { PersistGate } from 'redux-persist/integration/react'
+import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
+
+const persistConfig = {
+  key: 'root',
+  storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
 const initialState = createStore(
-  rootReducer,
+  persistedReducer,
   compose(applyMiddleware(thunk),window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 );
+
+let persistor = persistStore(initialState)
 
 ReactDOM.render(
   <AuthContext>
     <Provider store={initialState}>
+      <PersistGate loading={null} persistor={persistor}>
       <React.StrictMode>
       <Router>
         <App />
       </Router>
       </React.StrictMode>
+      </PersistGate>
     </Provider>
   </AuthContext>
     ,
