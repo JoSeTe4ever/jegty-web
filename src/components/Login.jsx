@@ -134,7 +134,6 @@ export const Login = () => {
                                 onClick={() => dispatch(showDialog(false))}>Close</button>
                         </div>
                     </div>
-
                 </div>
             </div>
     );

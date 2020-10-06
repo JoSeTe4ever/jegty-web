@@ -1,5 +1,6 @@
 export const getDateFromFirebaseString = (stringDate) => {
-    return _getFormatedDate(new Date(stringDate));
+    const intDate = parseInt(stringDate)
+    return _getFormatedDate(new Date(intDate));
 }
 
 const _getFormatedDate = (dateObject) => {
