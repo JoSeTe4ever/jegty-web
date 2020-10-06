@@ -19,6 +19,11 @@ function rootReducer(state = initialState, action) {
         return newState;
     }
 
+    if (action.type === ActionTypes.ADD_LOGGED_USER) {
+        newState.user = action.payload;
+        return newState;
+    }
+
     return newState;
 };
 

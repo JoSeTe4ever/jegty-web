@@ -36,7 +36,7 @@ export const Login = () => {
             .signInWithEmailAndPassword(userInput.value, passInput.value)
             .then(result => {
                 dispatch(logValidUser(true));
-                dispatch(addLogedUser(result));
+                dispatch(addLogedUser(result.user));
             })
             .catch(error => {
                 seterror(error.message, "Error while authenticating")
