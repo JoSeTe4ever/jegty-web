@@ -9,7 +9,6 @@ export const Avatar = (props) => {
         if(mail != undefined){
             return md5(mail);
         }
-        
     }
     return (
         <img src={`https://www.gravatar.com/avatar/${hashEmail(email)}?d=robohash`} alt="Avatar" className={`avatar ${customClass}`} onClick={onClickCallback}></img>

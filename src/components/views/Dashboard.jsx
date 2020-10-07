@@ -23,14 +23,20 @@ export const Dashboard = () => {
     return (
         <React.Fragment>
             <Navbar></Navbar>
-            <Switch>
-                <LoggedRoute exact path="/" component={Home} />
-                <LoggedRoute exact path="/profile" component={Profile} />
-                <LoggedRoute exact path="/friends" component={Friends} />
-                <LoggedRoute path="*">
-                    <NotFound></NotFound>
-                </LoggedRoute>
-            </Switch>
+            <section>
+                <Switch>
+                    <LoggedRoute exact path="/" component={Home} />
+                    <LoggedRoute exact path="/profile" component={Profile} />
+                    <LoggedRoute exact path="/friends" component={Friends} />
+                    <LoggedRoute path="*">
+                        <NotFound></NotFound>
+                    </LoggedRoute>
+                </Switch>
+                <footer>
+                    
+                </footer>
+            </section>
+
         </React.Fragment>
     )
 }
