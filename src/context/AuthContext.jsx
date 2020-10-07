@@ -18,7 +18,7 @@ export const AuthContext = ({ children }) => {
         return <span>cargando</span>;
     } else {
         return (
-            <Auth.Provider value={{ user }}>
+            <Auth.Provider value={ user }>
                 {children}
             </Auth.Provider>
         );

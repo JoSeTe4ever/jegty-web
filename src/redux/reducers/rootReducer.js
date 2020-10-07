@@ -24,6 +24,12 @@ function rootReducer(state = initialState, action) {
         return newState;
     }
 
+    
+    if (action.type === ActionTypes.ADD_JEGTY_USER) {
+        newState.jegtyUser = action.payload;
+        return newState;
+    }
+
     return newState;
 };
 

@@ -17,3 +17,8 @@ export const addLogedUser = (loggedUser) => ({
     type: ActionTypes.ADD_LOGGED_USER,
     payload: loggedUser
 });
+
+export const addJegtyUser = (user) => ({
+    type: ActionTypes.ADD_JEGTY_USER,
+    payload: user
+});

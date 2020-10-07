@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { showDialog, logValidUser, addLogedUser } from '../redux/actions/actions'
 import { InputField } from './shared/atoms/InputField'
 import { ReactComponent as IconSvg } from './../assets/icons/icono.svg';
-import { app } from './../data/firebase';
+import { app, db } from './../data/firebase';
 import { useHistory } from "react-router-dom";
 import { Auth } from './../context/AuthContext';
 
@@ -21,7 +21,6 @@ export const Login = () => {
     const [info, setInfo] = useState('');
     const [signIn, setSignIn] = useState(true);
 
-    const { usuario } = useContext(Auth);
     const EMAIL_INPUT_ID = "email";
     const PASSWORD_INPUT_ID = "password";
     const REPEAT_PASSWORD_INPUT_ID = "repeatpassword";
@@ -35,8 +34,9 @@ export const Login = () => {
             .auth()
             .signInWithEmailAndPassword(userInput.value, passInput.value)
             .then(result => {
-                dispatch(logValidUser(true));
+                debugger;
                 dispatch(addLogedUser(result.user));
+                dispatch(logValidUser(true));
             })
             .catch(error => {
                 seterror(error.message, "Error while authenticating")
@@ -49,13 +49,19 @@ export const Login = () => {
         const userInput = e.target.elements[EMAIL_INPUT_ID];
         const passInput = e.target.elements[PASSWORD_INPUT_ID];
         const repeatPassInput = e.target.elements[REPEAT_PASSWORD_INPUT_ID];
+
         await app
             .auth()
             .createUserWithEmailAndPassword(userInput.value, passInput.value)
             .then(result => {
+                debugger;
                 setSignIn(true);
                 setInfo(`User ${result.user.email}successfully created`);
                 seterror('');
+                db.collection('users').doc(result.user.uid).set({
+                    email: result.user.email,
+                    id: result.user.uid
+                });
             })
             .catch(error => {
                 seterror(error.message)
@@ -89,9 +95,9 @@ export const Login = () => {
                                 </div>
                             </form>
                             <div className="d-flex justify-content-center">
-                            <span>Do not have an account? <button className="btn btn-link" onClick={() => {
-                                toggleView();
-                            }}>Sign up here</button></span>
+                                <span>Do not have an account? <button className="btn btn-link" onClick={() => {
+                                    toggleView();
+                                }}>Sign up here</button></span>
                             </div>
                         </div>
                         <div className="modal-footer">
