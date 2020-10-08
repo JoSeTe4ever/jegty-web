@@ -19,3 +19,10 @@ en Bootstrap 4.
 2. npm install o yarn install 
 3. npm run start o yarn run start
 4. abrir localhost:3000
+
+# Frontend 
+
+1. Los dialogos modales se pueden activar usando la variable showDialog del store, usando por ejemplo el dispatch -> dispatch(showDialog(isShown)), pero normalmente van con boton + id del modal.
+
+font-awesome versión 4.3.0
+

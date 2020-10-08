@@ -9,14 +9,8 @@ import { useHistory } from "react-router-dom";
 import './Mollecules.scss';
 
 export const Navbar = () => {
-    const dispatch = useDispatch();
     const history = useHistory();
     const user = useSelector((state) => state.user);
-
-    const _logout = () => {
-        localStorage.clear();
-        dispatch(logValidUser(false));
-    }
 
     return (
         <nav className="navbar navbar-light py-1">
@@ -27,10 +21,6 @@ export const Navbar = () => {
                 </div>
             </a>
 
-            <div className="iconsContainer">
-                <Icon icon="users" aria-hidden="true" onClickCallback={() => history.push('friends')}></Icon>
-                <Icon icon="sign-out" aria-hidden="true" onClickCallback={() => _logout()}></Icon>
-            </div>
             <Avatar onClickCallback={() => history.push('profile')} email={user.email}></Avatar>
         </nav>
     )

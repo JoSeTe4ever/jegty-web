@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { connect, useDispatch, useSelector } from "react-redux";
 import { db } from './../../../data/firebase';
-import { addJegtyUser } from "./../../../redux/actions/actions";
+import { addJegtyUser, logValidUser } from "./../../../redux/actions/actions";
 import { Avatar } from "./../../shared/atoms/Avatar";
 import { InputField } from './../../shared/atoms/InputField';
+import { Icon } from '../../shared/atoms/Icon'
+import { useHistory } from "react-router-dom";
 
 export const Profile = (props) => {
 
@@ -22,6 +24,12 @@ export const Profile = (props) => {
     const email = useRef(null);
 
     const dispatch = useDispatch();
+    const history = useHistory();
+
+    const _logout = () => {
+        localStorage.clear();
+        dispatch(logValidUser(false));
+    }
 
     const displayMessage = (message, type) => {
         if (type === "INFO") {
@@ -40,6 +48,16 @@ export const Profile = (props) => {
     };
 
     const updateUser = async () => {
+        const updatedUser = { ...jegtyUser, displayName: inputNickName.current.value, birthday: inputBirthdate.current.value };
+        db.collection('users').doc(user.uid).set(updatedUser).then(
+            (result) => {
+                displayMessage(`User ${result} sucessfully updated`, "INFO");
+                dispatch(addJegtyUser(updatedUser));
+            }
+        )
+    }
+
+    const deleteUser = async () => {
         const updatedUser = { ...jegtyUser, displayName: inputNickName.current.value, birthday: inputBirthdate.current.value };
         db.collection('users').doc(user.uid).set(updatedUser).then(
             (result) => {
@@ -74,13 +92,44 @@ export const Profile = (props) => {
                     <InputField id={EMAIL_INPUT_ID} labelText="email" value={jegtyUser.email} innerRef={email} readonly={true}></InputField>
                 </div>
             </div>
+
+            <div className="form-group row">
+                <div className="offset-4 col-8">
+                    <Icon icon="sign-out" aria-hidden="true" onClickCallback={() => _logout()}></Icon>
+                    <Icon icon="ban" aria-hidden="true" onClickCallback={() => history.push("friends")}></Icon>
+                </div>
+            </div>
+
             <div className="form-group row">
                 <div className="offset-4 col-8">
                     <button className="btn btn-primary" onClick={updateUser}>Update</button>
                 </div>
             </div>
-        </div>
+            <div className="form-group row">
+                <div className="offset-4 col-8">
+                    <button data-toggle="modal" data-target="#confirmationModal"
+                        className="btn btn-danger">Delete user</button>
+                </div>
+            </div>
+            <div className="modal fade" id="confirmationModal" role="dialog">
+                <div className="modal-dialog">
 
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            Delete user
+                        </div>
+                        <div className="modal-body">
+                            Are you sure you want to delete your user? You will be automatically logged out
+                        </div>
+                        <div className="modal-footer">
+                            <button className="btn btn-primary">Cancel</button>
+                            <button className="btn btn-danger">Accept</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     )
 }
 
