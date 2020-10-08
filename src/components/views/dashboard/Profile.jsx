@@ -56,21 +56,25 @@ export const Profile = (props) => {
         )
     }
 
-    const deleteUser = async () => {
+    const deleteUser = async (event) => {
         const currentUser = app.auth().currentUser;
-        debugger;
-        db.collection('users').doc(currentUser.uid).delete().then(
+        const errorObtained = undefined;
+
+        await db.collection('users').doc(currentUser.uid).delete().then(
             (result) => {
                 currentUser.delete().then(() => {
-                    debugger;
                     displayMessage(`User ${result} sucessfully updated`, "INFO");
                     dispatch(logValidUser(false));
                 }).catch(function (error) {
-                    debugger;
-                    displayMessage(error, "ERROR");
+                    console.log("Error ocurred" + error);
+                    event.preventDefault();
+                    errorObtained = error;
                 });
             }
         )
+        if(errorObtained){
+            displayMessage(error, "ERROR");
+        }
     }
 
     useEffect(function () {
@@ -139,8 +143,8 @@ export const Profile = (props) => {
                             Are you sure you want to delete your user? You will be automatically logged out
                         </div>
                         <div className="modal-footer">
-                            <button className="btn btn-primary">Cancel</button>
-                            <button className="btn btn-danger" onClick={deleteUser}>Accept</button>
+                            <button className="btn btn-primary" data-dismiss="modal">Cancel</button>
+                            <button className="btn btn-danger" onClick={(event) => deleteUser(event)}>Accept</button>
                         </div>
                     </div>
 
