@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { connect, useDispatch, useSelector } from "react-redux";
-import { db } from './../../../data/firebase';
+import { app, db } from './../../../data/firebase';
 import { addJegtyUser, logValidUser } from "./../../../redux/actions/actions";
 import { Avatar } from "./../../shared/atoms/Avatar";
 import { InputField } from './../../shared/atoms/InputField';
@@ -57,11 +57,18 @@ export const Profile = (props) => {
     }
 
     const deleteUser = async () => {
-        const updatedUser = { ...jegtyUser, displayName: inputNickName.current.value, birthday: inputBirthdate.current.value };
-        db.collection('users').doc(user.uid).set(updatedUser).then(
+        const currentUser = app.auth().currentUser;
+        debugger;
+        db.collection('users').doc(currentUser.uid).delete().then(
             (result) => {
-                displayMessage(`User ${result} sucessfully updated`, "INFO");
-                dispatch(addJegtyUser(updatedUser));
+                currentUser.delete().then(() => {
+                    debugger;
+                    displayMessage(`User ${result} sucessfully updated`, "INFO");
+                    dispatch(logValidUser(false));
+                }).catch(function (error) {
+                    debugger;
+                    displayMessage(error, "ERROR");
+                });
             }
         )
     }
@@ -133,7 +140,7 @@ export const Profile = (props) => {
                         </div>
                         <div className="modal-footer">
                             <button className="btn btn-primary">Cancel</button>
-                            <button className="btn btn-danger">Accept</button>
+                            <button className="btn btn-danger" onClick={deleteUser}>Accept</button>
                         </div>
                     </div>
 

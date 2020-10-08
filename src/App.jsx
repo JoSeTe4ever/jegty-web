@@ -32,8 +32,13 @@ export class App extends Component {
 
   componentDidMount() {
     this.getlandingPageData();
+    const modalBackgroundArray = document.getElementsByClassName("modal-backdrop fade show")
+    if (modalBackgroundArray && modalBackgroundArray.length > 0) {
+        modalBackgroundArray[0].remove();
+    }
   }
 
+      // remove backdrop from modal if exists.
   render() {
     const { isLogged } = this.props;
     return !isLogged ? (

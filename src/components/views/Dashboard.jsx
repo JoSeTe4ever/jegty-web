@@ -33,10 +33,8 @@ export const Dashboard = () => {
                     </LoggedRoute>
                 </Switch>
                 <footer>
-                    
                 </footer>
             </section>
-
         </React.Fragment>
     )
 }
