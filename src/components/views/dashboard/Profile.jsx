@@ -27,7 +27,6 @@ export const Profile = (props) => {
     const history = useHistory();
 
     const _logout = () => {
-        localStorage.clear();
         dispatch(logValidUser(false));
     }
 
@@ -81,36 +80,47 @@ export const Profile = (props) => {
 
     return (
         <div className="container">
+
             {error ? <div className="alert alert-danger mt-3 fade show" htmlrole="alert">{error}</div> : null}
             {info ? <div className="alert alert-success mt-3 fade show" htmlrole="alert">{info}</div> : null}
-            <Avatar className="test" email={user.email}></Avatar>
-            <div className="form-group row">
-                <label htmlFor="nickname" className="col-4 col-form-label">{user.displayName}</label>
-                <div className="col-8">
-                    <InputField id={NICKNAME_INPUT_ID} labelText="nickname" value={jegtyUser.displayName} innerRef={inputNickName}></InputField>
-                    <InputField id={CAKEDATE_INPUT_ID} labelText="Cake date" value={jegtyUser.birthday} innerRef={inputBirthdate}></InputField>
-                    <InputField id={EMAIL_INPUT_ID} labelText="email" value={jegtyUser.email} innerRef={email} readonly={true}></InputField>
+
+            <h4 className="mt-2">SETTINGS</h4>
+            <div className="row mt-2">
+                <div className="col-12">
+                    <div className="form-group">
+                        <div>
+                            <InputField id={NICKNAME_INPUT_ID} labelText="nickname" value={jegtyUser.displayName} innerRef={inputNickName}></InputField>
+                            <InputField id={CAKEDATE_INPUT_ID} labelText="Cake date" value={jegtyUser.birthday} innerRef={inputBirthdate}></InputField>
+                            <InputField id={EMAIL_INPUT_ID} labelText="email" value={jegtyUser.email} innerRef={email} readonly={true}></InputField>
+                        </div>
+                    </div>
+
+                    <div className="form-group">
+                        <Icon icon="sign-out" aria-hidden="true" onClickCallback={() => _logout()}></Icon>
+                        <Icon icon="ban" aria-hidden="true" onClickCallback={() => history.push("friends")}></Icon>
+                    </div>
+
+                    <div className="form-group">
+                        <div className="d-flex flex-column">
+                            <button className="btn btn-primary float-right col-2 profileButton mb-2" onClick={updateUser}>Update</button>
+                            <button data-toggle="modal" data-target="#confirmationModal"
+                                className="btn btn-danger float-right col-2 profileButton">Delete user</button>
+                        </div>
+                    </div>
+
+
+                    <div className="d-flex justify-content-center">
+                        <ul className="list-group list-group-horizontal">
+                            <li className=""><a href="#" className="badge badge-light mr-3">About Jegty</a></li>
+                            <li className=""><a href="#" className="badge badge-light mr-3">Privacy policy</a></li>
+                            <li className=""><a href="#" className="badge badge-light mr-3">Help</a></li>
+                        </ul>
+                    </div>
                 </div>
+
             </div>
 
-            <div className="form-group row">
-                <div className="offset-4 col-8">
-                    <Icon icon="sign-out" aria-hidden="true" onClickCallback={() => _logout()}></Icon>
-                    <Icon icon="ban" aria-hidden="true" onClickCallback={() => history.push("friends")}></Icon>
-                </div>
-            </div>
 
-            <div className="form-group row">
-                <div className="offset-4 col-8">
-                    <button className="btn btn-primary" onClick={updateUser}>Update</button>
-                </div>
-            </div>
-            <div className="form-group row">
-                <div className="offset-4 col-8">
-                    <button data-toggle="modal" data-target="#confirmationModal"
-                        className="btn btn-danger">Delete user</button>
-                </div>
-            </div>
             <div className="modal fade" id="confirmationModal" role="dialog">
                 <div className="modal-dialog">
 

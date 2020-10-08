@@ -34,7 +34,6 @@ export const Login = () => {
             .auth()
             .signInWithEmailAndPassword(userInput.value, passInput.value)
             .then(result => {
-                debugger;
                 dispatch(addLogedUser(result.user));
                 dispatch(logValidUser(true));
             })
@@ -54,7 +53,6 @@ export const Login = () => {
             .auth()
             .createUserWithEmailAndPassword(userInput.value, passInput.value)
             .then(result => {
-                debugger;
                 setSignIn(true);
                 setInfo(`User ${result.user.email}successfully created`);
                 seterror('');

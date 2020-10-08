@@ -2,7 +2,9 @@ import {
     initialState
 } from '../store'
 
-import {ActionTypes} from "../actions/action-type"
+import {
+    ActionTypes
+} from "../actions/action-type"
 
 function rootReducer(state = initialState, action) {
     let newState = {
@@ -15,6 +17,10 @@ function rootReducer(state = initialState, action) {
     }
 
     if (action.type === ActionTypes.LOG_IN) {
+        if (!action.payload) {
+            localStorage.clear();
+            return {...initialState};
+        }
         newState.isLogged = action.payload;
         return newState;
     }
@@ -24,7 +30,7 @@ function rootReducer(state = initialState, action) {
         return newState;
     }
 
-    
+
     if (action.type === ActionTypes.ADD_JEGTY_USER) {
         newState.jegtyUser = action.payload;
         return newState;
