@@ -6,6 +6,7 @@ import { Avatar } from "./../../shared/atoms/Avatar";
 import { InputField } from './../../shared/atoms/InputField';
 import { Icon } from '../../shared/atoms/Icon'
 import { useHistory } from "react-router-dom";
+import { LoadingBar } from './../../shared/atoms/LoadingBar'
 
 export const Profile = (props) => {
 
@@ -18,6 +19,7 @@ export const Profile = (props) => {
 
     const [error, setError] = useState('');
     const [info, setInfo] = useState('');
+    const [isLoading, setLoading] = useState(false);
 
     const inputNickName = useRef(null);
     const inputBirthdate = useRef(null);
@@ -47,18 +49,24 @@ export const Profile = (props) => {
     };
 
     const updateUser = async () => {
+        setLoading(true);
         const updatedUser = { ...jegtyUser, displayName: inputNickName.current.value, birthday: inputBirthdate.current.value };
         db.collection('users').doc(user.uid).set(updatedUser).then(
             (result) => {
                 displayMessage(`User ${result} sucessfully updated`, "INFO");
                 dispatch(addJegtyUser(updatedUser));
+                setLoading(false);
             }
-        )
+        ).catch(error => {
+            displayMessage(`Error updating, ${error}`, "ERROR");
+            setLoading(false);
+        })
     }
 
     const deleteUser = async (event) => {
+        setLoading(true);
         const currentUser = app.auth().currentUser;
-        const errorObtained = undefined;
+        let errorObtained = undefined;
 
         await db.collection('users').doc(currentUser.uid).delete().then(
             (result) => {
@@ -67,14 +75,12 @@ export const Profile = (props) => {
                     dispatch(logValidUser(false));
                 }).catch(function (error) {
                     console.log("Error ocurred" + error);
-                    event.preventDefault();
                     errorObtained = error;
+                    displayMessage(errorObtained, "ERROR");
+                    setLoading(false);
                 });
             }
         )
-        if(errorObtained){
-            displayMessage(error, "ERROR");
-        }
     }
 
     useEffect(function () {
@@ -94,7 +100,7 @@ export const Profile = (props) => {
 
             {error ? <div className="alert alert-danger mt-3 fade show" htmlrole="alert">{error}</div> : null}
             {info ? <div className="alert alert-success mt-3 fade show" htmlrole="alert">{info}</div> : null}
-
+            {isLoading ? <LoadingBar></LoadingBar> : null}
             <h4 className="mt-2">SETTINGS</h4>
             <div className="row mt-2">
                 <div className="col-12">

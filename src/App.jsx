@@ -22,7 +22,8 @@ export class App extends Component {
     super(props);
     this.state = {
       landingPageData: {},
-      isLogged: false
+      isLogged: false,
+      loading: false
     };
 
   }
@@ -62,7 +63,7 @@ export class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  isLogged: state.isLogged
+  isLogged: state.isLogged,
 });
 
 export default connect(mapStateToProps, null)(App);

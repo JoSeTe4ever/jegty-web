@@ -18,7 +18,7 @@ function rootReducer(state = initialState, action) {
 
     if (action.type === ActionTypes.LOG_IN) {
         if (!action.payload) {
-            localStorage.clear();
+            window.localStorage.clear();
             return {...initialState};
         }
         newState.isLogged = action.payload;

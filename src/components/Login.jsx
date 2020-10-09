@@ -1,11 +1,11 @@
-import React, { useState, useContext } from 'react'
-import { useDispatch } from 'react-redux'
-import { showDialog, logValidUser, addLogedUser } from '../redux/actions/actions'
-import { InputField } from './shared/atoms/InputField'
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from "react-router-dom";
+import { addLogedUser, logValidUser, showDialog } from '../redux/actions/actions';
 import { ReactComponent as IconSvg } from './../assets/icons/icono.svg';
 import { app, db } from './../data/firebase';
-import { useHistory } from "react-router-dom";
-import { Auth } from './../context/AuthContext';
+import { InputField } from './shared/atoms/InputField';
+import { LoadingBar } from './shared/atoms/LoadingBar'
 
 /****
  * Componente Login con estado de sign in y sign up 
@@ -19,14 +19,15 @@ export const Login = () => {
     const history = useHistory();
     const [error, seterror] = useState('');
     const [info, setInfo] = useState('');
+    const [isLoading, setLoading] = useState(false);
     const [signIn, setSignIn] = useState(true);
-
     const EMAIL_INPUT_ID = "email";
     const PASSWORD_INPUT_ID = "password";
     const REPEAT_PASSWORD_INPUT_ID = "repeatpassword";
-    let email,pass,repeat = "";
+    let email, pass, repeat = "";
 
     const submitLoginForm = async e => {
+        setLoading(true);
         e.preventDefault();
         const userInput = e.target.elements[EMAIL_INPUT_ID];
         const passInput = e.target.elements[PASSWORD_INPUT_ID];
@@ -36,14 +37,17 @@ export const Login = () => {
             .then(result => {
                 dispatch(addLogedUser(result.user));
                 dispatch(logValidUser(true));
+                setLoading(false);
             })
             .catch(error => {
-                seterror(error.message, "Error while authenticating")
+                seterror(error.message, "Error while authenticating");
+                setLoading(false);
             });
 
     };
 
     const submitRegisterForm = async e => {
+        setLoading(true);
         e.preventDefault();
         const userInput = e.target.elements[EMAIL_INPUT_ID];
         const passInput = e.target.elements[PASSWORD_INPUT_ID];
@@ -60,9 +64,11 @@ export const Login = () => {
                     email: result.user.email,
                     id: result.user.uid
                 });
+                setLoading(false);
             })
             .catch(error => {
-                seterror(error.message)
+                seterror(error.message);
+                setLoading(false);
             });
     };
 
@@ -74,6 +80,7 @@ export const Login = () => {
     return (
         signIn ?
             <div className="modal fade" id="myModal" role="dialog">
+                 
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div>
@@ -84,6 +91,7 @@ export const Login = () => {
                         <div className="modal-body">
                             {error ? <div className="alert alert-danger" htmlrole="alert">{error}</div> : null}
                             {info ? <div className="alert alert-success" htmlrole="alert">{info}</div> : null}
+                            {isLoading ? <LoadingBar></LoadingBar> : null}
                             <p>Enter your credentials</p>
                             <form className="form-group form-horizontal" onSubmit={submitLoginForm}>
                                 <InputField id={EMAIL_INPUT_ID} labelText="E-mail" value={email}></InputField>
@@ -118,6 +126,8 @@ export const Login = () => {
                         <div className="modal-body">
                             {error ? <div className="alert alert-danger" htmlrole="alert">{error}</div> : null}
                             {info ? <div className="alert alert-success" htmlrole="alert">{info}</div> : null}
+                            {isLoading ? <LoadingBar></LoadingBar> : null}
+
                             <p>Register your credentials</p>
                             <form className="form-group form-horizontal" onSubmit={submitRegisterForm}>
                                 <InputField id={EMAIL_INPUT_ID} labelText="E-mail" value={email}></InputField>
