@@ -10,7 +10,7 @@ export const InputField = (props) => {
 
     return (
         <div className="form-group">
-            <label className="col-sm-2 control-label" htmlFor={id}>{labelText ? labelText.toString() : ''}</label>
+            <label className="control-label" htmlFor={id}>{labelText ? labelText.toString() : ''}</label>
             {readonly ? <input className="form-control" id={id} type={type ? type : text} onChange={handleChange} value={text || ""} ref={innerRef} readOnly></input>
                 : <input className="form-control" id={id} type={type ? type : text} onChange={handleChange} value={text || ""} ref={innerRef} ></input>}
         </div>

@@ -74,7 +74,7 @@ export const Profile = (props) => {
                     displayMessage(`User ${result} sucessfully updated`, "INFO");
                     dispatch(logValidUser(false));
                 }).catch(function (error) {
-                    console.log("Error ocurred" + error);
+                    console.log("JOPI Error ocurred" + error);
                     errorObtained = error;
                     displayMessage(errorObtained, "ERROR");
                     setLoading(false);
@@ -102,12 +102,12 @@ export const Profile = (props) => {
             {info ? <div className="alert alert-success mt-3 fade show" htmlrole="alert">{info}</div> : null}
             {isLoading ? <LoadingBar></LoadingBar> : null}
             <h4 className="mt-2">SETTINGS</h4>
-            <div className="row mt-2">
+            <div className="row mt-2 justify-content-end">
                 <div className="col-12">
                     <div className="form-group">
-                        <div>
+                        <div className=".col-md-6 .offset-md-3">
                             <InputField id={NICKNAME_INPUT_ID} labelText="nickname" value={jegtyUser.displayName} innerRef={inputNickName}></InputField>
-                            <InputField id={CAKEDATE_INPUT_ID} labelText="Cake date" value={jegtyUser.birthday} innerRef={inputBirthdate}></InputField>
+                            <InputField id={CAKEDATE_INPUT_ID} labelText="Cake date" value={jegtyUser.birthday} innerRef={inputBirthdate} type="datetime-local"></InputField>
                             <InputField id={EMAIL_INPUT_ID} labelText="email" value={jegtyUser.email} innerRef={email} readonly={true}></InputField>
                         </div>
                     </div>
