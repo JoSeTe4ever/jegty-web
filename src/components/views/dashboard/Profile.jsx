@@ -7,6 +7,7 @@ import { InputField } from './../../shared/atoms/InputField';
 import { Icon } from '../../shared/atoms/Icon'
 import { useHistory } from "react-router-dom";
 import { LoadingBar } from './../../shared/atoms/LoadingBar'
+import './../../views/views.scss';
 
 export const Profile = (props) => {
 
@@ -20,6 +21,7 @@ export const Profile = (props) => {
     const [error, setError] = useState('');
     const [info, setInfo] = useState('');
     const [isLoading, setLoading] = useState(false);
+    const [jegtyUserState, setJegtyUser] = useState('');
 
     const inputNickName = useRef(null);
     const inputBirthdate = useRef(null);
@@ -53,6 +55,7 @@ export const Profile = (props) => {
         const updatedUser = { ...jegtyUser, displayName: inputNickName.current.value, birthday: inputBirthdate.current.value };
         db.collection('users').doc(user.uid).set(updatedUser).then(
             (result) => {
+                debugger;
                 displayMessage(`User ${result} sucessfully updated`, "INFO");
                 dispatch(addJegtyUser(updatedUser));
                 setLoading(false);
@@ -96,8 +99,7 @@ export const Profile = (props) => {
     }, [])
 
     return (
-        <div className="container">
-
+        <div className="container profileContainer">
             {error ? <div className="alert alert-danger mt-3 fade show" htmlrole="alert">{error}</div> : null}
             {info ? <div className="alert alert-success mt-3 fade show" htmlrole="alert">{info}</div> : null}
             {isLoading ? <LoadingBar></LoadingBar> : null}
@@ -113,15 +115,22 @@ export const Profile = (props) => {
                     </div>
 
                     <div className="form-group">
-                        <Icon icon="sign-out" aria-hidden="true" onClickCallback={() => _logout()}></Icon>
-                        <Icon icon="ban" aria-hidden="true" onClickCallback={() => history.push("friends")}></Icon>
+                        <div className="form-icon">
+                            <Icon icon="sign-out" aria-hidden="true" onClickCallback={() => _logout()}></Icon>
+                            <span>Sign out</span>
+                        </div>
+                        
+                        <div className="form-icon">
+                            <Icon icon="ban" aria-hidden="true" onClickCallback={() => history.push("friends")}></Icon>
+                            <span>Banned people</span>
+                        </div>
                     </div>
 
                     <div className="form-group">
                         <div className="d-flex flex-column">
                             <button className="btn btn-primary float-right col-2 profileButton mb-2" onClick={updateUser}>Update</button>
                             <button data-toggle="modal" data-target="#confirmationModal"
-                                className="btn btn-danger float-right col-2 profileButton">Delete user</button>
+                                className="btn btn-danger float-right col-2 profileButton">Delete</button>
                         </div>
                     </div>
 

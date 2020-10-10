@@ -16,3 +16,15 @@
 .profileButton {
     margin-left: auto;
 }
+
+.container.profileContainer {
+    padding-left: 12%;
+    padding-right: 12%;
+}
+
+.form-icon {
+    & > i{
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+}
