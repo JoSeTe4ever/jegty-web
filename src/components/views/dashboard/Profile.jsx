@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { connect, useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { Icon } from '../../shared/atoms/Icon';
 import { app, db } from './../../../data/firebase';
 import { addJegtyUser, logValidUser } from "./../../../redux/actions/actions";
-import { Avatar } from "./../../shared/atoms/Avatar";
 import { InputField } from './../../shared/atoms/InputField';
-import { Icon } from '../../shared/atoms/Icon'
-import { useHistory } from "react-router-dom";
-import { LoadingBar } from './../../shared/atoms/LoadingBar'
+import { LoadingBar } from './../../shared/atoms/LoadingBar';
 import './../../views/views.scss';
 
 export const Profile = (props) => {
@@ -21,7 +20,6 @@ export const Profile = (props) => {
     const [error, setError] = useState('');
     const [info, setInfo] = useState('');
     const [isLoading, setLoading] = useState(false);
-    const [jegtyUserState, setJegtyUser] = useState('');
 
     const inputNickName = useRef(null);
     const inputBirthdate = useRef(null);
@@ -43,7 +41,7 @@ export const Profile = (props) => {
         }
 
         if (type === "ERROR") {
-            setInfo(message);
+            setError(message);
             setTimeout(() => {
                 setInfo('');
             }, parseInt(5000));
@@ -55,7 +53,6 @@ export const Profile = (props) => {
         const updatedUser = { ...jegtyUser, displayName: inputNickName.current.value, birthday: inputBirthdate.current.value };
         db.collection('users').doc(user.uid).set(updatedUser).then(
             (result) => {
-                debugger;
                 displayMessage(`User ${result} sucessfully updated`, "INFO");
                 dispatch(addJegtyUser(updatedUser));
                 setLoading(false);
@@ -87,7 +84,7 @@ export const Profile = (props) => {
     }
 
     useEffect(function () {
-        if (user != undefined && user.uid != undefined && jegtyUser.id == undefined) {
+        if (user !== undefined && user.uid !== undefined && jegtyUser.id === undefined) {
             // BUSCAR EN lA BBDD Y METERLO EN EL STORE.
             db.collection('users').doc(user.uid).get().then(jegtyUser => {
                 jegtyUser = { ...jegtyUser.data() };

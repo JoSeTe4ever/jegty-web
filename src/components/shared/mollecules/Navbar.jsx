@@ -1,12 +1,10 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { ReactComponent as IconSvg } from '../../../assets/icons/icono.svg';
-import { Icon } from "./../atoms/Icon";
-import { logValidUser } from './../../../redux/actions/actions'
-import { Avatar } from "./../atoms/Avatar";
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
-
+import { ReactComponent as IconSvg } from '../../../assets/icons/icono.svg';
+import { Avatar } from "./../atoms/Avatar";
 import './Mollecules.scss';
+
 
 export const Navbar = () => {
     const history = useHistory();

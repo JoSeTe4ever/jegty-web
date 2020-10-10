@@ -6,7 +6,7 @@ export const Avatar = (props) => {
     const { email, onClickCallback, customClass } = props;
 
     const hashEmail = (mail) => {
-        if(mail != undefined){
+        if(mail !== undefined){
             return md5(mail);
         }
     }

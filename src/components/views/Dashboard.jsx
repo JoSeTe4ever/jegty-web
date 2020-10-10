@@ -1,12 +1,12 @@
-import React, { useEffect, useContext } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import { Switch } from "react-router-dom";
+import { Navbar } from "../../components/shared/mollecules/Navbar";
+import { Friends } from "../../components/views/dashboard/Friends";
+import { Profile } from "../../components/views/dashboard/Profile";
 import GuardedRoute from '../shared/GuardedRoute';
 import { Home } from '../views/dashboard/Home';
 import { NotFound } from './NotFound';
-import { Navbar } from "../../components/shared/mollecules/Navbar"
-import { Profile } from "../../components/views/dashboard/Profile"
-import { Friends } from "../../components/views/dashboard/Friends"
 
 export const Dashboard = () => {
     const LoggedRoute = GuardedRoute(true); // this shuold be the user logged in
