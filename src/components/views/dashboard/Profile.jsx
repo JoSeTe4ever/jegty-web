@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { connect, useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Icon } from '../../shared/atoms/Icon';
@@ -82,19 +82,7 @@ export const Profile = (props) => {
             }
         )
     }
-
-    useEffect(function () {
-        if (user !== undefined && user.uid !== undefined && jegtyUser.id === undefined) {
-            // BUSCAR EN lA BBDD Y METERLO EN EL STORE.
-            db.collection('users').doc(user.uid).get().then(jegtyUser => {
-                jegtyUser = { ...jegtyUser.data() };
-                dispatch(addJegtyUser(jegtyUser));
-            }).catch(function (error) {
-                displayMessage(`error` + error, "ERROR");
-            });
-        }
-    }, [])
-
+    
     return (
         <div className="container profileContainer">
             {error ? <div className="alert alert-danger mt-3 fade show" htmlrole="alert">{error}</div> : null}

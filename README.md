@@ -26,3 +26,5 @@ en Bootstrap 4.
 
 font-awesome versión 4.3.0
 
+2. Para la API de juegos raw.io se usa este wrapper de la API en node. 
+ https://www.npmjs.com/package/rawger
