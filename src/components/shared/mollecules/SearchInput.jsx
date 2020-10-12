@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
-import { connect } from 'react-redux'
-import { LoadingSpinner } from './../atoms/LoadingSpinner'
-import { ResultsList } from "./../mollecules/ResultsList"
-import { getGamesByName } from "./../../../data/games-api";
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { LoadingSpinner } from './../atoms/LoadingSpinner';
+import { ResultsList } from "./../mollecules/ResultsList";
 export const SearchInput = () => {
 
     const [text, setText] = useState("");
