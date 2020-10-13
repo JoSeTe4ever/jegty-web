@@ -1,9 +1,9 @@
 import {
-  useState,
-  useConstant,
-  useAsync
+  useState
 } from 'react';
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
+import useConstant from 'use-constant';
+import { useAsync } from 'react-async-hook';
 
 // Generic reusable hook (High Order Funcion)
 export const useDebouncedSearch = (searchFunction) => {

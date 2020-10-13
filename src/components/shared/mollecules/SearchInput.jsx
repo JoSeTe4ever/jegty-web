@@ -2,16 +2,21 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { LoadingSpinner } from './../atoms/LoadingSpinner';
 import { ResultsList } from "./../mollecules/ResultsList";
+import { getGamesByName } from "./../../../data/games-api";
+import { useDebouncedSearch } from "./../../../hooks/useDebouncedSearch"
+
+const useSearchGames = () => useDebouncedSearch(text => getGamesByName(text))
+
 export const SearchInput = () => {
 
-    const [text, setText] = useState("");
     const [hasText, setHasText] = useState(false);
     const [isLoading, setLoading] = useState(false);
 
+    const { inputText, setInputText, searchResults } = useSearchGames();
 
     // TODO hay que usar el useEffect y no olvida hacer el unsubscribe, correspondiente. 
     const handleChange = (e) => {
-        setText(e.target.value);
+        setInputText(e.target.value);
         setHasText(true)
         setLoading(true);
 
@@ -21,8 +26,12 @@ export const SearchInput = () => {
         }
     }
     let searchResult = null;
-    if (hasText) {
-        searchResult = (<div className="searchResultsContainer"> {isLoading ? <LoadingSpinner></LoadingSpinner> : <ResultsList></ResultsList>}</div>)
+
+    if(searchResults && searchResults.status === "success" && searchResults.result && searchResults.result.raw){
+        debugger;
+        searchResult = <div className="searchResultsContainer"><ResultsList elements={searchResults ? searchResults.result.raw() : []}></ResultsList></div>;
+    } else if (searchResults && searchResults.status === "loading") {
+        searchResult = (<div className="searchResultsContainer"> <LoadingSpinner></LoadingSpinner></div>)
     }
 
     return (
