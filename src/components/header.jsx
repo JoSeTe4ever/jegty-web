@@ -33,11 +33,11 @@ export class Header extends Component {
               <div className="row">
                 <div className="intro-text">
                   <h1>
-                    {this.props.data ? this.props.data.title : "Loading"}
+                    JEGTY
                     <span></span>
                   </h1>
                   <p>
-                    {this.props.data ? this.props.data.paragraph : "Loading"}
+                    Development
                   </p>
                   <IconSvg></IconSvg>
                   <div className="subtitle pb-3">Games for teams</div>

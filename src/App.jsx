@@ -26,36 +26,22 @@ export class App extends Component {
       loading: false
     };
 
-  }
-  getlandingPageData() {
-    this.setState({ ...this.state, landingPageData: JsonData })
+
+
   }
 
-  componentDidMount() {
-    this.getlandingPageData();
-  }
-
-      // remove backdrop from modal if exists.
+  // remove backdrop from modal if exists.
   render() {
-
     const modalBackgroundArray = document.getElementsByClassName("modal-backdrop fade show")
     if (modalBackgroundArray && modalBackgroundArray.length > 0) {
-        modalBackgroundArray[0].remove();
+      modalBackgroundArray[0].remove();
     }
 
     const { isLogged } = this.props;
     return !isLogged ? (
       <div>
         <Login></Login>
-        <Navigation />
-        <Header data={this.state.landingPageData.Header} />
-        <Features data={this.state.landingPageData.Features} />
-        <About data={this.state.landingPageData.About} />
-        <Services data={this.state.landingPageData.Services} />
-        <Gallery />
-        <Testimonials data={this.state.landingPageData.Testimonials} />
-        <Team data={this.state.landingPageData.Team} />
-        <Contact data={this.state.landingPageData.Contact} />
+        <Header data={this.state.landingPageData.Header}/>
         <div id="modal-root"></div>
       </div>
     ) : <Dashboard></Dashboard>

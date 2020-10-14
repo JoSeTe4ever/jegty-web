@@ -22,7 +22,8 @@
     "redux": "^4.0.5",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
-    "use-constant": "^1.0.0"
+    "use-constant": "^1.0.0",
+    "use-state-if-mounted": "^1.0.4"
   },
   "scripts": {
     "start": "react-scripts start",
