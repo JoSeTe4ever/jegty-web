@@ -1,13 +1,13 @@
 @import './../../styles/base.scss';
 
-.notFound{
+.notFound {
     height: 100%;
     background-color: $dark-electric-blue;
     color: $ufo-green;
     text-transform: uppercase;
 }
 
-.bottomPage{
+.bottomPage {
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -23,8 +23,24 @@
 }
 
 .form-icon {
-    & > i{
+    &>i {
         margin-right: 10px;
         margin-bottom: 10px;
     }
+}
+
+
+// home 
+
+.fixedMenu {
+    background-color: red;
+}
+
+.infiniteScroll {
+    background-color: blue;
+}
+
+
+.friendsList {
+    background-color: violet;
 }

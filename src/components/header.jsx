@@ -33,7 +33,7 @@ export class Header extends Component {
               <div className="row">
                 <div className="intro-text">
                   <h1>
-                    JEGTY
+                    Jegty
                     <span></span>
                   </h1>
                   <p>

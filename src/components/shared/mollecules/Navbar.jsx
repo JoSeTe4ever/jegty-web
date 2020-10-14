@@ -27,10 +27,10 @@ export const Navbar = () => {
 
     return (
         <nav className="navbar navbar-light py-1">
-            <a className="navbar-brand pl-4" href="#">
+            <a className="navbar-brand pl-4" onClick={() => history.push('')}>
                 <div className="brand-container">
                     <IconSvg></IconSvg>
-                    <span className="brand-span-container pl-3">Jegty</span>
+                    <span  className="brand-span-container pl-3">Jegty</span>
                 </div>
             </a>
 
