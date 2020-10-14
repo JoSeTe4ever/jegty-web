@@ -7,9 +7,15 @@ import { Profile } from "../../components/views/dashboard/Profile";
 import GuardedRoute from '../shared/GuardedRoute';
 import { Home } from '../views/dashboard/Home';
 import { NotFound } from './NotFound';
+import { NavigationMenu } from './../../components/shared/mollecules/NavigationMenu';
 
 export const Dashboard = () => {
     const LoggedRoute = GuardedRoute(true); // this shuold be the user logged in
+
+    const navitagionElemens = [{ icon: 'gamepad', navLocation: '/games', navText: 'Games' },
+    { icon: 'users', navLocation: '/friends', navText: 'Friends' },
+    { icon: 'futbol-o', navLocation: '/tournaments', navText: 'Tournaments' },
+    { icon: 'user', navLocation: '/profile', navText: 'Profile' }];
 
     // remove backdrop from modal if exists.
     useEffect(() => {
@@ -24,14 +30,29 @@ export const Dashboard = () => {
         <React.Fragment>
             <Navbar></Navbar>
             <section>
-                <Switch>
-                    <LoggedRoute exact path="/" component={Home} />
-                    <LoggedRoute exact path="/profile" component={Profile} />
-                    <LoggedRoute exact path="/friends" component={Friends} />
-                    <LoggedRoute path="*">
-                        <NotFound></NotFound>
-                    </LoggedRoute>
-                </Switch>
+
+                <div>
+                    <div className="row">
+                        <div className="col-3 fixedMenu">
+                            <NavigationMenu elems={navitagionElemens}></NavigationMenu>
+                        </div>
+                        <div className="col-6 infiniteScroll">
+                            <Switch>
+                                <LoggedRoute exact path="/" component={Home} />
+                                <LoggedRoute exact path="/profile" component={Profile} />
+                                <LoggedRoute exact path="/friends" component={Friends} />
+                                <LoggedRoute path="*">
+                                    <NotFound></NotFound>
+                                </LoggedRoute>
+                            </Switch>
+                        </div>
+                        <div className="col-3 friendsList">
+                            jopi
+                        </div>
+                    </div>
+                </div>
+
+
                 <footer>
                 </footer>
             </section>

@@ -25,9 +25,6 @@ export class App extends Component {
       isLogged: false,
       loading: false
     };
-
-
-
   }
 
   // remove backdrop from modal if exists.
