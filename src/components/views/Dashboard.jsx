@@ -13,7 +13,7 @@ export const Dashboard = () => {
     const LoggedRoute = GuardedRoute(true); // this shuold be the user logged in
 
     const navitagionElemens = [{ icon: 'gamepad', navLocation: '/games', navText: 'Games' },
-    { icon: 'users', navLocation: '/friends', navText: 'Friends' },
+    { icon: 'users', navLocation: '/', navText: 'Friends' },
     { icon: 'futbol-o', navLocation: '/tournaments', navText: 'Tournaments' },
     { icon: 'user', navLocation: '/profile', navText: 'Profile' }];
 
@@ -30,9 +30,8 @@ export const Dashboard = () => {
         <React.Fragment>
             <Navbar></Navbar>
             <section>
-
                 <div>
-                    <div className="row">
+                    <div className="row h-100">
                         <div className="col-3 fixedMenu">
                             <NavigationMenu elems={navitagionElemens}></NavigationMenu>
                         </div>
