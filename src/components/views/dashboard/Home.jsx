@@ -2,13 +2,14 @@ import React, { useRef, useState } from 'react'
 import { InputField } from './../../shared/atoms/InputField'
 import { Icon } from './../../shared/atoms/Icon'
 import { connect } from "react-redux";
-
-
-export const Home = () => {
+import { AvatarList } from './../../shared/mollecules/AvatarList'
+import { useSelector } from 'react-redux';
+export const Home = (props) => {
 
     const SEARCH_FRIENDS_INPUT_ID = "searchForFriends"
     const searchFriendsRef = useRef(null);
     const [searchQueryText, setQueryText] = useState('');
+    const friends = useSelector((state) => state.friends);
 
     const addUser = () => {
 
@@ -22,7 +23,7 @@ export const Home = () => {
         <div className="homeContainer">
             <InputField id={SEARCH_FRIENDS_INPUT_ID} labelText="Search friends" value={searchQueryText} innerRef={searchFriendsRef}></InputField>
             <Icon icon={'plus-circle'} aria-hidden="true" onClickCallback={() => showAddFriendDialog()}></Icon>
-
+            <AvatarList friends={friends}></AvatarList>
             <div className="modal fade" id="addFriendDialog" role="dialog">
                 <div className="modal-dialog">
 
@@ -46,7 +47,7 @@ export const Home = () => {
 }
 
 const mapStateToProps = (state) => ({
-
+    friends: state.friends,
 })
 
 const mapDispatchToProps = {
