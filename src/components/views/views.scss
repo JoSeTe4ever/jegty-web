@@ -43,10 +43,17 @@
 }
 
 .infiniteScroll {
-    background-color: #0C305E;
+    background-color: $white;
 }
 
 
 .friendsList {
     background-color: #0C305E;
+}
+
+.avatarContainer {
+    min-width: 15rem;
+    border-radius: 2.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    background-color: #cfd4da;
 }

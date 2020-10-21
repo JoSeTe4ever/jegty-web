@@ -10,6 +10,7 @@ import { NotFound } from './NotFound';
 import { NavigationMenu } from './../../components/shared/mollecules/NavigationMenu';
 import { db } from "./../../data/firebase";
 import { addJegtyUser } from "./../../redux/actions/actions";
+import { Avatar } from '../shared/atoms/Avatar';
 
 export const Dashboard = () => {
     const LoggedRoute = GuardedRoute(true); // this shuold be the user logged in
@@ -56,7 +57,13 @@ export const Dashboard = () => {
                                     onClick={() => console.log(true)}
                                     className="btn btn-custom btn-lg page-scroll">
                                     New game
-                            </button>
+                                </button>
+                            </div>
+                            <div className="d-flex justify-content-center">
+                                <div className="avatarContainer">
+                                    <Avatar email="user.email" customClass=""></Avatar>
+                                    <span className="">caca</span>
+                                </div>
                             </div>
                         </div>
                         <div className="col-6 infiniteScroll">
