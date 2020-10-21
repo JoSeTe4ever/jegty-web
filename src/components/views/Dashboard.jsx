@@ -10,7 +10,7 @@ import { NotFound } from './NotFound';
 import { NavigationMenu } from './../../components/shared/mollecules/NavigationMenu';
 import { db } from "./../../data/firebase";
 import { addJegtyUser } from "./../../redux/actions/actions";
-import { Avatar } from '../shared/atoms/Avatar';
+import { AvatarBadge } from '../shared/mollecules/AvatarBadge';
 
 export const Dashboard = () => {
     const LoggedRoute = GuardedRoute(true); // this shuold be the user logged in
@@ -47,26 +47,22 @@ export const Dashboard = () => {
                 <div>
                     <div className="row h-100">
                         <div className="col-3 fixedMenu">
-                            <div className="brand-container d-flex justify-content-center">
+                            <div className="brand-container d-flex justify-content-center mt-5">
                                 <IconSvg className="logoIconApp p-2"></IconSvg>
                                 <span className="brand-span-container pl-3">Jegty</span>
                             </div>
                             <NavigationMenu elems={navitagionElemens}></NavigationMenu>
-                            <div className="d-flex justify-content-center">
+                            <div className="d-flex justify-content-center mt-5">
                                 <button
                                     onClick={() => console.log(true)}
                                     className="btn btn-custom btn-lg page-scroll">
                                     New game
                                 </button>
                             </div>
-                            <div className="d-flex justify-content-center">
-                                <div className="avatarContainer">
-                                    <Avatar email="user.email" customClass=""></Avatar>
-                                    <span className="">caca</span>
-                                </div>
-                            </div>
+                            <AvatarBadge email={user.email} name={jegtyUser.name}></AvatarBadge>
                         </div>
                         <div className="col-6 infiniteScroll">
+                            <div className="top">TOP</div>
                             <Switch>
                                 <LoggedRoute exact path="/" component={Home} />
                                 <LoggedRoute exact path="/profile" component={Profile} />

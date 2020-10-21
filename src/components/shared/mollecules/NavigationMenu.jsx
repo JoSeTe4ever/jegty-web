@@ -11,7 +11,7 @@ export const NavigationMenu = (props) => {
     const history = useHistory();
 
     return (
-        <div className="navigation-menu">
+        <div className="navigation-menu mt-5">
             <ul className="navigationList">
                 {elems.map((e, i) => <li className="navigationElemnList" key={i} onClick={() => history.push(`${e.navLocation}`)}>
                     <div className="container">

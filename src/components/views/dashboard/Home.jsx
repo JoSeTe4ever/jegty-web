@@ -24,6 +24,7 @@ export const Home = (props) => {
             <InputField id={SEARCH_FRIENDS_INPUT_ID} labelText="Search friends" value={searchQueryText} innerRef={searchFriendsRef}></InputField>
             <Icon icon={'plus-circle'} aria-hidden="true" onClickCallback={() => showAddFriendDialog()}></Icon>
             <AvatarList friends={friends}></AvatarList>
+
             <div className="modal fade" id="addFriendDialog" role="dialog">
                 <div className="modal-dialog">
 

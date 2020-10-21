@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../../../data/firebase';
-import { Avatar } from '../atoms/Avatar';
+import { AvatarBadge } from './AvatarBadge';
 
 export const AvatarList = (props) => {
 
@@ -12,7 +12,7 @@ export const AvatarList = (props) => {
         const refs = userIds.map(id => db.collection('users').doc(`${id}`).get())
         // ahcer un push q.all
         Promise.all(refs).then(users => {
-            setFriends(users);
+            setFriends(users.map(e => e.data()));
             setLoading(false);
         })
     }
@@ -27,15 +27,13 @@ export const AvatarList = (props) => {
         <span className="sr-only">Loading...</span>
     </div>);
     return (
-        <div>
+        <div className="">
             {isLoading ? loading : null}
-            <ul className="list-unstyled">
-                {loadedFriends.map((user, index) => <li className="media" key={index}>
-                    <Avatar onClickCallback={() => console.log("clicked")} email={user.email}></Avatar>
+            <ul className="list-unstyled d-flex">
+                {loadedFriends.map((user, index) => <li className="media mr-2" key={index}>
+                    <AvatarBadge email={user.email} name={user.name}></AvatarBadge>
                 </li>)}
             </ul>
-
-
         </div>
     )
 }
