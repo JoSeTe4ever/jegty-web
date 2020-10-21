@@ -28,7 +28,6 @@ export const SearchInput = () => {
     let searchResult = null;
 
     if(searchResults && searchResults.status === "success" && searchResults.result && searchResults.result.raw){
-        debugger;
         searchResult = <div className="searchResultsContainer"><ResultsList elements={searchResults ? searchResults.result.raw() : []}></ResultsList></div>;
     } else if (searchResults && searchResults.status === "loading") {
         searchResult = (<div className="searchResultsContainer"> <LoadingSpinner></LoadingSpinner></div>)

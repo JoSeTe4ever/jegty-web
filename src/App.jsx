@@ -1,16 +1,7 @@
-import React, { Component } from 'react'
-import Navigation from './components/navigation';
-import Header from './components/header';
-import Features from './components/features';
-import About from './components/about';
-import Services from './components/services';
-import Gallery from './components/gallery';
-import Testimonials from './components/testimonials';
-import Team from './components/Team';
-import { Login } from './components/Login';
-import Contact from './components/contact';
-import JsonData from './data/data.json';
+import React, { Component } from 'react';
 import { connect } from "react-redux";
+import Header from './components/header';
+import { Login } from './components/Login';
 import { Dashboard } from './components/views/Dashboard';
 
 export class App extends Component {

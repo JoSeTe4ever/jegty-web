@@ -9,7 +9,6 @@ export const AvatarList = (props) => {
     const [isLoading, setLoading] = useState(true);
 
     const loadDataFromFirebase = async (userIds) => {
-        debugger;
         const refs = userIds.map(id => db.collection('users').doc(`${id}`).get())
         // ahcer un push q.all
         Promise.all(refs).then(users => {

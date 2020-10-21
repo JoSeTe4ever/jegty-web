@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { useHistory } from 'react-router'
 import { Icon } from './../atoms/Icon'
 
+import './Mollecules.scss'
+
 export const NavigationMenu = (props) => {
 
     const { elems } = props;
@@ -11,9 +13,11 @@ export const NavigationMenu = (props) => {
     return (
         <div className="navigation-menu">
             <ul className="navigationList">
-                {elems.map((e, i) => <li className="navigationElemnList" key={i}>
-                    <Icon icon={e.icon} aria-hidden="true" onClickCallback={() => history.push(`${e.navLocation}`)}></Icon>
-                    <span>{e.navText}</span>
+                {elems.map((e, i) => <li className="navigationElemnList" key={i} onClick={() => history.push(`${e.navLocation}`)}>
+                    <div className="container">
+                        <Icon icon={e.icon} aria-hidden="true"></Icon>
+                        <span className="ml-3">{e.navText}</span>
+                    </div>
                 </li>)}
             </ul>
         </div>
