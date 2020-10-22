@@ -33,6 +33,7 @@ li.navigationElemnList {
     &>.container {
         position: relative;
         width: 12rem;
+
         &:hover {
             border-radius: 0.25rem;
             transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -56,20 +57,38 @@ li.navigationElemnList {
     background-color: #cfd4da;
     display: flex;
 
-    & > div span.avatarMail{
+    &>div span.avatarMail {
         display: block;
         font-size: 14px;
         font-style: italic;
     }
-    
-    & > div span.avatarName{
+
+    &>div span.avatarName {
         font-weight: bold;
         display: block;
         font-size: 1.2rem;
     }
-    
-    & >.miniAvatar{
+
+    &>.miniAvatar {
         width: 60px;
         heigth: 60px;
+    }
+}
+
+// game card
+.gameCard {
+    display: 'flex';
+
+    &.details {
+        display: 'flex';
+        flexDirection: 'column';
+    }
+
+    &.gameContent {
+        flex: '1 0 auto',
+    }
+
+    &.gameCover {
+        width: 151,
     }
 }

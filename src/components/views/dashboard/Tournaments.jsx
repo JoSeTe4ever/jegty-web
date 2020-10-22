@@ -1,15 +1,10 @@
 import React from 'react'
 import { SearchInput } from './../../shared/mollecules/SearchInput'
 
-export const Friends = props => {
+export const Tournaments = props => {
     return (
         <div>
             <SearchInput></SearchInput>
         </div>
     )
 }
-
-Friends.propTypes = {
-
-}
-

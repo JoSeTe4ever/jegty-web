@@ -4,6 +4,8 @@ import { Switch } from "react-router-dom";
 import { ReactComponent as IconSvg } from '../../assets/icons/icono.svg';
 import { Friends } from "../../components/views/dashboard/Friends";
 import { Profile } from "../../components/views/dashboard/Profile";
+import { Tournaments } from "../../components/views/dashboard/Tournaments";
+import { Games } from "../../components/views/dashboard/Games";
 import GuardedRoute from '../shared/GuardedRoute';
 import { Home } from '../views/dashboard/Home';
 import { NotFound } from './NotFound';
@@ -67,6 +69,8 @@ export const Dashboard = () => {
                                 <LoggedRoute exact path="/" component={Home} />
                                 <LoggedRoute exact path="/profile" component={Profile} />
                                 <LoggedRoute exact path="/friends" component={Friends} />
+                                <LoggedRoute exact path="/tournaments" component={Tournaments} />
+                                <LoggedRoute exact path="/games" component={Games} />
                                 <LoggedRoute path="*">
                                     <NotFound></NotFound>
                                 </LoggedRoute>
