@@ -205,6 +205,9 @@ hr {
 	border-radius: 25px;
 	transition: all 0.5s linear;
 	border: 0;
+
+	box-shadow: 0px 3px 6px #00000029;
+	border-radius: 35px;
 }
 
 .btn-custom:hover,
@@ -241,7 +244,7 @@ a:focus,
 	display: table;
 	width: 100%;
 	padding: 0;
-	background-color: #0e0d0d;
+	background-color: #456386;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	background-size: cover;
@@ -249,7 +252,16 @@ a:focus,
 }
 
 .intro .overlay {
-	background: #0C305E;
+	top: 0px;
+	left: 0px;
+	background: #456386 0% 0% no-repeat padding-box;
+	opacity: 1;
+}
+
+.introLogo {
+	background: transparent url('/public/img/jegty_oval.svg') 0% 0% no-repeat padding-box;
+
+	opacity: 1;
 }
 
 .intro h1 {
@@ -281,12 +293,24 @@ header .intro-text {
 	text-align: center;
 }
 
+.familyLogo {
+	vertical-align: middle;
+	border-style: none;
+	top: 289px;
+	left: 79px;
+	width: 749px;
+	height: 429px;
+	position: absolute;
+}
+
 #header .subtitle {
 	font-family: 'Comfortaa Light';
 	text-transform: uppercase;
 	font-size: 4.6rem;
 	letter-spacing: 0.3em;
-	color: #43a886;
+	color: #38EA91;
+	position: relative;
+	top: 7rem;
 }
 
 /* Features Section */
@@ -537,65 +561,7 @@ header .intro-text {
 	color: #888;
 }
 
-/* Contact Section */
-#contact {
-	padding: 100px 0 60px 0;
-	background: linear-gradient(to right, #6372ff 0%, #5ca9fb 100%);
-	color: rgba(255, 255, 255, .75);
-}
 
-#contact .section-title {
-	margin-bottom: 40px;
-}
-
-#contact .section-title p {
-	font-size: 16px;
-}
-
-#contact h2 {
-	color: #fff;
-	margin-top: 10px;
-	margin-bottom: 15px;
-	padding-bottom: 15px;
-}
-
-#contact .section-title h2::after {
-	position: absolute;
-	content: "";
-	background: rgba(255, 255, 255, .3);
-	height: 4px;
-	width: 60px;
-	bottom: 0;
-	left: 30px;
-}
-
-#contact h3 {
-	color: #fff;
-	margin-top: 80px;
-	margin-bottom: 25px;
-	padding-bottom: 20px;
-	font-weight: 400;
-}
-
-#contact form {
-	padding-top: 20px;
-}
-
-#contact .text-danger {
-	color: #cc0033;
-	text-align: left;
-}
-
-#contact .btn-custom {
-	margin: 30px 0;
-	background: transparent;
-	border: 2px solid #fff;
-}
-
-#contact .btn-custom:hover {
-	color: #1f386e;
-	background: #fff;
-}
 
 label {
 	font-size: 12px;
@@ -714,8 +680,8 @@ label {
 
 svg.logoIcon {
 	width: 100px;
-    height: 100px;
-    display: block;
+	height: 100px;
+	display: block;
 }
 
 span.signUpLink {

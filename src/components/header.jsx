@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { ReactComponent as IconSvg } from './../assets/icons/icono.svg';
+import { ReactComponent as IntroIconSvg } from './../assets/img/jegty_oval.svg';
+import family from './../assets/img/family.png';
+
 import { connect } from "react-redux";
 import { showDialog } from "../redux/actions/actions"
 
@@ -29,29 +32,27 @@ export class Header extends Component {
       <header id="header">
         <div className="intro">
           <div className="overlay">
-            <div className="container">
-              <div className="row">
+            <div className="">
+              <div className="mt-5">
                 <div className="intro-text">
-                  <h1>
-                    Jegty
-                    <span></span>
-                  </h1>
                   <p>
-                    Development
+                    <IntroIconSvg></IntroIconSvg>
+                    <img src={family} alt="Family" className="familyLogo"/>
                   </p>
-                  <IconSvg></IconSvg>
                   <div className="subtitle pb-3">Games for teams</div>
-                  <button
-                    data-toggle="modal" data-target="#myModal"
-                    onClick={() => setShowDialog(true)}
-                    className="btn btn-custom btn-lg page-scroll"
-                  >
-                    start
-                  </button>{" "}
                 </div>
               </div>
             </div>
           </div>
+        </div>
+        <div className="d-flex justify-content-center">
+          <button
+            data-toggle="modal" data-target="#myModal"
+            onClick={() => setShowDialog(true)}
+            className="btn btn-custom btn-lg page-scroll mt-5"
+          >
+            start
+                  </button>
         </div>
       </header>
     );
