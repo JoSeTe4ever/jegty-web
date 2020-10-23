@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { connect, useSelector, useDispatch } from 'react-redux';
-import { Switch, useLocation } from "react-router-dom";
+import { Switch, useLocation, useHistory } from "react-router-dom";
 import { ReactComponent as IconSvg } from '../../assets/icons/icono.svg';
 import { Friends } from "../../components/views/dashboard/Friends";
 import { Profile } from "../../components/views/dashboard/Profile";
 import { Tournaments } from "../../components/views/dashboard/Tournaments";
 import { Games } from "../../components/views/dashboard/Games";
+import { CreateGame } from "../../components/views/dashboard/CreateGame";
 import GuardedRoute from '../shared/GuardedRoute';
 import { Home } from '../views/dashboard/Home';
 import { NotFound } from './NotFound';
@@ -15,11 +16,12 @@ import { addJegtyUser } from "./../../redux/actions/actions";
 import { AvatarBadge } from '../shared/mollecules/AvatarBadge';
 
 export const Dashboard = () => {
-    const LoggedRoute = GuardedRoute(true); // this shuold be the user logged in
+    const LoggedRoute = GuardedRoute(true);
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const jegtyUser = useSelector((state) => state.jegtyUser);
     const location = useLocation();
+    const history = useHistory();
 
     const navitagionElemens = [{ icon: 'gamepad', navLocation: '/games', navText: 'Games' },
     { icon: 'users', navLocation: '/', navText: 'Friends' },
@@ -63,7 +65,7 @@ export const Dashboard = () => {
                             <NavigationMenu elems={navitagionElemens}></NavigationMenu>
                             <div className="d-flex justify-content-center mt-5">
                                 <button
-                                    onClick={() => console.log(true)}
+                                    onClick={() => history.push("/new-game")}
                                     className="btn btn-custom btn-lg page-scroll">
                                     New game
                                 </button>
@@ -78,6 +80,7 @@ export const Dashboard = () => {
                                 <LoggedRoute exact path="/friends" component={Friends} />
                                 <LoggedRoute exact path="/tournaments" component={Tournaments} />
                                 <LoggedRoute exact path="/games" component={Games} />
+                                <LoggedRoute exact path="/new-game" component={CreateGame} />
                                 <LoggedRoute path="*">
                                     <NotFound></NotFound>
                                 </LoggedRoute>

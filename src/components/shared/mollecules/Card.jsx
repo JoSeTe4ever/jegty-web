@@ -19,31 +19,32 @@ export const GameCard = (props) => {
     }
     return (
         <React.Fragment>
-        <Card className="gameCard"
-            onMouseEnter={() => {
-                setMouseEntered(!mouseEntered)
-            }}
-            onMouseLeave={() => {
-                setMouseEntered(!mouseEntered)
-            }}
-        >
-            <div className="details">
-                <CardContent className="gameContent">
-                    <Typography component="h5" variant="h5">
-                        Live From Space
-            </Typography>
-                    <Typography variant="subtitle1" color="textSecondary">
-                        Mac Miller
-            </Typography>
-                </CardContent>
-            </div>
-            <CardMedia
-                className="gameCover"
-                image="/static/images/cards/live-from-space.jpg"
-                title="Live from space album cover"
-            />
-        </Card >
-        { mouseEntered ? <div>CACACACACACACA</div> : null }
+            <Card className="gameCard"
+                onMouseEnter={() => {
+                    setMouseEntered(!mouseEntered)
+                }}
+                onMouseLeave={() => {
+                    setMouseEntered(!mouseEntered)
+                }}
+            >
+                <div className="details">
+                    <CardContent className="gameContent">
+                        
+                        <Typography component="h5" variant="h5">
+                            Live From Space
+                        </Typography>
+                        <Typography variant="subtitle1" color="textSecondary">
+                            Mac Miller
+                        </Typography>
+                    </CardContent>
+                </div>
+                <CardMedia
+                    className="gameCover"
+                    image="https://media.rawg.io/media/games/e74/e74458058b35e01c1ae3feeb39a3f724.jpg"
+                    title="Live from space album cover"
+                />
+            </Card >
+            {mouseEntered ? <div>CACACACACACACA</div> : null}
         </React.Fragment>
     )
 }
