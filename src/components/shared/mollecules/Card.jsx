@@ -1,11 +1,13 @@
+import React, { useState, useRef } from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import React from 'react';
 
 
 export const GameCard = (props) => {
+    const [mouseEntered, setMouseEntered] = useState(false);
+
     const dummyInfoObject = {
         createdAt: '',
         description: '',
@@ -16,7 +18,15 @@ export const GameCard = (props) => {
         startAt: '',
     }
     return (
-        <Card className="gameCard">
+        <React.Fragment>
+        <Card className="gameCard"
+            onMouseEnter={() => {
+                setMouseEntered(!mouseEntered)
+            }}
+            onMouseLeave={() => {
+                setMouseEntered(!mouseEntered)
+            }}
+        >
             <div className="details">
                 <CardContent className="gameContent">
                     <Typography component="h5" variant="h5">
@@ -32,6 +42,8 @@ export const GameCard = (props) => {
                 image="/static/images/cards/live-from-space.jpg"
                 title="Live from space album cover"
             />
-        </Card>
+        </Card >
+        { mouseEntered ? <div>CACACACACACACA</div> : null }
+        </React.Fragment>
     )
 }

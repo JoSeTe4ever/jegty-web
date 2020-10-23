@@ -1,6 +1,6 @@
-import React, { useEffect, useHistory } from 'react';
+import React, { useEffect } from 'react';
 import { connect, useSelector, useDispatch } from 'react-redux';
-import { Switch } from "react-router-dom";
+import { Switch, useLocation } from "react-router-dom";
 import { ReactComponent as IconSvg } from '../../assets/icons/icono.svg';
 import { Friends } from "../../components/views/dashboard/Friends";
 import { Profile } from "../../components/views/dashboard/Profile";
@@ -19,6 +19,7 @@ export const Dashboard = () => {
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const jegtyUser = useSelector((state) => state.jegtyUser);
+    const location = useLocation();
 
     const navitagionElemens = [{ icon: 'gamepad', navLocation: '/games', navText: 'Games' },
     { icon: 'users', navLocation: '/', navText: 'Friends' },
@@ -43,6 +44,12 @@ export const Dashboard = () => {
 
     }, [])
 
+    const transformCurrentLocation = () => {
+        if (location.pathname === "/") {
+            return "FRIENDS";
+        }
+        return location.pathname.replaceAll("/","").toUpperCase();
+    }
     return (
         <React.Fragment>
             <section>
@@ -64,7 +71,7 @@ export const Dashboard = () => {
                             <AvatarBadge email={user.email} name={jegtyUser.name}></AvatarBadge>
                         </div>
                         <div className="col-6 infiniteScroll">
-                            <div className="top">TOP</div>
+                            <div className="top">{transformCurrentLocation()}</div>
                             <Switch>
                                 <LoggedRoute exact path="/" component={Home} />
                                 <LoggedRoute exact path="/profile" component={Profile} />

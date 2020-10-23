@@ -6,7 +6,7 @@ export const AvatarBadge = (props) => {
     return (
         <div className="d-flex justify-content-center">
             <div className="avatarContainer">
-                <Avatar email={email} customClass="miniAvatar"></Avatar>
+                <Avatar email={email} customClass="miniAvatar coolEfect"></Avatar>
                 <div>
                     <span className="avatarName">{name}</span>
                     <span className="avatarMail">{email}</span>

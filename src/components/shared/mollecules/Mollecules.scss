@@ -72,6 +72,12 @@ li.navigationElemnList {
     &>.miniAvatar {
         width: 60px;
         heigth: 60px;
+
+        &.coolEfect{
+            background-color: #cfd4da;
+            display: flex;
+            border: outset;
+        }
     }
 }
 
