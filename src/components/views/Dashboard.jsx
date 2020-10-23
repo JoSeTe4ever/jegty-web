@@ -48,7 +48,7 @@ export const Dashboard = () => {
         if (location.pathname === "/") {
             return "FRIENDS";
         }
-        return location.pathname.replaceAll("/","").toUpperCase();
+        return location.pathname.replace(/\//g, '').toUpperCase();
     }
     return (
         <React.Fragment>
@@ -88,8 +88,6 @@ export const Dashboard = () => {
                         </div>
                     </div>
                 </div>
-
-
                 <footer>
                 </footer>
             </section>
