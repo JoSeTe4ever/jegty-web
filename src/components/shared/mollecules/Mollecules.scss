@@ -92,9 +92,10 @@ li.navigationElemnList {
 }
 
 .miniAvatarList{
-    display: flex;
-    position: absolute;
-    left: 77rem;
     z-index: 100;
+    background: white;
+    min-height: 344px;
+    min-width: 302px;
+    display: block;
 }
 

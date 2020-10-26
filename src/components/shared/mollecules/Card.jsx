@@ -5,6 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import React, { useState } from 'react';
 import { Avatar } from './../atoms/Avatar'
 import { getJegtyUserById } from './../../../data/jegty-api'
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 export const GameCard = (props) => {
     const [mouseEntered, setMouseEntered] = useState(false);
@@ -24,6 +26,11 @@ export const GameCard = (props) => {
 
     const MiniAvatarList = (props) => {
         return (<ul className="miniAvatarList">
+            <li>
+            <Fab color="primary" aria-label="add">
+                    <AddIcon />
+            </Fab>
+            </li>
             <li><Avatar></Avatar></li>
             <li><Avatar></Avatar></li>
             <li><Avatar></Avatar></li>
@@ -58,9 +65,8 @@ export const GameCard = (props) => {
                         </Typography>
                     </CardContent>
                 </div>
-
-            </Card >
-            {mouseEntered ? <MiniAvatarList></MiniAvatarList> : null}
+                {true ? <MiniAvatarList></MiniAvatarList> : null}
+            </Card>
         </React.Fragment>
     )
 }
