@@ -82,20 +82,19 @@ li.navigationElemnList {
 }
 
 // game card
-.gameCard {
-    display: 'flex';
-
-    &.details {
-        display: 'flex';
-        flexDirection: 'column';
-    }
-
-    &.gameContent {
-        flex: '1 0 auto',
-    }
-
-    &.gameCover {
-        width: 204px;
-        height: auto;
-    }
+.MuiPaper-root.MuiCard-root.gameCard.MuiPaper-elevation1.MuiPaper-rounded {
+    display: flex;
 }
+
+.gameCover {
+    width: 279px;
+    height: 369px;
+}
+
+.miniAvatarList{
+    display: flex;
+    position: absolute;
+    left: 77rem;
+    z-index: 100;
+}
+

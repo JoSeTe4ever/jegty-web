@@ -4,6 +4,11 @@ export const Games = props => {
     return (
         <div>
             <GameCard></GameCard>
+            <GameCard></GameCard>
+            <GameCard></GameCard>
+            <GameCard></GameCard>
+            <GameCard></GameCard>
+            <GameCard></GameCard>
         </div>
     )
 }
