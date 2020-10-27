@@ -64,11 +64,12 @@ export const Dashboard = () => {
                             </div>
                             <NavigationMenu elems={navitagionElemens}></NavigationMenu>
                             <div className="d-flex justify-content-center mt-5">
-                                <button
-                                    onClick={() => history.push("/new-game")}
-                                    className="btn btn-custom btn-lg page-scroll">
-                                    New game
-                                </button>
+                                {location != "/new-game" ?
+                                    <button
+                                        onClick={() => history.push("/new-game")}
+                                        className="btn btn-custom btn-lg page-scroll">
+                                        New game
+                                </button> : null}
                             </div>
                             <AvatarBadge email={user.email} name={jegtyUser.name}></AvatarBadge>
                         </div>
