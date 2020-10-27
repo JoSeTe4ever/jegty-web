@@ -40,7 +40,6 @@ export const GameCard = (props) => {
 
     return (
         <React.Fragment>
-
             <Card className="gameCard mb-3"
                 onMouseEnter={() => {
                     setMouseEntered(!mouseEntered)
