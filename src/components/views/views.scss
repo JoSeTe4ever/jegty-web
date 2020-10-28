@@ -40,6 +40,19 @@
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 6px #00000029;
     opacity: 1;
+    left: 465px;
+    margin-bottom: 20px;
+    height: 80px;
+
+    & >.title{
+        width: 90px;
+        height: 37px;
+        letter-spacing: 0.93px;
+        font-size: 25px;
+        position: relative;
+        top: 21px;
+        left: 32px;
+    }
 }
 
 // home 

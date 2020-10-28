@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect, useSelector, useDispatch } from 'react-redux';
 import { Switch, useLocation, useHistory } from "react-router-dom";
 import { ReactComponent as IconSvg } from '../../assets/icons/icono.svg';
@@ -22,6 +22,7 @@ export const Dashboard = () => {
     const jegtyUser = useSelector((state) => state.jegtyUser);
     const location = useLocation();
     const history = useHistory();
+    const [currentLocation, setCurrentLocation] = useState(location.pathname);
 
     const navitagionElemens = [{ icon: 'gamepad', navLocation: '/games', navText: 'Games' },
     { icon: 'users', navLocation: '/', navText: 'Friends' },
@@ -46,11 +47,17 @@ export const Dashboard = () => {
 
     }, [])
 
+    useEffect(() => {
+        const { pathname } = location;
+        setCurrentLocation(pathname);
+    }, [location]);
+
     const transformCurrentLocation = () => {
         if (location.pathname === "/") {
-            return "FRIENDS";
+            return "Friends";
         }
-        return location.pathname.replace(/\//g, '').toUpperCase();
+        const name = location.pathname.replace(/\//g, '');
+        return name.charAt(0).toUpperCase() + name.slice(1)
     }
     return (
         <React.Fragment>
@@ -64,16 +71,18 @@ export const Dashboard = () => {
                             </div>
                             <NavigationMenu elems={navitagionElemens}></NavigationMenu>
                             <div className="d-flex justify-content-center mt-5">
-                                <button
+                                {currentLocation !== "/new-game" ? <button
                                     onClick={() => history.push("/new-game")}
                                     className="btn btn-custom btn-lg page-scroll">
                                     New game
-                                </button>
+                                </button> : null}
+                                
                             </div>
                             <AvatarBadge email={user.email} name={jegtyUser.name}></AvatarBadge>
                         </div>
                         <div className="col-6 infiniteScroll">
-                            <div className="top">{transformCurrentLocation()}</div>
+                            <div className="top">
+                                <span className="title">{transformCurrentLocation()}</span></div>
                             <Switch>
                                 <LoggedRoute exact path="/" component={Home} />
                                 <LoggedRoute exact path="/profile" component={Profile} />
@@ -87,7 +96,6 @@ export const Dashboard = () => {
                             </Switch>
                         </div>
                         <div className="col-3 friendsList">
-                            jopi
                         </div>
                     </div>
                 </div>
