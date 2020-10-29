@@ -5,7 +5,7 @@ Applicación web con ReactJS 16.13.1 y Bootstrap 4
 
 
 Para la página principal he pillado una template típica 
-en Bootstrap 4.  
+en Bootstrap 4. Y también componentes de react-material.
 
 # Instalación en local
 
@@ -28,3 +28,13 @@ font-awesome versión 4.3.0
 
 2. Para la API de juegos rawg.io se usa este wrapper de la API en node. 
  https://www.npmjs.com/package/rawger
+
+
+## Componentes
+
+https://material-ui.com/es/components/autocomplete/
+
+
+## MVP de Xavi
+
+https://xd.adobe.com/view/c68b1025-a3f9-47c1-8e1d-31be4259e085-93d8/screen/f908b69e-9854-4bcb-b3b5-cd90e3751792
