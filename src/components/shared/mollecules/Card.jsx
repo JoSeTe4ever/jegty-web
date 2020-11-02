@@ -1,51 +1,65 @@
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
-import React, { useState } from 'react';
-import { Avatar } from './../atoms/Avatar'
-import { getJegtyUserById } from './../../../data/jegty-api'
 import Fab from '@material-ui/core/Fab';
+import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
+import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Avatar } from './../atoms/Avatar';
+import { getJegtyUserById } from "./../../../data/jegty-api"
 
 export const GameCard = (props) => {
-    const [mouseEntered, setMouseEntered] = useState(false);
-    //const {game} = props;
+    const [isSelected, setIsSelected] = useState(false);
+    const currentJegtyuser = useSelector((state) => state.user);
+    const [gameJegtyUser, setGameJegtyUser]  = useState({});
 
     const game = {
         createdAt: '19 de octubre de 2020, 9:04:00 UTC+2',
         description: 'this is a room description',
         discordChannel: 'https://discord.gg/8UprGpN',
-        id: '5j7LTjfXdDpBfjOtm5yT',
+        id: 'LjfWj2pER8Xj1eODNWRrnFztgL5222',
         rawGameId: '',
-        owner: 'IMqzLJkOfzeeb3D3LeVSSBxnSJC2',
+        owner: 'LjfWj2pER8Xj1eODNWRrnFztgL52',
         roomName: "Rick's Room",
         startAt: '29 de octubre de 2020, 21:00:00 UTC+1',
         img: 'https://media.rawg.io/media/games/e74/e74458058b35e01c1ae3feeb39a3f724.jpg'
     }
 
+    useEffect(() => {
+        if (currentJegtyuser.uid !== game.owner) {
+             getJegtyUserById(game.owner).then(value => {
+                setGameJegtyUser(value)
+            });
+        } else {
+            setGameJegtyUser(currentJegtyuser)
+        }
+    }, [])
+
+    
+
     const MiniAvatarList = (props) => {
+
+
         return (<ul className="miniAvatarList">
             <li>
-            <Fab color="primary" aria-label="add">
+                <Fab color="primary" aria-label="add" >
                     <AddIcon />
-            </Fab>
+                </Fab>
+                <span>Add friends</span>
             </li>
-            <li><Avatar></Avatar></li>
-            <li><Avatar></Avatar></li>
-            <li><Avatar></Avatar></li>
-            <li><Avatar></Avatar></li>
+            <li className="ml-3 mb-3"><Avatar customClass="smallAvatar"></Avatar><span className="ml-3">Friend1</span></li>
+            <li className="ml-3 mb-3"><Avatar customClass="smallAvatar"></Avatar><span className="ml-3">Friend1</span></li>
+            <li className="ml-3 mb-3"><Avatar customClass="smallAvatar"></Avatar><span className="ml-3">Friend1</span></li>
+            <li className="ml-3 mb-3"><Avatar customClass="smallAvatar"></Avatar><span className="ml-3">Friend1</span></li>
         </ul>)
     }
 
     return (
         <React.Fragment>
             <Card className="gameCard mb-3"
-                onMouseEnter={() => {
-                    setMouseEntered(!mouseEntered)
-                }}
-                onMouseLeave={() => {
-                    setMouseEntered(!mouseEntered)
+                onClick={() => {
+                    setIsSelected(!isSelected)
                 }}
             >
                 <CardMedia
@@ -57,14 +71,23 @@ export const GameCard = (props) => {
                     <CardContent className="gameContent">
 
                         <Typography component="h5" variant="h5">
-                            Organizer: {'getJegtyUserById(game.owner)'}
+                            Organizer:
                         </Typography>
+                        <span className="creationDate"></span>
+                        <div className="socialContainer">
+                            <div>discord</div>
+                            <div>twitch</div>
+                        </div>
                         <Typography variant="subtitle1" color="textSecondary">
-                            Mac Miller
+                            {gameJegtyUser.name}
                         </Typography>
+
+                        <div>
+
+                        </div>
                     </CardContent>
                 </div>
-                {true ? <MiniAvatarList></MiniAvatarList> : null}
+                {isSelected ? <MiniAvatarList></MiniAvatarList> : null}
             </Card>
         </React.Fragment>
     )

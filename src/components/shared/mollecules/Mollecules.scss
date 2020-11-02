@@ -73,7 +73,7 @@ li.navigationElemnList {
         width: 60px;
         heigth: 60px;
 
-        &.coolEfect{
+        &.coolEfect {
             background-color: #cfd4da;
             display: flex;
             border: outset;
@@ -84,6 +84,7 @@ li.navigationElemnList {
 // game card
 .MuiPaper-root.MuiCard-root.gameCard.MuiPaper-elevation1.MuiPaper-rounded {
     display: flex;
+    cursor: pointer;
 }
 
 .gameCover {
@@ -91,11 +92,20 @@ li.navigationElemnList {
     height: 369px;
 }
 
-.miniAvatarList{
+.miniAvatarList {
     z-index: 100;
     background: white;
     min-height: 344px;
     min-width: 302px;
-    display: block;
+    position: absolute;
+    left: 68rem;
+    animation: fadein 0.5s;
+    -moz-animation: fadein  0.5s;/* Firefox */
+    -webkit-animation: fadein 0.5s;/* Safari and Chrome */
+    -o-animation: fadein  0.5s; /* Opera */
 }
 
+.smallAvatar {
+    width: 38px;
+    height: 38px;
+}
