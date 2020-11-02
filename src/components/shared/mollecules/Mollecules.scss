@@ -42,6 +42,11 @@ li.navigationElemnList {
     }
 }
 
+.cursor-pointer {
+    cursor: pointer;
+}
+
+
 .navigationList {
     display: flex;
     flex-direction: column;
@@ -100,9 +105,12 @@ li.navigationElemnList {
     position: absolute;
     left: 68rem;
     animation: fadein 0.5s;
-    -moz-animation: fadein  0.5s;/* Firefox */
-    -webkit-animation: fadein 0.5s;/* Safari and Chrome */
-    -o-animation: fadein  0.5s; /* Opera */
+    -moz-animation: fadein 0.5s;
+    /* Firefox */
+    -webkit-animation: fadein 0.5s;
+    /* Safari and Chrome */
+    -o-animation: fadein 0.5s;
+    /* Opera */
 }
 
 .smallAvatar {

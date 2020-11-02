@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { LoadingSpinner } from './../atoms/LoadingSpinner';
 import { ResultsList } from "./../mollecules/ResultsList";
 import { getGamesByName } from "./../../../data/games-api";
 import { useDebouncedSearch } from "./../../../hooks/useDebouncedSearch"
+import TextField from '@material-ui/core/TextField';
 
 const useSearchGames = () => useDebouncedSearch(text => getGamesByName(text))
 
@@ -11,9 +12,16 @@ export const SearchInput = () => {
 
     const [hasText, setHasText] = useState(false);
     const [isLoading, setLoading] = useState(false);
-
+    const [selectedGame, setSelectedGame] = useState({});
     const { inputText, setInputText, searchResults } = useSearchGames();
+    const searchGameRef = useRef(null);
 
+    const selectGame = (game) => {
+        setSelectedGame(game);
+        setInputText(game.slug);
+        debugger;
+        //todo set the ref
+    }
     // TODO hay que usar el useEffect y no olvida hacer el unsubscribe, correspondiente. 
     const handleChange = (e) => {
         setInputText(e.target.value);
@@ -26,17 +34,25 @@ export const SearchInput = () => {
         }
     }
     let searchResult = null;
+    let selectedGameResult = null;
 
-    if(searchResults && searchResults.status === "success" && searchResults.result && searchResults.result.raw){
-        searchResult = <div className="searchResultsContainer"><ResultsList elements={searchResults ? searchResults.result.raw() : []}></ResultsList></div>;
+    if (searchResults && searchResults.status === "success" && searchResults.result && searchResults.result.raw) {
+        searchResult = <div className="searchResultsContainer"><ResultsList onSelect={selectGame} elements={searchResults ? searchResults.result.raw() : []}></ResultsList></div>;
     } else if (searchResults && searchResults.status === "loading") {
         searchResult = (<div className="searchResultsContainer"> <LoadingSpinner></LoadingSpinner></div>)
     }
 
+    if (selectedGame.slug) {
+        return <div className="form-group has-search searchInputContainer">
+            <TextField id="outlined-basic" label="Search" variant="outlined" onChange={handleChange} value={inputText}/>
+            {selectedGame.slug}
+            {searchResult}
+        </div>
+    }
+
     return (
         <div className="form-group has-search searchInputContainer">
-            <span className="fa fa-search form-control-feedback"></span>
-            <input type="text" className="form-control" placeholder="Search" onChange={handleChange}></input>
+            <TextField id="outlined-basic" label="Search" variant="outlined" onChange={handleChange} />
             {searchResult}
         </div>
     )

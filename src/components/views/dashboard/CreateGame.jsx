@@ -2,13 +2,19 @@ import DateFnsUtils from '@date-io/date-fns';
 import TextField from '@material-ui/core/TextField';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-
+import { AvatarList } from './../../shared/mollecules/AvatarList';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import { SearchInput } from '../../shared/mollecules/SearchInput'
 export const CreateGame = () => {
 
     // jopi meter esto en otro componente. al menos el datepicker.
-    const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+    const [selectedDate, setSelectedDate] = useState(new Date('2014-08-18T21:11:54'));
+    const [partyFriends, setPartyFriends] = useState([]);
+
+    const SEARCH_FRIENDS_INPUT_ID = "searchFriends";
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
@@ -19,7 +25,7 @@ export const CreateGame = () => {
         <React.Fragment>
             <div className="container d-flex flex-column">
                 <div className="p-5">
-                    <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+                    <TextField id="outlined-basic" label="Name" variant="outlined" />
                 </div>
 
                 <div>
@@ -40,9 +46,17 @@ export const CreateGame = () => {
                     </MuiPickersUtilsProvider>
                 </div>
 
-                <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-                <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-                <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+                <SearchInput></SearchInput>
+                <TextField id="outlined-basic" label="Description" variant="outlined" />
+                <TextField id="outlined-basic" label="DiscordLink" variant="outlined" />
+
+                <div className="friendsAgregator mt-3 border">
+                    <Fab color="primary" aria-label="add" className="m-1">
+                        <AddIcon />
+                    </Fab>
+                    <TextField id={SEARCH_FRIENDS_INPUT_ID} label="Search" variant="outlined" className="m-1"></TextField>
+                    <AvatarList friends={partyFriends}></AvatarList>
+                </div>
 
             </div>
             <div className="d-flex justify-content-center">
