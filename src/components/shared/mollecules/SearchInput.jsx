@@ -1,10 +1,10 @@
-import React, { useState, useRef } from 'react';
+import TextField from '@material-ui/core/TextField';
+import React, { useRef, useState } from 'react';
 import { connect } from 'react-redux';
+import { getGamesByName } from "./../../../data/games-api";
+import { useDebouncedSearch } from "./../../../hooks/useDebouncedSearch";
 import { LoadingSpinner } from './../atoms/LoadingSpinner';
 import { ResultsList } from "./../mollecules/ResultsList";
-import { getGamesByName } from "./../../../data/games-api";
-import { useDebouncedSearch } from "./../../../hooks/useDebouncedSearch"
-import TextField from '@material-ui/core/TextField';
 
 const useSearchGames = () => useDebouncedSearch(text => getGamesByName(text))
 
