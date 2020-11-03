@@ -38,10 +38,10 @@ export const Login = () => {
             .then(result => {
                 dispatch(addLogedUser(result.user));
                 dispatch(logValidUser(true));
-                setLoading(false);
             })
             .catch(error => {
                 seterror(error.message, "Error while authenticating");
+            }).finally(() => {
                 setLoading(false);
             });
 
@@ -58,22 +58,22 @@ export const Login = () => {
             setLoading(false);
         } else {
             await app
-            .auth()
-            .createUserWithEmailAndPassword(userInput, passInput)
-            .then(result => {
-                setSignIn(true);
-                setInfo(`User ${result.user.email}successfully created`);
-                seterror('');
-                db.collection('users').doc(result.user.uid).set({
-                    email: result.user.email,
-                    id: result.user.uid
+                .auth()
+                .createUserWithEmailAndPassword(userInput, passInput)
+                .then(result => {
+                    setSignIn(true);
+                    setInfo(`User ${result.user.email}successfully created`);
+                    seterror('');
+                    db.collection('users').doc(result.user.uid).set({
+                        email: result.user.email,
+                        id: result.user.uid
+                    });
+                    setLoading(false);
+                })
+                .catch(error => {
+                    seterror(error.message);
+                    setLoading(false);
                 });
-                setLoading(false);
-            })
-            .catch(error => {
-                seterror(error.message);
-                setLoading(false);
-            });
         }
     };
 
@@ -103,7 +103,8 @@ export const Login = () => {
                                 <InputField id={PASSWORD_INPUT_ID} labelText="Password" type="password" value={pass} innerRef={inputPassword}></InputField>
                                 <div className="d-flex justify-content-center">
                                     <button onClick={() => {
-                                    submitLoginForm();}} className="btn btn-primary">Log in</button>
+                                        submitLoginForm();
+                                    }} className="btn btn-primary">Log in</button>
                                 </div>
                             </div>
                             <div className="d-flex justify-content-center">
@@ -140,8 +141,9 @@ export const Login = () => {
                                 <InputField id={PASSWORD_INPUT_ID} labelText="Password" type="password" value={pass} innerRef={inputPassword}></InputField>
                                 <InputField id={REPEAT_PASSWORD_INPUT_ID} labelText="Repeat password" type="password" value={repeat} innerRef={inputRepeat}></InputField>
                                 <div className="d-flex justify-content-center">
-                                <button onClick={() => {
-                                    submitRegisterForm();}} className="btn btn-primary">Sign up</button>
+                                    <button onClick={() => {
+                                        submitRegisterForm();
+                                    }} className="btn btn-primary">Sign up</button>
                                 </div>
                             </div>
                             <div className="d-flex justify-content-center">

@@ -20,31 +20,30 @@ export const CreateGame = () => {
         setSelectedDate(date);
     };
 
+    const createGame = () =>{
+
+    };
 
     return (
         <React.Fragment>
             <div className="container d-flex flex-column">
-                <div className="p-5">
-                    <TextField id="outlined-basic" label="Name" variant="outlined" />
-                </div>
+                <TextField id="outlined-basic" label="Name" variant="outlined" />
 
-                <div>
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <KeyboardDatePicker
-                            disableToolbar
-                            variant="inline"
-                            format="MM/dd/yyyy"
-                            margin="normal"
-                            id="date-picker-inline"
-                            label="Date picker inline"
-                            value={selectedDate}
-                            onChange={handleDateChange}
-                            KeyboardButtonProps={{
-                                'aria-label': 'change date',
-                            }}
-                        />
-                    </MuiPickersUtilsProvider>
-                </div>
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <KeyboardDatePicker
+                        disableToolbar
+                        variant="inline"
+                        format="MM/dd/yyyy"
+                        margin="normal"
+                        id="date-picker-inline"
+                        label="Date picker inline"
+                        value={selectedDate}
+                        onChange={handleDateChange}
+                        KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                        }}
+                    />
+                </MuiPickersUtilsProvider>
 
                 <SearchInput></SearchInput>
                 <TextField id="outlined-basic" label="Description" variant="outlined" />
