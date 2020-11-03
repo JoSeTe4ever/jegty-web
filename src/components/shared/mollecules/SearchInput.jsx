@@ -27,6 +27,10 @@ export const SearchInput = () => {
         setInputText(e.target.value);
         setHasText(true)
         setLoading(true);
+        
+        if (selectedGame) {
+            setSelectedGame({});
+        }
 
         if (e.target.value === "") {
             setLoading(false);
@@ -40,13 +44,14 @@ export const SearchInput = () => {
         searchResult = <div className="searchResultsContainer"><ResultsList onSelect={selectGame} elements={searchResults ? searchResults.result.raw() : []}></ResultsList></div>;
     } else if (searchResults && searchResults.status === "loading") {
         searchResult = (<div className="searchResultsContainer"> <LoadingSpinner></LoadingSpinner></div>)
+    } else if (searchResults && selectedGame.slug) {
+        searchResult = (<div className="searchResultsContainer"> {selectedGame.slug}</div>)
     }
 
     if (selectedGame.slug) {
         return <div className="form-group has-search searchInputContainer">
-            <TextField id="outlined-basic" label="Search" variant="outlined" onChange={handleChange} value={inputText}/>
+            <TextField id="outlined-basic" label="Search" variant="outlined" onChange={handleChange} value={inputText} />
             {selectedGame.slug}
-            {searchResult}
         </div>
     }
 

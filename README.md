@@ -20,7 +20,7 @@ en Bootstrap 4. Y también componentes de react-material.
 3. npm run start o yarn run start
 4. abrir localhost:3000
 
-# Frontend 
+# Frontend
 
 1. Los dialogos modales se pueden activar usando la variable showDialog del store, usando por ejemplo el dispatch -> dispatch(showDialog(isShown)), pero normalmente van con boton + id del modal.
 

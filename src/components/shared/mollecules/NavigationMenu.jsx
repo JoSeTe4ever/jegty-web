@@ -2,6 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router'
 import { Icon } from './../atoms/Icon'
+import Chip from '@material-ui/core/Chip';
+import FaceIcon from '@material-ui/icons/Face';
+import DoneIcon from '@material-ui/icons/Done';
 
 import './Mollecules.scss'
 
