@@ -1,14 +1,27 @@
 import React from 'react'
 import { GameCard } from './../../shared/mollecules/Card'
+import { connect, useSelector } from 'react-redux';
 export const Games = props => {
+
+    const userGames = useSelector((state) => state.userGames);
+
     return (
         <div>
-            <GameCard></GameCard>
-            <GameCard></GameCard>
-            <GameCard></GameCard>
-            <GameCard></GameCard>
-            <GameCard></GameCard>
-            <GameCard></GameCard>
+            <ul className="list-unstyled">
+                {userGames.map((e, index) =>
+                    <GameCard gameId={e} key={index}></GameCard>
+                )}
+            </ul>
         </div>
     )
 }
+
+const mapStateToProps = (state) => ({
+
+})
+
+const mapDispatchToProps = {
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Games)

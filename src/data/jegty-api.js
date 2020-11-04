@@ -12,6 +12,17 @@ export const getJegtyUserById = async (jegtUserId) => {
     return user;
 }
 
+export const getGameById = async (jegtyGameId) => {
+    let game = {};
+    if (jegtyGameId) {
+        game = await db.collection('games').doc(jegtyGameId).get();
+    } else {
+        game = {}
+    }
+    return game;
+}
+
+
 
 /**
  * Creates a new game. 

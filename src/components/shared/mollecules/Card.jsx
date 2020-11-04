@@ -4,39 +4,42 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Fab from '@material-ui/core/Fab';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Avatar } from './../atoms/Avatar';
-import { getJegtyUserById } from "./../../../data/jegty-api"
+import { getJegtyUserById, getGameById } from "./../../../data/jegty-api"
+import  {getRawGameById} from "./../../../data/games-api"
 
 export const GameCard = (props) => {
+    const { gameId } = props;
     const [isSelected, setIsSelected] = useState(false);
+    const [jegtyGame, setJegtyGame] = useState({});
+    const [rawGame, setRawGame] = useState({});
     const currentJegtyuser = useSelector((state) => state.user);
-    const [gameJegtyUser, setGameJegtyUser]  = useState({});
-
-    const game = {
-        createdAt: '19 de octubre de 2020, 9:04:00 UTC+2',
-        description: 'this is a room description',
-        discordChannel: 'https://discord.gg/8UprGpN',
-        id: 'LjfWj2pER8Xj1eODNWRrnFztgL5222',
-        rawGameId: '',
-        owner: 'LjfWj2pER8Xj1eODNWRrnFztgL52',
-        roomName: "Rick's Room",
-        startAt: '29 de octubre de 2020, 21:00:00 UTC+1',
-        img: 'https://media.rawg.io/media/games/e74/e74458058b35e01c1ae3feeb39a3f724.jpg'
-    }
+    const [gameJegtyUser, setGameJegtyUser] = useState({});
 
     useEffect(() => {
-        if (currentJegtyuser.uid !== game.owner) {
-             getJegtyUserById(game.owner).then(value => {
-                setGameJegtyUser(value)
-            });
-        } else {
-            setGameJegtyUser(currentJegtyuser)
-        }
-    }, [])
+        getGameById(gameId).then((game) => {
+            game = { ...game.data() };
+            setJegtyGame(game);
 
-    
+            getRawGameById(game.rawgGameId).then(rawGame => {
+                setRawGame(rawGame)
+            })
+
+            if (currentJegtyuser.uid !== game.ownerId) {
+                getJegtyUserById(game.ownerId).then(jegtyUser => {
+                    jegtyUser = { ...jegtyUser.data() };
+                    setGameJegtyUser(jegtyUser)
+                });
+            } else {
+                setGameJegtyUser(currentJegtyuser)
+            }
+        });
+
+        
+
+    }, [])
 
     const MiniAvatarList = (props) => {
 
@@ -64,7 +67,7 @@ export const GameCard = (props) => {
             >
                 <CardMedia
                     className="gameCover"
-                    image={game.img}
+                    image={rawGame.background_image}
                     title="Live from space album cover"
                 />
                 <div className="details">
@@ -77,13 +80,14 @@ export const GameCard = (props) => {
                         <div className="socialContainer">
                             <div>discord</div>
                             <div>twitch</div>
+                            
                         </div>
                         <Typography variant="subtitle1" color="textSecondary">
                             {gameJegtyUser.name}
                         </Typography>
 
-                        <div>
-
+                        <div className="descriptionContainer">
+                            <div dangerouslySetInnerHTML={{__html: rawGame.description}}></div>
                         </div>
                     </CardContent>
                 </div>
