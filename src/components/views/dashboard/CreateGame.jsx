@@ -2,32 +2,50 @@ import DateFnsUtils from '@date-io/date-fns';
 import TextField from '@material-ui/core/TextField';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { AvatarList } from './../../shared/mollecules/AvatarList';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import { SearchInput } from '../../shared/mollecules/SearchInput'
+import { SearchInput } from '../../shared/mollecules/SearchInput';
+import {createNewGame} from '../../../data/jegty-api';
+
 export const CreateGame = () => {
 
     // jopi meter esto en otro componente. al menos el datepicker.
     const [selectedDate, setSelectedDate] = useState(new Date('2014-08-18T21:11:54'));
     const [partyFriends, setPartyFriends] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    const inputName = useRef(null);
+    const inputDescription = useRef(null);
+    const inputDiscord = useRef(null);
+    const inputSelectedGame = useRef(null);
 
     const SEARCH_FRIENDS_INPUT_ID = "searchFriends";
+    const NAME_INPUT_ID = "nameInput";
+    const GAME_DATE_INPUT_ID = "gameDateInput";
+    const DESCRIPTION_INPUT_ID = "descriptionInput";
+    const DISCORD_INPUT_ID = "discordInput";
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
     };
 
-    const createGame = () =>{
-
+    const createGame = () => {
+        setLoading(true);
+        const userInput = inputName.current.value;
+        const passInput = inputDescription.current.value;
+        const repeatInput = inputDiscord.current.value;
+        const inputSelectedGame = inputDiscord.current.value;
+        const newGame =  {}
+        createNewGame(newGame); 
     };
 
     return (
         <React.Fragment>
             <div className="container d-flex flex-column">
-                <TextField id="outlined-basic" label="Name" variant="outlined" />
+                <TextField id={NAME_INPUT_ID} label="Name" variant="outlined" />
 
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker
@@ -35,7 +53,7 @@ export const CreateGame = () => {
                         variant="inline"
                         format="MM/dd/yyyy"
                         margin="normal"
-                        id="date-picker-inline"
+                        id={GAME_DATE_INPUT_ID}
                         label="Date picker inline"
                         value={selectedDate}
                         onChange={handleDateChange}
@@ -45,9 +63,9 @@ export const CreateGame = () => {
                     />
                 </MuiPickersUtilsProvider>
 
-                <SearchInput></SearchInput>
-                <TextField id="outlined-basic" label="Description" variant="outlined" />
-                <TextField id="outlined-basic" label="DiscordLink" variant="outlined" />
+                <SearchInput innerRef={inputSelectedGame}></SearchInput>
+                <TextField id={DESCRIPTION_INPUT_ID} label="Description" variant="outlined" />
+                <TextField id={DISCORD_INPUT_ID} label="DiscordLink" variant="outlined" />
 
                 <div className="friendsAgregator mt-3 border">
                     <Fab color="primary" aria-label="add" className="m-1">

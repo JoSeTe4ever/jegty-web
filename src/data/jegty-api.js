@@ -1,4 +1,6 @@
-import { db } from './firebase'
+import {
+    db
+} from './firebase'
 
 export const getJegtyUserById = async (jegtUserId) => {
     let user = {};
@@ -8,4 +10,10 @@ export const getJegtyUserById = async (jegtUserId) => {
         user = {}
     }
     return user;
+}
+
+export const createNewGame = async (game) => {
+    await db.collection('games').add({
+        game
+    });
 }

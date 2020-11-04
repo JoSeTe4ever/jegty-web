@@ -8,19 +8,18 @@ import { ResultsList } from "./../mollecules/ResultsList";
 
 const useSearchGames = () => useDebouncedSearch(text => getGamesByName(text))
 
-export const SearchInput = () => {
+export const SearchInput = (props) => {
 
+    const {innerRef} = props;
     const [hasText, setHasText] = useState(false);
     const [isLoading, setLoading] = useState(false);
     const [selectedGame, setSelectedGame] = useState({});
     const { inputText, setInputText, searchResults } = useSearchGames();
-    const searchGameRef = useRef(null);
 
     const selectGame = (game) => {
         setSelectedGame(game);
         setInputText(game.slug);
-        debugger;
-        //todo set the ref
+        innerRef.current = game;
     }
     // TODO hay que usar el useEffect y no olvida hacer el unsubscribe, correspondiente. 
     const handleChange = (e) => {
@@ -44,14 +43,19 @@ export const SearchInput = () => {
         searchResult = <div className="searchResultsContainer"><ResultsList onSelect={selectGame} elements={searchResults ? searchResults.result.raw() : []}></ResultsList></div>;
     } else if (searchResults && searchResults.status === "loading") {
         searchResult = (<div className="searchResultsContainer"> <LoadingSpinner></LoadingSpinner></div>)
-    } else if (searchResults && selectedGame.slug) {
+    }
+
+    if (selectedGame.slug) {
         selectedGameResult = (<div className="selectedGameResultContainer"> {selectedGame.slug}</div>)
     }
 
     if (selectedGame.slug) {
-        return <div className="form-group has-search searchInputContainer">
+        return <div className="searchInputContainer">
             <TextField id="outlined-basic" label="Search" variant="outlined" onChange={handleChange} value={inputText} />
-            {selectedGameResult}
+            <img className="mr-3 img-thumbnail game-img-thumbnail" src={selectedGame.background_image} alt={selectedGame.slug}></img>
+            <div className="media-body">
+                <h5 className="mt-0 mb-1">{selectedGame.slug}</h5>
+            </div>
         </div>
     }
 
