@@ -3,8 +3,9 @@ import { GameCard } from './../../shared/mollecules/Card'
 import { connect, useSelector } from 'react-redux';
 export const Games = props => {
 
-    const userGames = useSelector((state) => state.userGames);
-
+    const userGames = useSelector((state) => {
+        return state.userGames
+    });
     return (
         <div>
             <ul className="list-unstyled">

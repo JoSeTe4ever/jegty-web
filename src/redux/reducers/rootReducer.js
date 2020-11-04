@@ -7,19 +7,23 @@ import {
 } from "../actions/action-type"
 
 function rootReducer(state = initialState, action) {
-    let newState = {
-        ...state
-    };
-
-    if (action.type === ActionTypes.SHOW_LOG_IN_DIALOG) {
-        newState.showLoginModal = action.payload;
-        return newState;
+    let newState = {};
+    if (!state.user) {
+        newState = {
+            ...initialState
+        };
+    } else {
+        newState = {
+            ...state
+        };
     }
 
     if (action.type === ActionTypes.LOG_IN) {
         if (!action.payload) {
             window.localStorage.clear();
-            return {...initialState};
+            return {
+                ...initialState
+            };
         }
         newState.isLogged = action.payload;
         return newState;
@@ -36,7 +40,12 @@ function rootReducer(state = initialState, action) {
         return newState;
     }
 
-    return newState;
+    if (action.type === ActionTypes.CACHE_RAW_GAME) {
+        if (!newState.cache.rawGames.some(e => e.id === action.payload.id)) {
+            newState.cache.rawGames.push(action.payload);
+        }
+        return newState;
+    }
 };
 
 export default rootReducer;

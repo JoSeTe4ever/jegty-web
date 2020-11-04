@@ -98,10 +98,10 @@ export const Login = () => {
                             {info ? <div className="alert alert-success" htmlrole="alert">{info}</div> : null}
                             {isLoading ? <LoadingBar></LoadingBar> : null}
                             <p>Enter your credentials</p>
-                            <div className="form-group form-horizontal" onSubmit={submitLoginForm}>
+                            <div className="d-flex flex-column" onSubmit={submitLoginForm}>
                                 <InputField id={EMAIL_INPUT_ID} labelText="E-mail" value={email} innerRef={inputEmail}></InputField>
                                 <InputField id={PASSWORD_INPUT_ID} labelText="Password" type="password" value={pass} innerRef={inputPassword}></InputField>
-                                <div className="d-flex justify-content-center">
+                                <div className="d-flex justify-content-center mt-2">
                                     <button onClick={() => {
                                         submitLoginForm();
                                     }} className="btn btn-primary">Log in</button>
@@ -115,7 +115,7 @@ export const Login = () => {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-default" data-dismiss="modal"
-                                onClick={() => dispatch(showDialog(false))}>Close</button>
+                                onClick={() => toggleView()}>Close</button>
                         </div>
                     </div>
 
@@ -136,11 +136,11 @@ export const Login = () => {
                             {isLoading ? <LoadingBar></LoadingBar> : null}
 
                             <p>Register your credentials</p>
-                            <div className="form-group form-horizontal" onSubmit={submitRegisterForm}>
+                            <div className="d-flex flex-column" onSubmit={submitRegisterForm}>
                                 <InputField id={EMAIL_INPUT_ID} labelText="E-mail" value={email} innerRef={inputEmail}></InputField>
                                 <InputField id={PASSWORD_INPUT_ID} labelText="Password" type="password" value={pass} innerRef={inputPassword}></InputField>
                                 <InputField id={REPEAT_PASSWORD_INPUT_ID} labelText="Repeat password" type="password" value={repeat} innerRef={inputRepeat}></InputField>
-                                <div className="d-flex justify-content-center">
+                                <div className="d-flex justify-content-center mt-2">
                                     <button onClick={() => {
                                         submitRegisterForm();
                                     }} className="btn btn-primary">Sign up</button>
@@ -154,7 +154,7 @@ export const Login = () => {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-default" data-dismiss="modal"
-                                onClick={() => dispatch(showDialog(false))}>Close</button>
+                                onClick={() => toggleView()}>Close</button>
                         </div>
                     </div>
                 </div>

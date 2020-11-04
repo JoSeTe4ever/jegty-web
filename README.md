@@ -22,8 +22,6 @@ en Bootstrap 4. Y también componentes de react-material.
 
 # Frontend
 
-1. Los dialogos modales se pueden activar usando la variable showDialog del store, usando por ejemplo el dispatch -> dispatch(showDialog(isShown)), pero normalmente van con boton + id del modal.
-
 font-awesome versión 4.3.0
 
 2. Para la API de juegos rawg.io se usa este wrapper de la API en node. 

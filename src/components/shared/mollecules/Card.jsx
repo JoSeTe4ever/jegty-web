@@ -5,10 +5,11 @@ import Fab from '@material-ui/core/Fab';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Avatar } from './../atoms/Avatar';
 import { getJegtyUserById, getGameById } from "./../../../data/jegty-api"
-import  {getRawGameById} from "./../../../data/games-api"
+import { getRawGameById } from "./../../../data/games-api"
+import { cacheRawGame } from "./../../../redux/actions/actions"
 
 export const GameCard = (props) => {
     const { gameId } = props;
@@ -16,16 +17,24 @@ export const GameCard = (props) => {
     const [jegtyGame, setJegtyGame] = useState({});
     const [rawGame, setRawGame] = useState({});
     const currentJegtyuser = useSelector((state) => state.user);
+    const cachedRawGames = useSelector((state) => state.cache.rawGames);
     const [gameJegtyUser, setGameJegtyUser] = useState({});
+    const dispatch = useDispatch();
+
 
     useEffect(() => {
         getGameById(gameId).then((game) => {
             game = { ...game.data() };
             setJegtyGame(game);
 
-            getRawGameById(game.rawgGameId).then(rawGame => {
-                setRawGame(rawGame)
-            })
+            if(cachedRawGames.some(e => e.id === game.rawgGameId)){
+                setRawGame(cachedRawGames.find(e => e.id === game.rawgGameId))
+            } else {
+                getRawGameById(game.rawgGameId).then(rawGame => {
+                    setRawGame(rawGame)
+                    dispatch(cacheRawGame(rawGame));
+                })
+            }
 
             if (currentJegtyuser.uid !== game.ownerId) {
                 getJegtyUserById(game.ownerId).then(jegtyUser => {
@@ -36,14 +45,9 @@ export const GameCard = (props) => {
                 setGameJegtyUser(currentJegtyuser)
             }
         });
-
-        
-
     }, [])
 
     const MiniAvatarList = (props) => {
-
-
         return (<ul className="miniAvatarList">
             <li>
                 <Fab color="primary" aria-label="add" >
@@ -80,14 +84,14 @@ export const GameCard = (props) => {
                         <div className="socialContainer">
                             <div>discord</div>
                             <div>twitch</div>
-                            
+
                         </div>
                         <Typography variant="subtitle1" color="textSecondary">
                             {gameJegtyUser.name}
                         </Typography>
 
                         <div className="descriptionContainer">
-                            <div dangerouslySetInnerHTML={{__html: rawGame.description}}></div>
+                            <div dangerouslySetInnerHTML={{ __html: rawGame.description }}></div>
                         </div>
                     </CardContent>
                 </div>

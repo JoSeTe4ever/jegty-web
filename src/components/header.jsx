@@ -27,7 +27,6 @@ export class Header extends Component {
   }
 
   render() {
-    const { setShowDialog } = this.props;
     return (
       <header id="header">
         <div className="intro">
@@ -37,7 +36,7 @@ export class Header extends Component {
                 <div className="intro-text">
                   <p>
                     <IntroIconSvg></IntroIconSvg>
-                    <img src={family} alt="Family" className="familyLogo"/>
+                    <img src={family} alt="Family" className="familyLogo" />
                   </p>
                   <div className="subtitle pb-3">Games for teams</div>
                 </div>
@@ -48,7 +47,7 @@ export class Header extends Component {
         <div className="d-flex justify-content-center">
           <button
             data-toggle="modal" data-target="#myModal"
-            onClick={() => setShowDialog(true)}
+            onClick={() => console.log(true)}
             className="btn btn-custom btn-lg page-scroll mt-5"
           >
             start
@@ -59,7 +58,6 @@ export class Header extends Component {
   }
 }
 const mapDispatchToProps = dispatch => {
-  return { setShowDialog: (isShown) => dispatch(showDialog(isShown)) }
 };
 
 const mapStateToProps = state => ({

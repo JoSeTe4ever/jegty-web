@@ -76,9 +76,10 @@ export const Dashboard = () => {
                                     className="btn btn-custom btn-lg page-scroll">
                                     New game
                                 </button> : null}
-                                
+
                             </div>
-                            <AvatarBadge email={user.email} name={jegtyUser.name}></AvatarBadge>
+                            {jegtyUser ? <AvatarBadge email={user.email} name={jegtyUser.name}></AvatarBadge> : null}
+
                         </div>
                         <div className="col-6 infiniteScroll">
                             <div className="top">

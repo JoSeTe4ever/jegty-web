@@ -12,6 +12,11 @@ export const getJegtyUserById = async (jegtUserId) => {
     return user;
 }
 
+/**
+ * Get a Jegty game From Firestore by its id 
+ * 
+ * @param {*} jegtyGameId 
+ */
 export const getGameById = async (jegtyGameId) => {
     let game = {};
     if (jegtyGameId) {
@@ -37,12 +42,13 @@ export const createNewGame = async (game, userId) => {
     const ref = db.collection("users").doc(userId).collection("games").doc();
     const gameId = ref.id;
     game.id= gameId;
-    const newGame = db.collection("games").doc(gameId);
+    
+    await db.collection("games").doc(gameId).set(game);
+
     const userGame = db.collection("users").doc(userId).collection("games").doc(gameId);
     const gameUser = db.collection("games").doc(gameId).collection("users").doc(userId);
 
     const batch = db.batch();
-    batch.set(newGame, game);
     batch.set(userGame, { id: gameId });
     batch.set(gameUser, { accepted: true, id: userId });
     batch.commit();
