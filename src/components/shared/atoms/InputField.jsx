@@ -16,7 +16,6 @@ export const InputField = (props) => {
     const handleChange = (e) => {
         setText(e.target.value);
         innerRef.current.value = e.target.value;
-        console.log(innerRef.current.value);
     }
 
     let regularTextField = <TextField
