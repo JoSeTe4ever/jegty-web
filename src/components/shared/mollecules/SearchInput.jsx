@@ -18,7 +18,7 @@ export const SearchInput = (props) => {
 
     const selectGame = (game) => {
         setSelectedGame(game);
-        setInputText(game.slug);
+        setInputText(game.name);
         innerRef.current = game;
     }
     // TODO hay que usar el useEffect y no olvida hacer el unsubscribe, correspondiente. 

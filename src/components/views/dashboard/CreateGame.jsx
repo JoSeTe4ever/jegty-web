@@ -56,7 +56,7 @@ export const CreateGame = () => {
             startAt,
             twitch: "cc",
         }
-        createNewGame(newGame);
+        createNewGame(newGame, currentLoggedUser.uid);
     };
 
     return (
