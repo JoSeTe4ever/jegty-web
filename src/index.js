@@ -25,11 +25,10 @@ const initialState = createStore(
 );
 
 let persistor = persistStore(initialState)
-
 ReactDOM.render(
   <AuthContext>
     <Provider store={initialState}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate loading={<div>loading</div>} persistor={persistor}>
       <React.StrictMode>
       <Router>
         <App />

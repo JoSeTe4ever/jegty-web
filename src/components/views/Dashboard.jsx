@@ -12,8 +12,9 @@ import { Home } from '../views/dashboard/Home';
 import { NotFound } from './NotFound';
 import { NavigationMenu } from './../../components/shared/mollecules/NavigationMenu';
 import { db } from "./../../data/firebase";
-import { addJegtyUser } from "./../../redux/actions/actions";
+import { addJegtyUser, addGameidToUserList } from "./../../redux/actions/actions";
 import { AvatarBadge } from '../shared/mollecules/AvatarBadge';
+import { getGamesByJegtyUserId } from "../../data/jegty-api";
 
 export const Dashboard = () => {
     const LoggedRoute = GuardedRoute(true);
@@ -35,8 +36,14 @@ export const Dashboard = () => {
         if (modalBackgroundArray && modalBackgroundArray.length > 0) {
             modalBackgroundArray[0].remove();
         }
-
-        if (user !== undefined && user.uid !== undefined && jegtyUser.id === undefined) {
+        if (user !== undefined && user.uid !== undefined) {
+            getGamesByJegtyUserId(user.uid).then(gamesList => {
+                gamesList = gamesList.docs.map(doc => {
+                    dispatch(addGameidToUserList(doc.data().id));
+                });
+            })
+        }
+        if (jegtyUser.id === undefined) {
             db.collection('users').doc(user.uid).get().then(jegtyUser => {
                 jegtyUser = { ...jegtyUser.data() };
                 dispatch(addJegtyUser(jegtyUser));
@@ -44,7 +51,6 @@ export const Dashboard = () => {
                 console.log(`ERROR ${error}`, "ERROR");
             });
         }
-
     }, [])
 
     useEffect(() => {

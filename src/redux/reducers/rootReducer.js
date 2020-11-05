@@ -46,6 +46,22 @@ function rootReducer(state = initialState, action) {
         }
         return newState;
     }
+
+    if (action.type === ActionTypes.CACHE_ROOM_GAME) {
+        if (!newState.cache.roomGames.some(e => e.id === action.payload.id)) {
+            newState.cache.roomGames.push(action.payload);
+        }
+        return newState;
+    }
+
+    if (action.type === ActionTypes.ADD_ROOM_GAME_ID) {
+        if (!newState.userGames.some(e => e.id === action.payload)) {
+            newState.userGames.push(action.payload);
+        }
+        return newState;
+    }
+
+return newState;
 };
 
 export default rootReducer;

@@ -4,10 +4,11 @@ import AddIcon from '@material-ui/icons/Add';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { createNewGame } from '../../../data/jegty-api';
-import { SearchInput } from '../../shared/mollecules/SearchInput';
 import { InputField } from '../../shared/atoms/InputField';
+import { SearchInput } from '../../shared/mollecules/SearchInput';
+import { addGameidToUserList, cacheRoomGame } from "./../../../redux/actions/actions";
 import { AvatarList } from './../../shared/mollecules/AvatarList';
 
 export const CreateGame = () => {
@@ -16,7 +17,10 @@ export const CreateGame = () => {
     const [selectedDate, setSelectedDate] = useState(new Date('2014-08-18T21:11:54'));
     const [partyFriends, setPartyFriends] = useState([]);
     const [loading, setLoading] = useState(false);
+
     const currentLoggedUser = useSelector((state) => state.user);
+    const dispatch = useDispatch();
+
 
     const inputName = useRef(null);
     const inputDescription = useRef(null);
@@ -45,18 +49,23 @@ export const CreateGame = () => {
         const rawgGameId = inputSelectedGame.current.id;
         const ownerId = currentLoggedUser.uid;
         const startAt = selectedDate;
-
+        const createdAt = new Date();
         const newGame = {
             description,
             discord,
             ownerId,
             rawgGameId,
             roomName,
-            selectedDate,
             startAt,
+            createdAt,
             twitch: "cc",
         }
-        createNewGame(newGame, currentLoggedUser.uid);
+        createNewGame(newGame, currentLoggedUser.uid).then((id) => {
+            //if everything went well we add it to the store. 
+            dispatch(addGameidToUserList(id));
+            dispatch(cacheRoomGame(newGame));
+        });
+
     };
 
     return (

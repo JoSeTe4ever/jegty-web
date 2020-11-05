@@ -6,13 +6,15 @@ export const Games = props => {
     const userGames = useSelector((state) => {
         return state.userGames
     });
+
+    debugger;
     return (
         <div>
-            <ul className="list-unstyled">
+            <div className="list-unstyled">
                 {userGames.map((e, index) =>
                     <GameCard gameId={e} key={index}></GameCard>
                 )}
-            </ul>
+            </div>
         </div>
     )
 }

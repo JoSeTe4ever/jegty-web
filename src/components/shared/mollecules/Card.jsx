@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Avatar } from './../atoms/Avatar';
 import { getJegtyUserById, getGameById } from "./../../../data/jegty-api"
 import { getRawGameById } from "./../../../data/games-api"
-import { cacheRawGame } from "./../../../redux/actions/actions"
+import { cacheRawGame, cacheRoomGame } from "./../../../redux/actions/actions"
 
 export const GameCard = (props) => {
     const { gameId } = props;
@@ -18,41 +18,55 @@ export const GameCard = (props) => {
     const [rawGame, setRawGame] = useState({});
     const currentJegtyuser = useSelector((state) => state.user);
     const cachedRawGames = useSelector((state) => state.cache.rawGames);
+    const cachedRoomGames = useSelector((state) => state.cache.roomGames);
     const [gameJegtyUser, setGameJegtyUser] = useState({});
     const dispatch = useDispatch();
 
+    const _displayAndCatchRawGame = (cachedArray, elem) => {
+        if (cachedArray.some(e => e.id === elem.rawgGameId)) {
+            setRawGame(cachedArray.find(e => e.id === elem.rawgGameId))
+        } else {
+            getRawGameById(elem.rawgGameId).then(rawGame => {
+                setRawGame(rawGame)
+                dispatch(cacheRawGame(rawGame));
+            })
+        }
+    };
+
+    const _loadUserInfo = (ownerId) => {
+        if (currentJegtyuser.uid !== ownerId) {
+            getJegtyUserById(ownerId).then(jegtyUser => {
+                jegtyUser = { ...jegtyUser.data() };
+                setGameJegtyUser(jegtyUser)
+            });
+        } else {
+            setGameJegtyUser(currentJegtyuser)
+        }
+    };
 
     useEffect(() => {
-        getGameById(gameId).then((game) => {
-            game = { ...game.data() };
-            setJegtyGame(game);
+        // if cached, ddisplayit. If not cached,  display it & cache it
+        let room = {};
+        if (cachedRoomGames.some(room => room.id === gameId)) {
+            room = cachedRoomGames.find(room => room.id === gameId);
+            setJegtyGame(room);
+            _displayAndCatchRawGame(cachedRawGames, room);
+            _loadUserInfo(room.ownerId);
+        } else {
+            getGameById(gameId).then((game) => {
+                room = { ...game.data() };
+                setJegtyGame(room);
+                dispatch(cacheRoomGame(room));
+                _displayAndCatchRawGame(cachedRawGames, room);
+                _loadUserInfo(room.ownerId);
+            });
+        }
 
-            if(cachedRawGames.some(e => e.id === game.rawgGameId)){
-                setRawGame(cachedRawGames.find(e => e.id === game.rawgGameId))
-            } else {
-                getRawGameById(game.rawgGameId).then(rawGame => {
-                    setRawGame(rawGame)
-                    dispatch(cacheRawGame(rawGame));
-                })
-            }
-
-            if (currentJegtyuser.uid !== game.ownerId) {
-                getJegtyUserById(game.ownerId).then(jegtyUser => {
-                    jegtyUser = { ...jegtyUser.data() };
-                    setGameJegtyUser(jegtyUser)
-                });
-            } else {
-                setGameJegtyUser(currentJegtyuser)
-            }
-        });
     }, [])
 
     const MiniAvatarList = (props) => {
         return (<ul className="miniAvatarList">
             <li>
-                <Fab color="primary" aria-label="add" >
-                    <AddIcon />
-                </Fab>
                 <span>Add friends</span>
             </li>
             <li className="ml-3 mb-3"><Avatar customClass="smallAvatar"></Avatar><span className="ml-3">Friend1</span></li>
@@ -66,7 +80,7 @@ export const GameCard = (props) => {
         <React.Fragment>
             <Card className="gameCard mb-3"
                 onClick={() => {
-                    setIsSelected(!isSelected)
+                    console.log("navigate to details!!!!! ")
                 }}
             >
                 <CardMedia
@@ -94,7 +108,13 @@ export const GameCard = (props) => {
                             <div dangerouslySetInnerHTML={{ __html: rawGame.description }}></div>
                         </div>
                     </CardContent>
+
                 </div>
+                <Fab color="primary" aria-label="add" onClick={() => {
+                        setIsSelected(!isSelected);
+                    }}>
+                        <AddIcon />
+                    </Fab>
                 {isSelected ? <MiniAvatarList></MiniAvatarList> : null}
             </Card>
         </React.Fragment>

@@ -75,7 +75,6 @@ export const Profile = (props) => {
                     displayMessage(`User ${result} sucessfully updated`, "INFO");
                     dispatch(logValidUser(false));
                 }).catch(function (error) {
-                    console.log("JOPI Error ocurred" + error);
                     errorObtained = error;
                     displayMessage(errorObtained, "ERROR");
                     setLoading(false);

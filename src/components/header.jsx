@@ -1,10 +1,6 @@
 import React, { Component } from "react";
-import { ReactComponent as IconSvg } from './../assets/icons/icono.svg';
-import { ReactComponent as IntroIconSvg } from './../assets/img/jegty_oval.svg';
 import family from './../assets/img/family.png';
-
-import { connect } from "react-redux";
-import { showDialog } from "../redux/actions/actions"
+import { ReactComponent as IntroIconSvg } from './../assets/img/jegty_oval.svg';
 
 export class Header extends Component {
 
@@ -57,11 +53,5 @@ export class Header extends Component {
     );
   }
 }
-const mapDispatchToProps = dispatch => {
-};
 
-const mapStateToProps = state => ({
-  showLoginModal: state.showLoginModal
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header;

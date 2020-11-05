@@ -21,3 +21,13 @@ export const cacheRawGame = (rawGame) => ({
     type: ActionTypes.CACHE_RAW_GAME,
     payload: rawGame
 });
+
+export const cacheRoomGame = (rawGame) => ({
+    type: ActionTypes.CACHE_ROOM_GAME,
+    payload: rawGame
+});
+
+export const addGameidToUserList = (roomGameId) => ({
+    type: ActionTypes.ADD_ROOM_GAME_ID,
+    payload: roomGameId
+});
