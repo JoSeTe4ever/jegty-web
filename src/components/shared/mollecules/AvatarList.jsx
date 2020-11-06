@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../../../data/firebase';
 import { AvatarBadge } from './AvatarBadge';
+import { cacheJegtyUser } from './../../../redux/actions/actions'
+import { useDispatch } from 'react-redux';
 
 /**
  * It loads the data from firebase, from 
@@ -13,18 +15,24 @@ export const AvatarList = (props) => {
     const { friends } = props;
     const [loadedFriends, setFriends] = useState([]);
     const [isLoading, setLoading] = useState(true);
+    const dispatch = useDispatch();
 
+    // todo save readings checking cache
     const loadDataFromFirebase = async (userIds) => {
         const refs = userIds.map(id => db.collection('users').doc(`${id}`).get())
         // ahcer un push q.all
-        Promise.all(refs).then(users => {
-            setFriends(users.map(e => e.data()));
+        Promise.all(refs).then( friendsList=> {
+            const list = friendsList.map(e => e.data());
+            setFriends(list);
+            list.map(e => {
+                dispatch(cacheJegtyUser(e));
+            })
             setLoading(false);
         })
     }
-
+    // todo save readings checking cache
     useEffect(function () {
-        if (friends) {
+        if (friends && friends.length > 0) {
             loadDataFromFirebase(friends)
         }
     }, [])

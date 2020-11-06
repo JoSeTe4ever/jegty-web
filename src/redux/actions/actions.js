@@ -36,3 +36,8 @@ export const addFriendidToFriendList = (friendId)  => ({
     type: ActionTypes.ADD_FRIEND_ID,
     payload: friendId
 });
+
+export const cacheJegtyUser = (jegtyUser) => ({
+    type: ActionTypes.CACHE_JEGTY_USER,
+    payload: jegtyUser
+});

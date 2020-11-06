@@ -45,7 +45,7 @@ export const GameCard = (props) => {
     };
 
     useEffect(() => {
-        // if cached, ddisplayit. If not cached,  display it & cache it
+        // if cached, displayit. If not cached,  display it & cache it
         let room = {};
         if (cachedRoomGames.some(room => room.id === gameId)) {
             room = cachedRoomGames.find(room => room.id === gameId);
