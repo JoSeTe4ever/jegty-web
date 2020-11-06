@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { db } from '../../../data/firebase';
 import { AvatarBadge } from './AvatarBadge';
 import { cacheJegtyUser } from './../../../redux/actions/actions'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 /**
  * It loads the data from firebase, from 
@@ -16,6 +16,8 @@ export const AvatarList = (props) => {
     const [loadedFriends, setFriends] = useState([]);
     const [isLoading, setLoading] = useState(false);
     const dispatch = useDispatch();
+    const friendsList = useSelector((state) => state.friends);
+    const cachedJegtyUsers = useSelector((state) => state.cache.jegtyUsers);
 
     // todo save readings checking cache
     const loadDataFromFirebase = async (userIds) => {
@@ -35,6 +37,15 @@ export const AvatarList = (props) => {
     }
     // todo save readings checking cache
     useEffect(function () {
+        if(friends && friends.length > 0){
+            const cachedIds = cachedJegtyUsers.map(e => e.id);
+            const foundIds = friendsList.some(r=> cachedIds.includes(r));
+            if(foundIds){
+                const cachedParty = cachedJegtyUsers.filter(r=> friendsList.includes(r.id));
+                setFriends(cachedParty);
+            }
+        } 
+
         if (friends && friends.length > 0) {
             loadDataFromFirebase(friends)
         }
