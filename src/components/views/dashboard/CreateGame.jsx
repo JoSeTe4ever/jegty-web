@@ -3,7 +3,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import PropTypes from 'prop-types';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { createNewGame } from '../../../data/jegty-api';
 import { InputField } from '../../shared/atoms/InputField';
@@ -19,6 +19,9 @@ export const CreateGame = () => {
     const [loading, setLoading] = useState(false);
 
     const currentLoggedUser = useSelector((state) => state.user);
+    const friendsList = useSelector((state) => state.friends);
+    const cachedJegtyUsers = useSelector((state) => state.cache.jegtyUsers);
+
     const dispatch = useDispatch();
 
 
@@ -40,6 +43,22 @@ export const CreateGame = () => {
     const handleSelectFriend = (e) => {
         console.log("e" + e);
     }
+
+    const loadFriendIfNotCached = (jegtyUserId) =>{
+
+    }
+    useEffect(() => {
+        if(friendsList && friendsList.length > 0){
+            const cachedIds = cachedJegtyUsers.map(e => e.id);
+            const foundIds = friendsList.some(r=> cachedIds.includes(r));
+            if(foundIds){
+                const cachedParty = cachedJegtyUsers.filter(r=> friendsList.includes(r.id));
+                setPartyFriends(cachedParty);
+            }
+        } else {
+            setPartyFriends([]);
+        }
+    }, [])
 
     const createGame = () => {
         setLoading(true);

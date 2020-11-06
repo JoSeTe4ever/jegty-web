@@ -14,19 +14,22 @@ export const AvatarList = (props) => {
 
     const { friends } = props;
     const [loadedFriends, setFriends] = useState([]);
-    const [isLoading, setLoading] = useState(true);
+    const [isLoading, setLoading] = useState(false);
     const dispatch = useDispatch();
 
     // todo save readings checking cache
     const loadDataFromFirebase = async (userIds) => {
+        setLoading(true);
         const refs = userIds.map(id => db.collection('users').doc(`${id}`).get())
         // ahcer un push q.all
-        Promise.all(refs).then( friendsList=> {
+        Promise.all(refs).then(friendsList => {
             const list = friendsList.map(e => e.data());
             setFriends(list);
             list.map(e => {
                 dispatch(cacheJegtyUser(e));
             })
+            setLoading(false);
+        }).catch(() => {
             setLoading(false);
         })
     }

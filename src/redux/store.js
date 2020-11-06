@@ -4,5 +4,6 @@ export const initialState = {
     friends: [],
     userGames: [],
     jegtyUser: {},
+    selectedRoom: {},
     cache: { rawGames: [], roomGames: [], jegtyUsers: []}
 };
