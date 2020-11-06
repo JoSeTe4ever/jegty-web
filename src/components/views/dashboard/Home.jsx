@@ -9,7 +9,7 @@ export const Home = (props) => {
     const SEARCH_FRIENDS_INPUT_ID = "searchForFriends"
     const searchFriendsRef = useRef(null);
     const [searchQueryText, setQueryText] = useState('');
-    const friends = useSelector((state) => state.friends);
+    const friendsIdList = useSelector((state) => state.friends);
 
     const addUser = () => {
 
@@ -23,7 +23,7 @@ export const Home = (props) => {
         <div className="homeContainer">
             <InputField id={SEARCH_FRIENDS_INPUT_ID} labelText="Search friends" value={searchQueryText} innerRef={searchFriendsRef}></InputField>
             <Icon icon={'plus-circle'} aria-hidden="true" onClickCallback={() => showAddFriendDialog()}></Icon>
-            <AvatarList friends={friends}></AvatarList>
+            <AvatarList friends={friendsIdList}></AvatarList>
 
             <div className="modal fade" id="addFriendDialog" role="dialog">
                 <div className="modal-dialog">

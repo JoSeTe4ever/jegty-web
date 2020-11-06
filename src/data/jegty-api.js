@@ -76,3 +76,21 @@ export const getGamesByJegtyUserId = async (jegtyUserId) => {
 
     return gameIdList;
 }
+
+
+/**
+ * Get a list of Jegty game id From Firestore by its id 
+ * Due to the limitations of Firebase, it uses intermediate and nested documents 
+ * 
+ * @param {*} jegtyGameId 
+ */
+export const getFriendsByJegtyUserId = async (jegtyUserId) => {
+    let gameIdList = [];
+    
+    if (jegtyUserId) {
+        gameIdList = await db.collection('friendZone').doc(jegtyUserId).collection("friends").get();
+    }
+
+    return gameIdList;
+}
+

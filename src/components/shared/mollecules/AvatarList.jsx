@@ -2,6 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { db } from '../../../data/firebase';
 import { AvatarBadge } from './AvatarBadge';
 
+/**
+ * It loads the data from firebase, from 
+ * the id. 
+ * 
+ * @param {*} props 
+ */
 export const AvatarList = (props) => {
 
     const { friends } = props;

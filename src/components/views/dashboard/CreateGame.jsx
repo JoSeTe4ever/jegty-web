@@ -71,7 +71,7 @@ export const CreateGame = () => {
     return (
         <React.Fragment>
             <div className="container d-flex flex-column">
-                <InputField id={NAME_INPUT_ID} labelText="Name" variant="outlined" innerRef={inputName}></InputField>
+                <InputField id={NAME_INPUT_ID} labelText="Name" variant="outlined" innerRef={inputName} helperText="The name of your room" required></InputField>
 
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker
@@ -90,8 +90,8 @@ export const CreateGame = () => {
                 </MuiPickersUtilsProvider>
 
                 <SearchInput innerRef={inputSelectedGame}></SearchInput>
-                <InputField id={DESCRIPTION_INPUT_ID} labelText="Description" variant="outlined" innerRef={inputDescription}></InputField>
-                <InputField id={DISCORD_INPUT_ID} labelText="DiscordLink" variant="outlined" innerRef={inputDiscord}></InputField>
+                <InputField id={DESCRIPTION_INPUT_ID} labelText="Description" variant="outlined" innerRef={inputDescription} helperText="Some insights" required></InputField>
+                <InputField id={DISCORD_INPUT_ID} labelText="DiscordLink" variant="outlined" innerRef={inputDiscord} helperText="Share it with discord" required></InputField>
 
                 <div className="friendsAgregator mt-3 border">
                     <Fab color="primary" aria-label="add" className="m-1">

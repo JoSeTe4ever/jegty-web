@@ -5,5 +5,6 @@ export const ActionTypes = {
     CACHE_RAW_GAME: "CACHE_RAW_GAME",
     CACHE_ROOM_GAME: "CACHE_ROOM_GAME",
     ADD_ROOM_GAME_ID: "ADD_ROOM_GAME_ID",
+    ADD_FRIEND_ID: "ADD_FRIEND_ID",
 };
 

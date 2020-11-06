@@ -12,9 +12,9 @@ import { Home } from '../views/dashboard/Home';
 import { NotFound } from './NotFound';
 import { NavigationMenu } from './../../components/shared/mollecules/NavigationMenu';
 import { db } from "./../../data/firebase";
-import { addJegtyUser, addGameidToUserList } from "./../../redux/actions/actions";
+import { addJegtyUser, addGameidToUserList, addFriendidToFriendList } from "./../../redux/actions/actions";
 import { AvatarBadge } from '../shared/mollecules/AvatarBadge';
-import { getGamesByJegtyUserId } from "../../data/jegty-api";
+import { getGamesByJegtyUserId, getFriendsByJegtyUserId } from "../../data/jegty-api";
 
 export const Dashboard = () => {
     const LoggedRoute = GuardedRoute(true);
@@ -41,8 +41,15 @@ export const Dashboard = () => {
                 gamesList = gamesList.docs.map(doc => {
                     dispatch(addGameidToUserList(doc.data().id));
                 });
+            });
+
+            getFriendsByJegtyUserId(user.uid).then(friendsList => {
+                friendsList = friendsList.docs.map(friend => {
+                    dispatch(addFriendidToFriendList(friend.data().id));
+                });
             })
         }
+
         if (jegtyUser.id === undefined) {
             db.collection('users').doc(user.uid).get().then(jegtyUser => {
                 jegtyUser = { ...jegtyUser.data() };
