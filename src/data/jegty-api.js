@@ -35,7 +35,8 @@ export const getGameById = async (jegtyGameId) => {
  * tables.
  * 
  * @param {*} game 
- * @param {*} userId 
+ * @param {*} userId the creator of the game. Owner of the room. TODO : It should be a list 
+ * with all the players.
  */
 export const createNewGame = async (game, userId) => {
 
