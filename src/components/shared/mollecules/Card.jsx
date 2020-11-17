@@ -83,7 +83,7 @@ export const GameCard = (props) => {
             <Card className="gameCard mb-3"
                 onClick={() => {
                     console.log("navigate to details!!!!! ");
-                    history.push("/game-details", { id: 7, color: 'green' })
+                    history.push("/game-details", { id: gameId, jegtyGame: jegtyGame, rawGame: rawGame })
                 }}
             >
                 <CardMedia
