@@ -7,7 +7,6 @@ export const Games = props => {
         return state.userGames
     });
 
-    debugger;
     return (
         <div>
             <div className="list-unstyled">

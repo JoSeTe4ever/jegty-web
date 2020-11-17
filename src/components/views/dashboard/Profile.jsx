@@ -96,9 +96,10 @@ export const Profile = (props) => {
                 <div className="col-10">
                     <div className="form-group">
                         <div className=".col-md-6 .offset-md-3">
-                            <InputField id={NICKNAME_INPUT_ID} labelText="nickname" value={jegtyUser.name} innerRef={inputNickName}></InputField>
-                            <InputField id={CAKEDATE_INPUT_ID} labelText="Cake date" value={jegtyUser.birthday} innerRef={inputBirthdate} type="datetime-local"></InputField>
-                            <InputField id={EMAIL_INPUT_ID} labelText="email" value={jegtyUser.email} innerRef={email} readonly={true}></InputField>
+                            <InputField id={NICKNAME_INPUT_ID} labelText="nickname" value={jegtyUser.name} innerRef={inputNickName} required helperText="your display name"></InputField>
+                            <InputField id={CAKEDATE_INPUT_ID} labelText="Cake date" value={jegtyUser.birthday} innerRef={inputBirthdate}
+                            helperText="your birthday" type="datetime-local"></InputField>
+                            <InputField id={EMAIL_INPUT_ID} labelText="email" value={jegtyUser.email} innerRef={email} readonly={true} helperText="your email"></InputField>
                         </div>
                     </div>
 

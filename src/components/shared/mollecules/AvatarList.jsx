@@ -1,24 +1,52 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../../../data/firebase';
 import { AvatarBadge } from './AvatarBadge';
+import { cacheJegtyUser } from './../../../redux/actions/actions'
+import { useDispatch, useSelector } from 'react-redux';
 
+/**
+ * It loads the data from firebase, from 
+ * the id. 
+ * 
+ * @param {*} props 
+ */
 export const AvatarList = (props) => {
 
     const { friends } = props;
     const [loadedFriends, setFriends] = useState([]);
-    const [isLoading, setLoading] = useState(true);
+    const [isLoading, setLoading] = useState(false);
+    const dispatch = useDispatch();
+    const friendsList = useSelector((state) => state.friends);
+    const cachedJegtyUsers = useSelector((state) => state.cache.jegtyUsers);
 
+    // todo save readings checking cache
     const loadDataFromFirebase = async (userIds) => {
+        setLoading(true);
         const refs = userIds.map(id => db.collection('users').doc(`${id}`).get())
         // ahcer un push q.all
-        Promise.all(refs).then(users => {
-            setFriends(users.map(e => e.data()));
+        Promise.all(refs).then(friendsList => {
+            const list = friendsList.map(e => e.data());
+            setFriends(list);
+            list.map(e => {
+                dispatch(cacheJegtyUser(e));
+            })
+            setLoading(false);
+        }).catch(() => {
             setLoading(false);
         })
     }
-
+    // todo save readings checking cache
     useEffect(function () {
-        if (friends) {
+        if(friends && friends.length > 0){
+            const cachedIds = cachedJegtyUsers.map(e => e.id);
+            const foundIds = friendsList.some(r=> cachedIds.includes(r));
+            if(foundIds){
+                const cachedParty = cachedJegtyUsers.filter(r=> friendsList.includes(r.id));
+                setFriends(cachedParty);
+            }
+        } 
+
+        if (friends && friends.length > 0) {
             loadDataFromFirebase(friends)
         }
     }, [])

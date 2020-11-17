@@ -66,6 +66,20 @@ function rootReducer(state = initialState, action) {
         return newState;
     }
 
+    if (action.type === ActionTypes.ADD_FRIEND_ID) {
+        if (!newState.friends.some(e => e.id === action.payload)) {
+            newState.friends.push(action.payload);
+        }
+        return newState;
+    }
+
+    if (action.type === ActionTypes.CACHE_JEGTY_USER) {
+        if (!newState.cache.jegtyUsers.some(e => e.id === action.payload.id)) {
+            newState.cache.jegtyUsers.push(action.payload);
+        }
+        return newState;
+    }
+
 return newState;
 };
 

@@ -5,7 +5,7 @@ import { ReactComponent as IconSvg } from './../assets/icons/icono.svg';
 import { app, db } from './../data/firebase';
 import { InputField } from './shared/atoms/InputField';
 import { LoadingBar } from './shared/atoms/LoadingBar';
-
+import { VALID_EMAIL } from "./../../src/helpers/validators"
 /****
  * Componente Login con estado de sign in y sign up 
  * llama a firebase para crear usuarios o para autenticarlos.
@@ -99,8 +99,9 @@ export const Login = () => {
                             {isLoading ? <LoadingBar></LoadingBar> : null}
                             <p>Enter your credentials</p>
                             <div className="d-flex flex-column" onSubmit={submitLoginForm}>
-                                <InputField id={EMAIL_INPUT_ID} labelText="E-mail" value={email} innerRef={inputEmail}></InputField>
-                                <InputField id={PASSWORD_INPUT_ID} labelText="Password" type="password" value={pass} innerRef={inputPassword}></InputField>
+                                <InputField id={EMAIL_INPUT_ID} labelText="E-mail" value={email} innerRef={inputEmail} validator={VALID_EMAIL} 
+                                errorText="Valid email required" required></InputField>
+                                <InputField id={PASSWORD_INPUT_ID} labelText="Password" type="password" value={pass} innerRef={inputPassword} required></InputField>
                                 <div className="d-flex justify-content-center mt-2">
                                     <button onClick={() => {
                                         submitLoginForm();
@@ -137,9 +138,10 @@ export const Login = () => {
 
                             <p>Register your credentials</p>
                             <div className="d-flex flex-column" onSubmit={submitRegisterForm}>
-                                <InputField id={EMAIL_INPUT_ID} labelText="E-mail" value={email} innerRef={inputEmail}></InputField>
-                                <InputField id={PASSWORD_INPUT_ID} labelText="Password" type="password" value={pass} innerRef={inputPassword}></InputField>
-                                <InputField id={REPEAT_PASSWORD_INPUT_ID} labelText="Repeat password" type="password" value={repeat} innerRef={inputRepeat}></InputField>
+                                <InputField id={EMAIL_INPUT_ID} labelText="E-mail" value={email} innerRef={inputEmail} validator={VALID_EMAIL} 
+                                errorText="Valid email required" required>></InputField>
+                                <InputField id={PASSWORD_INPUT_ID} labelText="Password" type="password" value={pass} innerRef={inputPassword} required></InputField>
+                                <InputField id={REPEAT_PASSWORD_INPUT_ID} labelText="Repeat password" type="password" value={repeat} innerRef={inputRepeat} required></InputField>
                                 <div className="d-flex justify-content-center mt-2">
                                     <button onClick={() => {
                                         submitRegisterForm();
