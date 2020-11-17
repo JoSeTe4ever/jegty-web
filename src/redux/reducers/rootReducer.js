@@ -6,6 +6,11 @@ import {
     ActionTypes
 } from "../actions/action-type"
 
+/**
+ * Do not forget to include a default return otherwise 
+ * the store will not be persisted between refreshs
+ * 
+ */
 function rootReducer(state = initialState, action) {
     let newState = {};
     if (!state.user) {
