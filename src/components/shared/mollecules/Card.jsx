@@ -10,6 +10,7 @@ import { Avatar } from './../atoms/Avatar';
 import { getJegtyUserById, getGameById } from "./../../../data/jegty-api"
 import { getRawGameById } from "./../../../data/games-api"
 import { cacheRawGame, cacheRoomGame } from "./../../../redux/actions/actions"
+import { useHistory } from 'react-router'
 
 export const GameCard = (props) => {
     const { gameId } = props;
@@ -21,11 +22,12 @@ export const GameCard = (props) => {
     const cachedRoomGames = useSelector((state) => state.cache.roomGames);
     const [gameJegtyUser, setGameJegtyUser] = useState({});
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const _displayAndCatchRawGame = (cachedArray, elem) => {
         if (cachedArray.some(e => e.id === elem.rawgGameId)) {
             setRawGame(cachedArray.find(e => e.id === elem.rawgGameId))
-        } else {
+        } else if (elem && elem.rawgGameId) {
             getRawGameById(elem.rawgGameId).then(rawGame => {
                 setRawGame(rawGame)
                 dispatch(cacheRawGame(rawGame));
@@ -80,7 +82,8 @@ export const GameCard = (props) => {
         <React.Fragment>
             <Card className="gameCard mb-3"
                 onClick={() => {
-                    console.log("navigate to details!!!!! ")
+                    console.log("navigate to details!!!!! ");
+                    history.push("/game-details", { id: 7, color: 'green' })
                 }}
             >
                 <CardMedia
@@ -111,10 +114,10 @@ export const GameCard = (props) => {
 
                 </div>
                 <Fab color="primary" aria-label="add" onClick={() => {
-                        setIsSelected(!isSelected);
-                    }}>
-                        <AddIcon />
-                    </Fab>
+                    setIsSelected(!isSelected);
+                }}>
+                    <AddIcon />
+                </Fab>
                 {isSelected ? <MiniAvatarList></MiniAvatarList> : null}
             </Card>
         </React.Fragment>

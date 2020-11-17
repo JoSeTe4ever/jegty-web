@@ -10,6 +10,10 @@ import { InputField } from '../../shared/atoms/InputField';
 import { SearchInput } from '../../shared/mollecules/SearchInput';
 import { addGameidToUserList, cacheRoomGame } from "./../../../redux/actions/actions";
 import { AvatarList } from './../../shared/mollecules/AvatarList';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
 
 export const CreateGame = () => {
 
@@ -17,13 +21,15 @@ export const CreateGame = () => {
     const [selectedDate, setSelectedDate] = useState(new Date('2014-08-18T21:11:54'));
     const [partyFriends, setPartyFriends] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [severity, setSeverity] = useState("");
+    const [message, setMessage] = useState("");
 
     const currentLoggedUser = useSelector((state) => state.user);
     const friendsList = useSelector((state) => state.friends);
     const cachedJegtyUsers = useSelector((state) => state.cache.jegtyUsers);
 
     const dispatch = useDispatch();
-
 
     const inputName = useRef(null);
     const inputDescription = useRef(null);
@@ -44,15 +50,15 @@ export const CreateGame = () => {
         console.log("e" + e);
     }
 
-    const loadFriendIfNotCached = (jegtyUserId) =>{
+    const loadFriendIfNotCached = (jegtyUserId) => {
 
     }
     useEffect(() => {
-        if(friendsList && friendsList.length > 0){
+        if (friendsList && friendsList.length > 0) {
             const cachedIds = cachedJegtyUsers.map(e => e.id);
-            const foundIds = friendsList.some(r=> cachedIds.includes(r));
-            if(foundIds){
-                const cachedParty = cachedJegtyUsers.filter(r=> friendsList.includes(r.id));
+            const foundIds = friendsList.some(r => cachedIds.includes(r));
+            if (foundIds) {
+                const cachedParty = cachedJegtyUsers.filter(r => friendsList.includes(r.id));
                 setPartyFriends(cachedParty);
             }
         } else {
@@ -83,12 +89,44 @@ export const CreateGame = () => {
             //if everything went well we add it to the store. 
             dispatch(addGameidToUserList(id));
             dispatch(cacheRoomGame(newGame));
+            setSeverity("success");
+            setMessage("Room sucessfully created");
+            setOpenSnackbar(true);
+        }).catch(error => {
+            setSeverity("error");
+            setMessage("Error while creating room");
+            setOpenSnackbar(true);
+        }).finally(() => {
+            resetForm();
         });
 
     };
 
+    function Alert(props) {
+        return <MuiAlert elevation={6} variant="filled" {...props} />;
+    }
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpenSnackbar(false);
+    };
+
+    const resetForm = () => {
+        inputName.current.value = "";
+        inputDescription.current.value = "";
+        inputDiscord.current.value = "";
+        inputSelectedGame.current.id = "";
+    }
     return (
         <React.Fragment>
+            <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+                <Alert onClose={handleClose} severity={severity}>
+                    {message}
+                </Alert>
+            </Snackbar>
             <div className="container d-flex flex-column">
                 <InputField id={NAME_INPUT_ID} labelText="Name" variant="outlined" innerRef={inputName} helperText="The name of your room" required></InputField>
 
@@ -113,22 +151,36 @@ export const CreateGame = () => {
                 <InputField id={DISCORD_INPUT_ID} labelText="DiscordLink" variant="outlined" innerRef={inputDiscord} helperText="Share it with discord" required></InputField>
 
                 <div className="friendsAgregator mt-3 border">
-                    <Fab color="primary" aria-label="add" className="m-1">
-                        <AddIcon />
-                    </Fab>
-                    <InputField id={SEARCH_FRIENDS_INPUT_ID} labelText="Search" variant="outlined" className="m-1"></InputField>
-                    <AvatarList friends={partyFriends} onSelect={handleSelectFriend}></AvatarList>
+                    <InputLabel htmlFor="outlined-age-native-simple">Age2</InputLabel>
+                    <Select
+                        native
+                        value={{}}
+                        onChange={handleSelectFriend}
+                        label="Friends"
+                        inputProps={{
+                            name: 'friends',
+                            id: SEARCH_FRIENDS_INPUT_ID,
+                        }}
+                    >
+
+                        {partyFriends.map((user, index) =>
+                            <option key={index} value={20}>
+                                {user.name}
+                            </option>)}
+                    </Select>
+                    <AvatarList friends={partyFriends}></AvatarList>
                 </div>
 
             </div>
             <div className="d-flex justify-content-center">
-                <button
+                {severity !== "success" ? <button
                     data-toggle="modal" data-target="#myModal"
                     onClick={() => createGame()}
                     className="btn btn-custom btn-lg mt-5"
                 >
                     Create
-                      </button>
+                      </button> : null}
+
             </div>
         </React.Fragment>
     )

@@ -1,8 +1,7 @@
-import React, { useRef, useState } from 'react';
-import { connect, useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import React from 'react';
+import { connect, useSelector } from "react-redux";
 
-const GameDetails = () => {
+export const GameDetails = () => {
 
     const cachedRawGames = useSelector((state) => state.cache.rawGames);
     const cachedRoomGames = useSelector((state) => state.cache.roomGames);
