@@ -1,4 +1,3 @@
-import { LiveTv } from '@material-ui/icons';
 import {
     db
 } from './firebase'
@@ -49,20 +48,37 @@ export const createNewGame = async (game, userId, friendList) => {
 
     const userGame = db.collection("users").doc(userId).collection("games").doc(gameId);
     const gameUser = db.collection("games").doc(gameId).collection("users").doc(userId);
-    let batchedReferences = [];
-    debugger;
+
+    let gamesBatchedReferences = [];
+    let userBatchedReferences = [];
+
     if (friendList && friendList.length > 0) {
-        batchedReferences = friendList.map(friendId => {
-            db.collection("games").doc(gameId).collection("users").doc(friendId)
+        userBatchedReferences = friendList.map(friendId => {
+            return {
+                reference: db.collection("users").doc(friendId).collection("games").doc(gameId),
+                id: friendId
+            };
+        });
+
+        gamesBatchedReferences = friendList.map(friendId => {
+            return db.collection("games").doc(gameId).collection("users").doc(friendId);
         });
     }
 
     const batch = db.batch();
-    batchedReferences.forEach(e => {
+    userBatchedReferences.forEach(e => {
+        batch.set(e.reference, {
+            id: e.id
+        });
+    });
+
+    gamesBatchedReferences.forEach(e => {
         batch.set(e, {
+            accepted: true,
             id: gameId
         });
     });
+
     batch.set(userGame, {
         id: gameId
     });
@@ -72,6 +88,8 @@ export const createNewGame = async (game, userId, friendList) => {
     });
     return batch.commit().then(() => {
         return gameId;
+    }).catch(error => {
+        throw new Error(error);
     });
 }
 

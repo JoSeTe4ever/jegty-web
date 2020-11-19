@@ -50,8 +50,12 @@ export const CreateGame = () => {
     const handleSelectFriend = (e) => {
         if (e) {
             setSelectedFriend(e.target.value);
-            setNewGameFriends([...newGameFriends, selectedFriend]);
         }
+    }
+
+    const addNewGameFriend = () => {
+        newGameFriends.push(selectedFriend);
+        setNewGameFriends(newGameFriends);
     }
 
     const loadFriendsFromDatabase = (usersIdList) => {
@@ -89,16 +93,23 @@ export const CreateGame = () => {
     }, []);
 
     const sanityCheck = () => {
-        return true;
+        const roomName = inputName.current;
+        const rawgGameId = inputSelectedGame.current;
+        const ownerId = currentLoggedUser.uid;
+        const startAt = selectedDate;
+        if ((roomName && rawgGameId && ownerId && startAt)) {
+            return true;
+        }
+        return false;
     }
 
     const createGame = () => {
         setLoading(true);
-        const sanity = sanityCheck();
-        if (!sanity) {
+        if (!sanityCheck()) {
             setSeverity("error");
             setMessage("Error while creating room");
             setOpenSnackbar(true);
+            resetForm();
             return;
         }
         const roomName = inputName.current.value;
@@ -148,10 +159,23 @@ export const CreateGame = () => {
     };
 
     const resetForm = () => {
-        inputName.current.value = "";
-        inputDescription.current.value = "";
-        inputDiscord.current.value = "";
-        inputSelectedGame.current.id = "";
+        if (inputName.current) {
+            inputName.current.value = "";
+        }
+
+        if (inputDescription.current) {
+            inputDescription.current.value = "";
+        }
+
+
+        if (inputDiscord.current) {
+            inputDiscord.current.value = "";
+        }
+
+
+        if (inputSelectedGame.current) {
+            inputSelectedGame.current.value = "";
+        }
     }
     return (
         <React.Fragment>
@@ -184,7 +208,7 @@ export const CreateGame = () => {
                 <InputField id={DISCORD_INPUT_ID} labelText="DiscordLink" variant="outlined" innerRef={inputDiscord} helperText="Share it with discord" required></InputField>
 
                 <div className="friendsAgregator mt-3 border">
-                    <AddIcon />
+                    <AddIcon onClick={addNewGameFriend} />
                     <InputLabel htmlFor="outlined-age-native-simple">Age2</InputLabel>
                     <Select
                         native

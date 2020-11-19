@@ -36,7 +36,9 @@ export const AvatarList = (props) => {
         })
     }
     // todo save readings checking cache
+
     useEffect(function () {
+        
         if (friends && friends.length > 0) {
             const totalLength = friends.length;
             const cachedIds = cachedJegtyUsers.map(e => e.id);
