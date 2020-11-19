@@ -1,11 +1,11 @@
 import DateFnsUtils from '@date-io/date-fns';
-import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import PropTypes from 'prop-types';
 import React, { useRef, useState, useEffect } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { createNewGame } from '../../../data/jegty-api';
+import { cacheJegtyUser } from './../../../redux/actions/actions'
+import { createNewGame, getJegtyUserById } from '../../../data/jegty-api';
 import { InputField } from '../../shared/atoms/InputField';
 import { SearchInput } from '../../shared/mollecules/SearchInput';
 import { addGameidToUserList, cacheRoomGame } from "./../../../redux/actions/actions";
@@ -20,6 +20,9 @@ export const CreateGame = () => {
     // jopi meter esto en otro componente. al menos el datepicker.
     const [selectedDate, setSelectedDate] = useState(new Date('2014-08-18T21:11:54'));
     const [partyFriends, setPartyFriends] = useState([]);
+    const [newGameFriends, setNewGameFriends] = useState([]);
+    const [selectedFriend, setSelectedFriend] = useState("");
+
     const [loading, setLoading] = useState(false);
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [severity, setSeverity] = useState("");
@@ -47,27 +50,59 @@ export const CreateGame = () => {
     };
 
     const handleSelectFriend = (e) => {
-        console.log("e" + e);
+        if (e) {
+            setSelectedFriend(e.target.value);
+            setNewGameFriends([...newGameFriends, selectedFriend]);
+        }
     }
 
-    const loadFriendIfNotCached = (jegtyUserId) => {
-
+    const loadFriendsFromDatabase = (usersIdList) => {
+        //read from firestore and cache it.
+        const refs = usersIdList.map(e => {
+            return getJegtyUserById(e);
+        });
+        // ahcer un push q.all
+        Promise.all(refs).then(friendsList => {
+            const list = friendsList.map(e => e.data());
+            setPartyFriends(list);
+            list.map(e => {
+                dispatch(cacheJegtyUser(e));
+            })
+        });
     }
     useEffect(() => {
         if (friendsList && friendsList.length > 0) {
+            const totalLength = friendsList.length;
             const cachedIds = cachedJegtyUsers.map(e => e.id);
             const foundIds = friendsList.some(r => cachedIds.includes(r));
             if (foundIds) {
                 const cachedParty = cachedJegtyUsers.filter(r => friendsList.includes(r.id));
-                setPartyFriends(cachedParty);
+                if (totalLength === cachedParty.length) {
+                    setPartyFriends(cachedParty);
+                } else {
+                    loadFriendsFromDatabase(friendsList);
+                }
+            } else {
+                loadFriendsFromDatabase(friendsList);
             }
         } else {
             setPartyFriends([]);
         }
-    }, [])
+    }, []);
+
+    const sanityCheck = () => {
+        return true;
+    }
 
     const createGame = () => {
         setLoading(true);
+        const sanity = sanityCheck();
+        if (!sanity) {
+            setSeverity("error");
+            setMessage("Error while creating room");
+            setOpenSnackbar(true);
+            return;
+        }
         const roomName = inputName.current.value;
         const description = inputDescription.current.value;
         const discord = inputDiscord.current.value;
@@ -85,7 +120,7 @@ export const CreateGame = () => {
             createdAt,
             twitch: "cc",
         }
-        createNewGame(newGame, currentLoggedUser.uid).then((id) => {
+        createNewGame(newGame, currentLoggedUser.uid, newGameFriends).then((id) => {
             //if everything went well we add it to the store. 
             dispatch(addGameidToUserList(id));
             dispatch(cacheRoomGame(newGame));
@@ -151,10 +186,11 @@ export const CreateGame = () => {
                 <InputField id={DISCORD_INPUT_ID} labelText="DiscordLink" variant="outlined" innerRef={inputDiscord} helperText="Share it with discord" required></InputField>
 
                 <div className="friendsAgregator mt-3 border">
+                    <AddIcon />
                     <InputLabel htmlFor="outlined-age-native-simple">Age2</InputLabel>
                     <Select
                         native
-                        value={{}}
+                        value={selectedFriend}
                         onChange={handleSelectFriend}
                         label="Friends"
                         inputProps={{
@@ -164,13 +200,12 @@ export const CreateGame = () => {
                     >
 
                         {partyFriends.map((user, index) =>
-                            <option key={index} value={20}>
+                            <option key={index} value={user.id}>
                                 {user.name}
                             </option>)}
                     </Select>
-                    <AvatarList friends={partyFriends}></AvatarList>
+                    <AvatarList friends={newGameFriends}></AvatarList>
                 </div>
-
             </div>
             <div className="d-flex justify-content-center">
                 {severity !== "success" ? <button
@@ -184,10 +219,6 @@ export const CreateGame = () => {
             </div>
         </React.Fragment>
     )
-}
-
-CreateGame.propTypes = {
-    prop: PropTypes
 }
 
 const mapStateToProps = (state) => ({

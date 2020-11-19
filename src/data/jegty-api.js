@@ -1,3 +1,4 @@
+import { LiveTv } from '@material-ui/icons';
 import {
     db
 } from './firebase'
@@ -35,10 +36,10 @@ export const getGameById = async (jegtyGameId) => {
  * tables.
  * 
  * @param {*} game 
- * @param {*} userId the creator of the game. Owner of the room. TODO : It should be a list 
- * with all the players.
+ * @param {*} userId the creator of the game. Owner of the room. 
+ * @param {*} friendList id of the list of friends.
  */
-export const createNewGame = async (game, userId) => {
+export const createNewGame = async (game, userId, friendList) => {
 
     const ref = db.collection("users").doc(userId).collection("games").doc();
     const gameId = ref.id;
@@ -48,8 +49,20 @@ export const createNewGame = async (game, userId) => {
 
     const userGame = db.collection("users").doc(userId).collection("games").doc(gameId);
     const gameUser = db.collection("games").doc(gameId).collection("users").doc(userId);
+    let batchedReferences = [];
+    debugger;
+    if (friendList && friendList.length > 0) {
+        batchedReferences = friendList.map(friendId => {
+            db.collection("games").doc(gameId).collection("users").doc(friendId)
+        });
+    }
 
     const batch = db.batch();
+    batchedReferences.forEach(e => {
+        batch.set(e, {
+            id: gameId
+        });
+    });
     batch.set(userGame, {
         id: gameId
     });
@@ -70,7 +83,7 @@ export const createNewGame = async (game, userId) => {
  */
 export const getGamesByJegtyUserId = async (jegtyUserId) => {
     let gameIdList = [];
-    
+
     if (jegtyUserId) {
         gameIdList = await db.collection('users').doc(jegtyUserId).collection("games").get();
     }
@@ -87,11 +100,10 @@ export const getGamesByJegtyUserId = async (jegtyUserId) => {
  */
 export const getFriendsByJegtyUserId = async (jegtyUserId) => {
     let gameIdList = [];
-    
+
     if (jegtyUserId) {
         gameIdList = await db.collection('friendZone').doc(jegtyUserId).collection("friends").get();
     }
 
     return gameIdList;
 }
-

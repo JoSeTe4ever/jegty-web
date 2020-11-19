@@ -67,7 +67,7 @@ function rootReducer(state = initialState, action) {
     }
 
     if (action.type === ActionTypes.ADD_FRIEND_ID) {
-        if (!newState.friends.some(e => e.id === action.payload)) {
+        if (!newState.friends.some(id => id === action.payload)) {
             newState.friends.push(action.payload);
         }
         return newState;

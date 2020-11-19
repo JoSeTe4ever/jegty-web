@@ -37,17 +37,22 @@ export const AvatarList = (props) => {
     }
     // todo save readings checking cache
     useEffect(function () {
-        if(friends && friends.length > 0){
+        if (friends && friends.length > 0) {
+            const totalLength = friends.length;
             const cachedIds = cachedJegtyUsers.map(e => e.id);
-            const foundIds = friendsList.some(r=> cachedIds.includes(r));
-            if(foundIds){
-                const cachedParty = cachedJegtyUsers.filter(r=> friendsList.includes(r.id));
-                setFriends(cachedParty);
+            const foundIds = friendsList.some(r => cachedIds.includes(r));
+            if (foundIds) {
+                const cachedParty = cachedJegtyUsers.filter(r => friendsList.includes(r.id));
+                if (totalLength === cachedParty.length) {
+                    setFriends(cachedParty);
+                } else {
+                    loadDataFromFirebase(friends);
+                }
             }
-        } 
+        }
 
         if (friends && friends.length > 0) {
-            loadDataFromFirebase(friends)
+            loadDataFromFirebase(friends);
         }
     }, [])
 
