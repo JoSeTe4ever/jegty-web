@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { addLogedUser, logValidUser, showDialog } from '../redux/actions/actions';
+import { addLogedUser, logValidUser } from '../redux/actions/actions';
 import { ReactComponent as IconSvg } from './../assets/icons/icono.svg';
 import { app, db } from './../data/firebase';
 import { InputField } from './shared/atoms/InputField';

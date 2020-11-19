@@ -48,7 +48,7 @@ export const CreateGame = () => {
     };
 
     const handleSelectFriend = (e) => {
-        if (e) {
+        if (e && e.target.value != "") {
             setSelectedFriend(e.target.value);
         }
     }

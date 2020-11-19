@@ -27,6 +27,18 @@ export const getGameById = async (jegtyGameId) => {
     return game;
 }
 
+/**
+ * Returns a promise of the List of participants id of a jegty room
+ * @param {id} roomId 
+ */
+export const getParticipantsIdFromRoomId = async (roomId) => {
+    let participantsIdList = [];
+    if (roomId) {
+        participantsIdList = await db.collection('games').doc(roomId).collection('users').get();
+    }
+    return participantsIdList;
+}
+
 
 
 /**

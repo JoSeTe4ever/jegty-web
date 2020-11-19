@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
 import './../../views/views.scss';
+import { getParticipantsIdFromRoomId } from "../../../data/jegty-api";
+import { AvatarList } from './../../shared/mollecules/AvatarList';
 
 export const GameDetails = (props) => {
 
     const { id, jegtyGame, rawGame } = props.location.state;
+    const [participantList, setParticipantList] = useState([]);
+
+    useEffect(() => {
+        getParticipantsIdFromRoomId(id).then(participantList => {
+            participantList = participantList.docs.map(doc => {
+                return doc.data();
+            })
+        })
+    }, []);
+
     return (
         <div>
             <div className="headerImage d-flex justify-content-center">
@@ -26,6 +38,8 @@ export const GameDetails = (props) => {
             <div className="rawgioRecognition">
                 Powered by <span>rawg.io</span>
             </div>
+
+            <AvatarList friends={participantList}></AvatarList>
         </div>
     )
 }

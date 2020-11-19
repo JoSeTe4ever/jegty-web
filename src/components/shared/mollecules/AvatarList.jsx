@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 /**
  * It loads the data from firebase, from 
- * the id. 
+ * the id list that is passed at props. 
+ * It caches in the store any data saved 
  * 
  * @param {*} props 
  */
@@ -65,9 +66,9 @@ export const AvatarList = (props) => {
         <span className="sr-only">Loading...</span>
     </div>);
     return (
-        <div className="">
+        <div className="d-flex flex-column">
             {isLoading ? loading : null}
-            <ul className="list-unstyled d-flex">
+            <ul className="list-unstyled">
                 {loadedFriends.map((user, index) => <li className="media mr-2" key={index}>
                     <AvatarBadge email={user.email} name={user.name}></AvatarBadge>
                 </li>)}
