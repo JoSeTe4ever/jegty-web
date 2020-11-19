@@ -55,7 +55,7 @@ export const CreateGame = () => {
 
     const addNewGameFriend = () => {
         newGameFriends.push(selectedFriend);
-        setNewGameFriends(newGameFriends);
+        setNewGameFriends([...newGameFriends]);
     }
 
     const loadFriendsFromDatabase = (usersIdList) => {

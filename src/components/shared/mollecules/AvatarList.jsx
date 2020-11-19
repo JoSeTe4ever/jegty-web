@@ -35,10 +35,8 @@ export const AvatarList = (props) => {
             setLoading(false);
         })
     }
-    // todo save readings checking cache
 
-    useEffect(function () {
-        
+    const renewFriends = () => {
         if (friends && friends.length > 0) {
             const totalLength = friends.length;
             const cachedIds = cachedJegtyUsers.map(e => e.id);
@@ -56,7 +54,12 @@ export const AvatarList = (props) => {
         if (friends && friends.length > 0) {
             loadDataFromFirebase(friends);
         }
-    }, [])
+    }
+    // todo save readings checking cache
+
+    useEffect(() => {
+        renewFriends();
+    }, [friends]);
 
     const loading = (<div className="spinner-border text-primary" role="status">
         <span className="sr-only">Loading...</span>
