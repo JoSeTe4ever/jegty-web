@@ -1,19 +1,17 @@
 import DateFnsUtils from '@date-io/date-fns';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import Snackbar from '@material-ui/core/Snackbar';
 import AddIcon from '@material-ui/icons/Add';
+import MuiAlert from '@material-ui/lab/Alert';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import PropTypes from 'prop-types';
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
-import { cacheJegtyUser } from './../../../redux/actions/actions'
 import { createNewGame, getJegtyUserById } from '../../../data/jegty-api';
 import { InputField } from '../../shared/atoms/InputField';
 import { SearchInput } from '../../shared/mollecules/SearchInput';
-import { addGameidToUserList, cacheRoomGame } from "./../../../redux/actions/actions";
+import { addGameidToUserList, cacheJegtyUser, cacheRoomGame } from './../../../redux/actions/actions';
 import { AvatarList } from './../../shared/mollecules/AvatarList';
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
 
 export const CreateGame = () => {
 
