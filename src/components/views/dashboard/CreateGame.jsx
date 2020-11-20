@@ -54,12 +54,15 @@ export const CreateGame = () => {
     }
 
     const addNewGameFriend = () => {
-        newGameFriends.push(selectedFriend);
-        setNewGameFriends([...newGameFriends]);
+        if (selectedFriend != "") {
+            newGameFriends.push(selectedFriend);
+            setNewGameFriends([...newGameFriends]);
+        }
     }
 
-    const onDeleteFriend = (friendEmail) => {
-        console.log("ondelete" + friendEmail);
+    const onDeleteFriend = (friendId) => {
+        const filtered = newGameFriends.filter(id => id !== friendId);
+        setNewGameFriends([...filtered]);
     }
 
     const loadFriendsFromDatabase = (usersIdList) => {

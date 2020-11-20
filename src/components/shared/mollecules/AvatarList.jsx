@@ -46,15 +46,18 @@ export const AvatarList = (props) => {
                 const cachedParty = cachedJegtyUsers.filter(r => friendsList.includes(r.id));
                 if (totalLength === cachedParty.length) {
                     setFriends(cachedParty);
-                } else {
-                    loadDataFromFirebase(friends);
                 }
             }
         }
-
         if (friends && friends.length > 0) {
             loadDataFromFirebase(friends);
         }
+
+        else {
+            setFriends([]);
+        }
+
+
     }
     // todo save readings checking cache
 
@@ -69,7 +72,7 @@ export const AvatarList = (props) => {
         <div className="d-flex flex-column">
             {isLoading ? loading : null}
             <ul className="list-unstyled">
-                {loadedFriends.map((user, index) => <li className="media mr-2" key={index} onClick={() => { deletable ? onDelete(user.email) : console.log("no action") }}>
+                {loadedFriends.map((user, index) => <li className="media mr-2" key={index} onClick={() => { deletable ? onDelete(user.id) : console.log("no action") }}>
                     <AvatarBadge email={user.email} name={user.name} deletable={deletable}
 
                     ></AvatarBadge>

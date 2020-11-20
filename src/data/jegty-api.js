@@ -73,7 +73,10 @@ export const createNewGame = async (game, userId, friendList) => {
         });
 
         gamesBatchedReferences = friendList.map(friendId => {
-            return db.collection("games").doc(gameId).collection("users").doc(friendId);
+            return {
+                reference:  db.collection("games").doc(gameId).collection("users").doc(friendId),
+                id: friendId
+            }
         });
     }
 
@@ -85,9 +88,9 @@ export const createNewGame = async (game, userId, friendList) => {
     });
 
     gamesBatchedReferences.forEach(e => {
-        batch.set(e, {
-            accepted: true,
-            id: gameId
+        batch.set(e.reference, {
+            accepted: false,
+            id: e.id
         });
     });
 

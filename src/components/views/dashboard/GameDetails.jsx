@@ -12,10 +12,13 @@ export const GameDetails = (props) => {
     useEffect(() => {
         getParticipantsIdFromRoomId(id).then(participantList => {
             participantList = participantList.docs.map(doc => {
-                return doc.data();
-            })
+               return doc.data().id;
+            });
+            setParticipantList(participantList);
         })
     }, []);
+
+    
 
     return (
         <div>
