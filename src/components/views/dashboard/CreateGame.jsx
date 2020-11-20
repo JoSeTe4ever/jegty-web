@@ -4,7 +4,6 @@ import Select from '@material-ui/core/Select';
 import Snackbar from '@material-ui/core/Snackbar';
 import AddIcon from '@material-ui/icons/Add';
 import MuiAlert from '@material-ui/lab/Alert';
-import { KeyboardDatePicker, MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers';
 import React, { useEffect, useRef, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { createNewGame, getJegtyUserById } from '../../../data/jegty-api';
@@ -57,6 +56,10 @@ export const CreateGame = () => {
     const addNewGameFriend = () => {
         newGameFriends.push(selectedFriend);
         setNewGameFriends([...newGameFriends]);
+    }
+
+    const onDeleteFriend = (friendEmail) => {
+        console.log("ondelete" + friendEmail);
     }
 
     const loadFriendsFromDatabase = (usersIdList) => {
@@ -188,7 +191,7 @@ export const CreateGame = () => {
             <div className="container d-flex flex-column">
                 <InputField id={NAME_INPUT_ID} labelText="Name" variant="outlined" innerRef={inputName} helperText="The name of your room" required></InputField>
                 <InputField id={GAME_DATE_INPUT_ID} labelText="Cake date" innerRef={inputSelectedDate}
-                            helperText="When the game starts" type="datetime-local"></InputField>
+                    helperText="When the game starts" type="datetime-local"></InputField>
 
                 <SearchInput innerRef={inputSelectedGame}></SearchInput>
                 <InputField id={DESCRIPTION_INPUT_ID} labelText="Description" variant="outlined" innerRef={inputDescription} helperText="Some insights" required></InputField>
@@ -213,7 +216,7 @@ export const CreateGame = () => {
                                 {user.name}
                             </option>)}
                     </Select>
-                    <AvatarList friends={newGameFriends} deletable={true}></AvatarList>
+                    <AvatarList friends={newGameFriends} deletable={true} onDelete={onDeleteFriend}></AvatarList>
                 </div>
             </div>
             <div className="d-flex justify-content-center">
