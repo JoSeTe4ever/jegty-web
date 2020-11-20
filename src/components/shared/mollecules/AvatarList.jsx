@@ -69,7 +69,7 @@ export const AvatarList = (props) => {
         <div className="d-flex flex-column">
             {isLoading ? loading : null}
             <ul className="list-unstyled">
-                {loadedFriends.map((user, index) => <li className="media mr-2" key={index} onClick={() => { deletable ? onDelete(user.email) : console.log("") }}>
+                {loadedFriends.map((user, index) => <li className="media mr-2" key={index} onClick={() => { deletable ? onDelete(user.email) : console.log("no action") }}>
                     <AvatarBadge email={user.email} name={user.name} deletable={deletable}
 
                     ></AvatarBadge>
