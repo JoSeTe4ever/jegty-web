@@ -40,6 +40,7 @@ export const InputField = (props) => {
         {...(required ? { required: true } : { required: false })}
         {...(helper ? { helperText: helper } : {})}
         {...(type === "password" ? { type: "password" } : {})}
+        {...(type === "datetime-local" ? { type: "datetime-local" } : {})}
         ref={innerRef}
     />;
 

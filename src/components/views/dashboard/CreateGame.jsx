@@ -4,7 +4,7 @@ import Select from '@material-ui/core/Select';
 import Snackbar from '@material-ui/core/Snackbar';
 import AddIcon from '@material-ui/icons/Add';
 import MuiAlert from '@material-ui/lab/Alert';
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { KeyboardDatePicker, MuiPickersUtilsProvider, KeyboardTimePicker } from '@material-ui/pickers';
 import React, { useEffect, useRef, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { createNewGame, getJegtyUserById } from '../../../data/jegty-api';
@@ -16,7 +16,7 @@ import { AvatarList } from './../../shared/mollecules/AvatarList';
 export const CreateGame = () => {
 
     // jopi meter esto en otro componente. al menos el datepicker.
-    const [selectedDate, setSelectedDate] = useState(new Date('2014-08-18T21:11:54'));
+    const [selectedDate, setSelectedDate] = useState(new Date());
     const [partyFriends, setPartyFriends] = useState([]);
     const [newGameFriends, setNewGameFriends] = useState([]);
     const [selectedFriend, setSelectedFriend] = useState("");
@@ -36,6 +36,7 @@ export const CreateGame = () => {
     const inputDescription = useRef(null);
     const inputDiscord = useRef(null);
     const inputSelectedGame = useRef(null);
+    const inputSelectedDate = useRef(new Date());
 
     const SEARCH_FRIENDS_INPUT_ID = "searchFriends";
     const NAME_INPUT_ID = "nameInput";
@@ -186,22 +187,8 @@ export const CreateGame = () => {
             </Snackbar>
             <div className="container d-flex flex-column">
                 <InputField id={NAME_INPUT_ID} labelText="Name" variant="outlined" innerRef={inputName} helperText="The name of your room" required></InputField>
-
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker
-                        disableToolbar
-                        variant="inline"
-                        format="MM/dd/yyyy"
-                        margin="normal"
-                        id={GAME_DATE_INPUT_ID}
-                        label="Date picker inline"
-                        value={selectedDate}
-                        onChange={handleDateChange}
-                        KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                        }}
-                    />
-                </MuiPickersUtilsProvider>
+                <InputField id={GAME_DATE_INPUT_ID} labelText="Cake date" innerRef={inputSelectedDate}
+                            helperText="When the game starts" type="datetime-local"></InputField>
 
                 <SearchInput innerRef={inputSelectedGame}></SearchInput>
                 <InputField id={DESCRIPTION_INPUT_ID} labelText="Description" variant="outlined" innerRef={inputDescription} helperText="Some insights" required></InputField>
@@ -226,7 +213,7 @@ export const CreateGame = () => {
                                 {user.name}
                             </option>)}
                     </Select>
-                    <AvatarList friends={newGameFriends}></AvatarList>
+                    <AvatarList friends={newGameFriends} deletable={true}></AvatarList>
                 </div>
             </div>
             <div className="d-flex justify-content-center">

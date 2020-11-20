@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
  */
 export const AvatarList = (props) => {
 
-    const { friends } = props;
+    const { friends, deletable } = props;
     const [loadedFriends, setFriends] = useState([]);
     const [isLoading, setLoading] = useState(false);
     const dispatch = useDispatch();
@@ -70,7 +70,7 @@ export const AvatarList = (props) => {
             {isLoading ? loading : null}
             <ul className="list-unstyled">
                 {loadedFriends.map((user, index) => <li className="media mr-2" key={index}>
-                    <AvatarBadge email={user.email} name={user.name}></AvatarBadge>
+                    <AvatarBadge email={user.email} name={user.name} deletable={deletable}></AvatarBadge>
                 </li>)}
             </ul>
         </div>

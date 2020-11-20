@@ -60,7 +60,7 @@ function rootReducer(state = initialState, action) {
     }
 
     if (action.type === ActionTypes.ADD_ROOM_GAME_ID) {
-        if (!newState.userGames.some(e => e.id === action.payload)) {
+        if (!newState.userGames.some(id => id === action.payload)) {
             newState.userGames.push(action.payload);
         }
         return newState;
