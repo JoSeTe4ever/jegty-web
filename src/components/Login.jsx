@@ -29,22 +29,27 @@ export const Login = () => {
     const inputRepeat = useRef(null);
 
     const submitLoginForm = async e => {
-        setLoading(true);
-        const userInput = inputEmail.current.value;
-        const passInput = inputPassword.current.value;
-        await app
-            .auth()
-            .signInWithEmailAndPassword(userInput, passInput)
-            .then(result => {
-                dispatch(addLogedUser(result.user));
-                dispatch(logValidUser(true));
-            })
-            .catch(error => {
-                seterror(error.message, "Error while authenticating");
-            }).finally(() => {
-                setLoading(false);
-            });
-
+        try {
+            setLoading(true);
+            const userInput = inputEmail.current.value;
+            const passInput = inputPassword.current.value;
+            await app
+                .auth()
+                .signInWithEmailAndPassword(userInput, passInput)
+                .then(result => {
+                    dispatch(addLogedUser(result.user));
+                    dispatch(logValidUser(true));
+                })
+                .catch(error => {
+                    seterror(error.message, "Error while authenticating");
+                }).finally(() => {
+                    setLoading(false);
+                });
+        } catch (e) {
+            console.log("e" + e);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const submitRegisterForm = async e => {
@@ -98,9 +103,9 @@ export const Login = () => {
                             {info ? <div className="alert alert-success" htmlrole="alert">{info}</div> : null}
                             {isLoading ? <LoadingBar></LoadingBar> : null}
                             <p>Enter your credentials</p>
-                            <div className="d-flex flex-column" onSubmit={submitLoginForm}>
-                                <InputField id={EMAIL_INPUT_ID} labelText="E-mail" value={email} innerRef={inputEmail} validator={VALID_EMAIL} 
-                                errorText="Valid email required" required></InputField>
+                            <div className="d-flex flex-column">
+                                <InputField id={EMAIL_INPUT_ID} labelText="E-mail" value={email} innerRef={inputEmail} validator={VALID_EMAIL}
+                                    errorText="Valid email required" required></InputField>
                                 <InputField id={PASSWORD_INPUT_ID} labelText="Password" type="password" value={pass} innerRef={inputPassword} required></InputField>
                                 <div className="d-flex justify-content-center mt-2">
                                     <button onClick={() => {
@@ -137,9 +142,9 @@ export const Login = () => {
                             {isLoading ? <LoadingBar></LoadingBar> : null}
 
                             <p>Register your credentials</p>
-                            <div className="d-flex flex-column" onSubmit={submitRegisterForm}>
-                                <InputField id={EMAIL_INPUT_ID} labelText="E-mail" value={email} innerRef={inputEmail} validator={VALID_EMAIL} 
-                                errorText="Valid email required" required>></InputField>
+                            <div className="d-flex flex-column">
+                                <InputField id={EMAIL_INPUT_ID} labelText="E-mail" value={email} innerRef={inputEmail} validator={VALID_EMAIL}
+                                    errorText="Valid email required" required>></InputField>
                                 <InputField id={PASSWORD_INPUT_ID} labelText="Password" type="password" value={pass} innerRef={inputPassword} required></InputField>
                                 <InputField id={REPEAT_PASSWORD_INPUT_ID} labelText="Repeat password" type="password" value={repeat} innerRef={inputRepeat} required></InputField>
                                 <div className="d-flex justify-content-center mt-2">

@@ -4,6 +4,8 @@ import { Icon } from './../../shared/atoms/Icon'
 import { connect } from "react-redux";
 import { AvatarList } from './../../shared/mollecules/AvatarList'
 import { useSelector } from 'react-redux';
+import { VALID_EMAIL } from "./../../../helpers/validators"
+
 export const Home = (props) => {
 
     const SEARCH_FRIENDS_INPUT_ID = "searchForFriends";
@@ -38,7 +40,8 @@ export const Home = (props) => {
                          </div>
                         <div className="modal-body">
                             <div className="mb-1">Please enter email to send invite.</div>
-                            <InputField id={EMAIL_TO_FRIEND} labelText="Send email invite to friend" value={inviteEmail} innerRef={inviteFriendEmailRef}></InputField>
+                            <InputField id={EMAIL_TO_FRIEND} labelText="Send email invite to friend" value={inviteEmail} innerRef={inviteFriendEmailRef}
+                            validator={VALID_EMAIL} errorText="Valid email required" required></InputField>
                         </div>
                         <div className="modal-footer mt-1">
                             <button className="btn btn-primary" data-dismiss="modal">Cancel</button>
