@@ -79,20 +79,18 @@ export const Dashboard = () => {
                 <div>
                     <div className="row h-100">
                         <div className="col-3 fixedMenu">
-                            <div className="brand-container d-flex justify-content-center mt-5">
+                            <div className="brand-container">
                                 <IconSvg className="logoIconApp p-2"></IconSvg>
                                 <span className="brand-span-container pl-3">Jegty</span>
                             </div>
                             <NavigationMenu elems={navitagionElemens}></NavigationMenu>
-                            <div className="d-flex justify-content-center mt-5">
+                            <div className="new-game-container position-fixed d-flex justify-content-center mt-5">
                                 {currentLocation !== "/new-game" ? <button
                                     onClick={() => history.push("/new-game")}
                                     className="btn btn-custom btn-lg page-scroll">
                                     New game
                                 </button> : null}
-
                             </div>
-                            {jegtyUser ? <AvatarBadge email={user.email} name={jegtyUser.name}></AvatarBadge> : null}
 
                         </div>
                         <div className="col-6 infiniteScroll">
@@ -112,6 +110,9 @@ export const Dashboard = () => {
                             </Switch>
                         </div>
                         <div className="col-3 friendsList">
+                            <div className="currentLoggedUser">
+                                {jegtyUser ? <AvatarBadge email={user.email} name={jegtyUser.name}></AvatarBadge> : null}
+                            </div>
                         </div>
                     </div>
                 </div>

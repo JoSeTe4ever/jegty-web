@@ -50,6 +50,8 @@ li.navigationElemnList {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: fixed;
+    top: 30vh;
 }
 
 .navigationChip {

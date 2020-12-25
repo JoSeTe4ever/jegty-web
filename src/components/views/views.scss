@@ -1,5 +1,15 @@
 @import './../../styles/base.scss';
 
+.new-game-container {
+    bottom: -9%;
+    left: 4.85%;
+}
+
+.brand-container {
+    position: fixed;
+    top: 8%;
+    left: 3%;
+}
 
 .logoIconApp {
     height: 80px;
@@ -80,4 +90,10 @@ img.avatar.profileAvatar {
 
 .mainImage {
     max-height: 440px;
+}
+
+.currentLoggedUser {
+    position: fixed;
+    right: 3%;
+    top: 10%;
 }
