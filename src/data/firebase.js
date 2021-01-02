@@ -19,6 +19,10 @@ firebase.analytics();
 
 const db = firebase.firestore();
 
+const baseFirebaseUrl = () => "https://us-central1-jegty-a863a.cloudfunctions.net"
+
 export {
-    app, db
+    app,
+    db,
+    baseFirebaseUrl
 };

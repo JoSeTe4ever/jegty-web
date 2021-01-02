@@ -1,4 +1,3 @@
-import DateFnsUtils from '@date-io/date-fns';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import Snackbar from '@material-ui/core/Snackbar';

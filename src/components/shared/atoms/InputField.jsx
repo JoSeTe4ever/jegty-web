@@ -4,7 +4,8 @@ import TextField from '@material-ui/core/TextField';
 /**
  * Input field 
  * 
- * type password or date. It allows validation with regex, helpertext and error text. 
+ * type password or date. 
+ * It allows validation with regex, helpertext and error text. 
  * 
  *
  * @param {*} props

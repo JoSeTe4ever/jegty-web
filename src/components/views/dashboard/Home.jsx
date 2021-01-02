@@ -5,6 +5,9 @@ import { connect } from "react-redux";
 import { AvatarList } from './../../shared/mollecules/AvatarList'
 import { useSelector } from 'react-redux';
 import { VALID_EMAIL } from "./../../../helpers/validators"
+import { sendInviteMail } from "./../../../data/cloud-functions"
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 export const Home = (props) => {
 
@@ -14,10 +17,23 @@ export const Home = (props) => {
     const inviteFriendEmailRef = useRef(null);
     const [searchQueryText, setQueryText] = useState('');
     const [inviteEmail, setInviteEmail] = useState('');
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [severity, setSeverity] = useState("");
+    const [message, setMessage] = useState("");
+
     const friendsIdList = useSelector((state) => state.friends);
 
     const addUser = () => {
         const inviteEmail = inviteFriendEmailRef.current.value;
+        sendInviteMail(inviteEmail).then(res => {
+            setSeverity("success");
+            setMessage("invitation email sucessfully sent");
+            setOpenSnackbar(true);
+        }, error => {
+            setSeverity("error");
+            setMessage("Error while sending email");
+            setOpenSnackbar(true);
+        });
         window.$('#addFriendDialog').modal('hide')
     }
 
@@ -25,33 +41,52 @@ export const Home = (props) => {
         window.$('#addFriendDialog').modal('show')
     }
 
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenSnackbar(false);
+    };
+
+    function Alert(props) {
+        return <MuiAlert elevation={6} variant="filled" {...props} />;
+    }
+
     return (
-        <div className="homeContainer">
-            <InputField id={SEARCH_FRIENDS_INPUT_ID} labelText="Search friends" value={searchQueryText} innerRef={searchFriendsRef}></InputField>
-            <Icon icon={'plus-circle'} aria-hidden="true" onClickCallback={() => showAddFriendDialog()}></Icon>
-            <AvatarList friends={friendsIdList}></AvatarList>
+        <React.Fragment>
+            <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+                <Alert onClose={handleClose} severity={severity}>
+                    {message}
+                </Alert>
+            </Snackbar>
+            <div className="homeContainer">
+                <InputField id={SEARCH_FRIENDS_INPUT_ID} labelText="Search friends" value={searchQueryText} innerRef={searchFriendsRef}></InputField>
+                <Icon icon={'plus-circle'} aria-hidden="true" onClickCallback={() => showAddFriendDialog()}></Icon>
+                <AvatarList friends={friendsIdList}></AvatarList>
 
-            <div className="modal fade" id="addFriendDialog" role="dialog">
-                <div className="modal-dialog">
+                <div className="modal fade" id="addFriendDialog" role="dialog">
+                    <div className="modal-dialog">
 
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            Invite user
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                Invite user
                          </div>
-                        <div className="modal-body">
-                            <div className="mb-1">Please enter email to send invite.</div>
-                            <InputField id={EMAIL_TO_FRIEND} labelText="Send email invite to friend" value={inviteEmail} innerRef={inviteFriendEmailRef}
-                            validator={VALID_EMAIL} errorText="Valid email required" required></InputField>
+                            <div className="modal-body">
+                                <div className="mb-1">Please enter email to send invite.</div>
+                                <InputField id={EMAIL_TO_FRIEND} labelText="Send email invite to friend" value={inviteEmail} innerRef={inviteFriendEmailRef}
+                                    validator={VALID_EMAIL} errorText="Valid email required" required></InputField>
+                            </div>
+                            <div className="modal-footer mt-1">
+                                <button className="btn btn-primary" data-dismiss="modal">Cancel</button>
+                                <button className="btn btn-danger" onClick={(event) => addUser(event)}>Accept</button>
+                            </div>
                         </div>
-                        <div className="modal-footer mt-1">
-                            <button className="btn btn-primary" data-dismiss="modal">Cancel</button>
-                            <button className="btn btn-danger" onClick={(event) => addUser(event)}>Accept</button>
-                        </div>
-                    </div>
 
+                    </div>
                 </div>
             </div>
-        </div>
+        </React.Fragment>
+
     )
 }
 
