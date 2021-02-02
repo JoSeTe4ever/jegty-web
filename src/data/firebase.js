@@ -18,11 +18,25 @@ const app = firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
 const db = firebase.firestore();
+let currentIdToken = "wtfJopi";
 
 const baseFirebaseUrl = () => "https://us-central1-jegty-a863a.cloudfunctions.net"
+
+app.auth().onAuthStateChanged((user) => {
+    if (!user) {
+      console.log('not logged in');
+      return;
+    }
+    // console.log(user);
+    user.getIdToken().then((idToken) => {
+      /** call the fetch function from inside here */
+      currentIdToken = idToken;
+    });
+  });
 
 export {
     app,
     db,
-    baseFirebaseUrl
+    baseFirebaseUrl,
+    currentIdToken
 };
