@@ -36,3 +36,7 @@ https://material-ui.com/es/components/autocomplete/
 ## MVP de Xavi
 
 https://xd.adobe.com/view/c68b1025-a3f9-47c1-8e1d-31be4259e085-93d8/screen/f908b69e-9854-4bcb-b3b5-cd90e3751792
+
+## TODO 
+
+Quitar el development redux tools para cuando se vaya a prod.
