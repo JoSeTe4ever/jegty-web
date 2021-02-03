@@ -4,14 +4,14 @@ import 'firebase/analytics'
 import 'firebase/firestore'
 
 const firebaseConfig = {
-    apiKey: "AIzaSyASlzY28VU4kyofRvwoS_7q_Y9Cy2F_Les",
-    authDomain: "jegty-a863a.firebaseapp.com",
-    databaseURL: "https://jegty-a863a.firebaseio.com",
-    projectId: "jegty-a863a",
-    storageBucket: "jegty-a863a.appspot.com",
-    messagingSenderId: "760195107800",
-    appId: "1:760195107800:web:631869b5e0d9791f8ac0ad",
-    measurementId: "G-KQGEQZT5J9"
+  apiKey: "AIzaSyASlzY28VU4kyofRvwoS_7q_Y9Cy2F_Les",
+  authDomain: "jegty-a863a.firebaseapp.com",
+  databaseURL: "https://jegty-a863a.firebaseio.com",
+  projectId: "jegty-a863a",
+  storageBucket: "jegty-a863a.appspot.com",
+  messagingSenderId: "760195107800",
+  appId: "1:760195107800:web:631869b5e0d9791f8ac0ad",
+  measurementId: "G-KQGEQZT5J9"
 };
 // Initialize Firebase
 const app = firebase.initializeApp(firebaseConfig);
@@ -23,20 +23,23 @@ let currentIdToken = "wtfJopi";
 const baseFirebaseUrl = () => "https://us-central1-jegty-a863a.cloudfunctions.net"
 
 app.auth().onAuthStateChanged((user) => {
-    if (!user) {
-      console.log('not logged in');
-      return;
-    }
-    // console.log(user);
-    user.getIdToken().then((idToken) => {
-      /** call the fetch function from inside here */
-      currentIdToken = idToken;
-    });
+  if (!user) {
+    console.log('not logged in');
+    return;
+  }
+
+
+  firebase.auth().currentUser.getIdToken( /* forceRefresh */ true).then(function (idToken) {
+    debugger;
+    currentIdToken = idToken;
+  }).catch(function (error) {
+    // Handle error
   });
+});
 
 export {
-    app,
-    db,
-    baseFirebaseUrl,
-    currentIdToken
+  app,
+  db,
+  baseFirebaseUrl,
+  currentIdToken
 };

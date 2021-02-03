@@ -40,3 +40,5 @@ https://xd.adobe.com/view/c68b1025-a3f9-47c1-8e1d-31be4259e085-93d8/screen/f908b
 ## TODO 
 
 Quitar el development redux tools para cuando se vaya a prod.
+Controlar los errores cuando se envia un mail.
+Mirar el tema de las traducciones.

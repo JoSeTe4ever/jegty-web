@@ -6,7 +6,6 @@ import {
 
 export const sendInviteMail = (email) => {
   if (email) {
-    debugger;
 
     const url = `${baseFirebaseUrl()}/sendMail?dest=${email}`;
     return fetch(url, {
@@ -15,6 +14,8 @@ export const sendInviteMail = (email) => {
         authorization: 'Bearer ' + currentIdToken,
         'Content-Type': 'application/json',
       },
+    }).then(error => {
+      return new Error("Error while sending email");
     });
   }
   return new Error("E-mail is empty");
