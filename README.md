@@ -44,3 +44,4 @@ Controlar los errores cuando se envia un mail.
 Mirar el tema de las traducciones.
 Configurar limite de gasto en firebase. https://cloud.google.com/appengine/docs/managing-costs?hl=es
 Habilitar la app para Edge.
+Cambiar la cloud functions que está generando los links para localhost.

@@ -6,20 +6,26 @@ import { app, db } from './../data/firebase';
 import { InputField } from './shared/atoms/InputField';
 import { LoadingBar } from './shared/atoms/LoadingBar';
 import { VALID_EMAIL } from "./../../src/helpers/validators"
+import { useLocation } from "react-router-dom";
+import { parse } from 'query-string';
 
 /****
- * Componente Login con estado de sign in y sign up 
- * llama a firebase para crear usuarios o para autenticarlos.
+ * 
+ * Invite, reyenando los datos que hagan falta 
+ * y creando la unión si hay invite. 
+ * 
+ * http://localhost:3000/invite?user=LjfWj2pER8Xj1eODNWRrnFztgL523yy59&invite=josete4ever@gmail.com
+ * 
  */
 
 
-export const Login = () => {
+export const Invite = () => {
 
     const dispatch = useDispatch();
     const [error, seterror] = useState('');
     const [info, setInfo] = useState('');
     const [isLoading, setLoading] = useState(false);
-    const [signIn, setSignIn] = useState(true);
+    const [signIn, setSignIn] = useState(false);
     const EMAIL_INPUT_ID = "email";
     const PASSWORD_INPUT_ID = "password";
     const REPEAT_PASSWORD_INPUT_ID = "repeatpassword";
@@ -28,6 +34,20 @@ export const Login = () => {
     const inputEmail = useRef(null);
     const inputPassword = useRef(null);
     const inputRepeat = useRef(null);
+
+    const location = useLocation();
+    const url = location;
+
+    if (url.search) {
+
+        const inviteData = parse(url.search);
+        const hostUser = inviteData.user;
+        inviteData.hostUser = hostUser.substring(0, hostUser.length - 4); // remove salt
+        if (inviteData) {
+            //setSignIn(false);
+            email = inviteData.invite;
+        }
+    }
 
     const submitLoginForm = async e => {
         try {

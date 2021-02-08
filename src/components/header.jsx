@@ -8,6 +8,7 @@ export class Header extends Component {
     super(props);
     this.state = {
       landingPageData: {},
+      openOnLoad: props.openOnLoad
     };
 
     this.handleShow = this.handleShow.bind(this);
@@ -20,6 +21,12 @@ export class Header extends Component {
 
   handleHide() {
     this.setState({ ...this.state, showModal: false });
+  }
+
+  componentDidMount() {
+    if (this.props.openOnLoad){
+      document.getElementById("modalButton").click();
+    }
   }
 
   render() {
@@ -41,7 +48,7 @@ export class Header extends Component {
           </div>
         </div>
         <div className="d-flex justify-content-center">
-          <button
+          <button id="modalButton"
             data-toggle="modal" data-target="#myModal"
             onClick={() => console.log(true)}
             className="btn btn-custom btn-lg page-scroll mt-5"

@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import { Route, Switch } from "react-router";
 import Header from './components/header';
 import { Login } from './components/Login';
+import { Invite } from './components/Invite';
 import { Dashboard } from './components/views/Dashboard';
 
+
 export class App extends Component {
+
   state = {
     landingPageData: {},
   }
@@ -28,9 +32,18 @@ export class App extends Component {
     const { isLogged } = this.props;
     return !isLogged ? (
       <div>
-        <Login></Login>
-        <Header data={this.state.landingPageData.Header}/>
-        <div id="modal-root"></div>
+        <Switch>
+          <Route exact path="/">
+            <Login></Login>
+            <Header data={this.state.landingPageData.Header} />
+            <div id="modal-root"></div>
+          </Route>
+          <Route path="/invite">
+            <Invite></Invite>
+            <Header data={this.state.landingPageData.Header} openOnLoad="true"/>
+            <div id="modal-root"></div>
+          </Route>
+        </Switch>
       </div>
     ) : <Dashboard></Dashboard>
   }
