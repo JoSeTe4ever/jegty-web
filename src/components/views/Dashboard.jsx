@@ -58,7 +58,6 @@ export const Dashboard = () => {
                 const data = snapshot.val();
                 dispatch(setHasPending(data));
                 console.log("data" + data);
-                debugger;
             });
         }
 

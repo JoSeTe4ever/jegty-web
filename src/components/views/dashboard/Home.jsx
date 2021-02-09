@@ -43,8 +43,8 @@ export const Home = (props) => {
         //get user by Id and add it in the page.
         //https://gist.github.com/katowulf/6479129
 
-        db.collection("users").where("email", "==", inviteEmail).get().then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
+        db.collection("users").where("email", "==", inviteEmail).get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
                 // doc.data() is never undefined for query doc snapshots
                 console.log(doc.id, " => ", doc.data());
                 //change to pending users.
@@ -55,19 +55,18 @@ export const Home = (props) => {
                 setOpenSnackbar(true);
             });
         })
-        .catch(function(error) {
-            console.log("Error getting documents: ", error);
-            setSeverity("error");
-            setMessage("Error while sending internal invite");
-            setOpenSnackbar(true);
-        });
+            .catch(function (error) {
+                console.log("Error getting documents: ", error);
+                setSeverity("error");
+                setMessage("Error while sending internal invite");
+                setOpenSnackbar(true);
+            });
 
     };
 
     const addUser = () => {
         //check if the user exist jopi
         const inviteEmail = inviteFriendEmailRef.current.value;
-        debugger;
         app.auth().fetchSignInMethodsForEmail(inviteEmail)
             .then(providers => {
                 if (providers.length === 0) {
@@ -78,7 +77,6 @@ export const Home = (props) => {
                     sendInternalInvite(inviteEmail);
                 }
             });
-
     }
 
     const showAddFriendDialog = () => {
