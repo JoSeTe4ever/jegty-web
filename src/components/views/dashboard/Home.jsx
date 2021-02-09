@@ -8,6 +8,7 @@ import { VALID_EMAIL } from "./../../../helpers/validators"
 import { sendInviteMail } from "./../../../data/cloud-functions"
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import { app, admin } from "../../../data/firebase";
 
 export const Home = (props) => {
 
@@ -23,8 +24,7 @@ export const Home = (props) => {
 
     const friendsIdList = useSelector((state) => state.friends);
 
-    const addUser = () => {
-        const inviteEmail = inviteFriendEmailRef.current.value;
+    const sendRecommendEmail = (inviteEmail)=> {
         sendInviteMail(inviteEmail).then(res => {
             setSeverity("success");
             setMessage("invitation email sucessfully sent");
@@ -34,7 +34,49 @@ export const Home = (props) => {
             setMessage("Error while sending email");
             setOpenSnackbar(true);
         });
-        window.$('#addFriendDialog').modal('hide')
+        window.$('#addFriendDialog').modal('hide');
+    };
+
+    const sendInternalInvite = (inviteEmail)=> {
+        //get user by Id and add it in the page.
+       // admin.auth().getUserByEmail(inviteEmail).then(function(userRecord) {
+       //     // See the UserRecord reference doc for the contents of userRecord.
+       //     console.log('Successfully fetched user data:', userRecord.toJSON());
+       //     setSeverity("success");
+       //     setMessage("internal invitation sucessfully sent");
+       //     window.$('#addFriendDialog').modal('hide');
+       //     debugger;
+       //     setOpenSnackbar(true);
+       //   })
+       //   .catch(function(error) {
+       //    console.log('Error fetching user data:', error);
+       //    setSeverity("error");
+       //    setMessage("Error while sending internal invite");
+       //    setOpenSnackbar(true);
+       //   });
+          setSeverity("success");
+          setMessage("internal invitation sucessfully sent");
+          window.$('#addFriendDialog').modal('hide');
+          debugger;
+          setOpenSnackbar(true);
+
+    };
+
+    const addUser = () => {
+        //check if the user exist jopi
+        const inviteEmail = inviteFriendEmailRef.current.value;
+        debugger;
+        app.auth().fetchSignInMethodsForEmail(inviteEmail)
+        .then(providers => {
+          if (providers.length === 0) {
+            // this email hasn't signed up yet
+             sendRecommendEmail(inviteEmail);
+          } else {
+            // has signed up
+            sendInternalInvite(inviteEmail);
+          }
+        });
+
     }
 
     const showAddFriendDialog = () => {

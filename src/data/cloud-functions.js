@@ -1,5 +1,4 @@
 import {
-  admin,
   baseFirebaseUrl,
   currentIdToken
 } from "./../data/firebase"

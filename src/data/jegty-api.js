@@ -39,7 +39,9 @@ export const getParticipantsIdFromRoomId = async (roomId) => {
     return participantsIdList;
 }
 
-
+export const addNewFriend = async (friendId) => {
+    return friendId;
+}
 
 /**
  * Creates a new game. 
@@ -74,7 +76,7 @@ export const createNewGame = async (game, userId, friendList) => {
 
         gamesBatchedReferences = friendList.map(friendId => {
             return {
-                reference:  db.collection("games").doc(gameId).collection("users").doc(friendId),
+                reference: db.collection("games").doc(gameId).collection("users").doc(friendId),
                 id: friendId
             }
         });

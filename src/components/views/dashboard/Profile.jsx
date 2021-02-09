@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { connect, useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Icon } from '../../shared/atoms/Icon';
-import { app, db } from './../../../data/firebase';
+import { app, db, realTimeDb } from './../../../data/firebase';
 import { addJegtyUser, logValidUser } from "./../../../redux/actions/actions";
 import { InputField } from './../../shared/atoms/InputField';
 import { LoadingBar } from './../../shared/atoms/LoadingBar';
@@ -30,6 +30,7 @@ export const Profile = (props) => {
     const history = useHistory();
 
     const _logout = () => {
+        realTimeDb.off();
         dispatch(logValidUser(false));
     }
 

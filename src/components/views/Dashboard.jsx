@@ -12,14 +12,15 @@ import GuardedRoute from '../shared/GuardedRoute';
 import { Home } from '../views/dashboard/Home';
 import { NotFound } from './NotFound';
 import { NavigationMenu } from './../../components/shared/mollecules/NavigationMenu';
-import { db } from "./../../data/firebase";
-import { addJegtyUser, addGameidToUserList, addFriendidToFriendList } from "./../../redux/actions/actions";
+import { db, realTimeDb } from "./../../data/firebase";
+import { addJegtyUser, addGameidToUserList, addFriendidToFriendList, setHasPending } from "./../../redux/actions/actions";
 import { AvatarBadge } from '../shared/mollecules/AvatarBadge';
 import { getGamesByJegtyUserId, getFriendsByJegtyUserId } from "../../data/jegty-api";
 
 export const Dashboard = () => {
     const LoggedRoute = GuardedRoute(true);
     const user = useSelector((state) => state.user);
+    const hasPending = useSelector((state) => state.hasPending);
     const dispatch = useDispatch();
     const jegtyUser = useSelector((state) => state.jegtyUser);
     const location = useLocation();
@@ -32,6 +33,7 @@ export const Dashboard = () => {
     { icon: 'user', navLocation: '/profile', navText: 'Profile' }];
 
     // remove backdrop from modal if exists.
+    // this is like onInit.
     useEffect(() => {
         const modalBackgroundArray = document.getElementsByClassName("modal-backdrop fade show")
         if (modalBackgroundArray && modalBackgroundArray.length > 0) {
@@ -48,7 +50,16 @@ export const Dashboard = () => {
                 friendsList = friendsList.docs.map(friend => {
                     dispatch(addFriendidToFriendList(friend.data().id));
                 });
-            })
+            });
+
+            // listen to the realtime database 
+            var pendingRequestsRef = realTimeDb.ref(`pendingRequests/${user.uid}`);
+            pendingRequestsRef.on('value', (snapshot) => {
+                const data = snapshot.val();
+                dispatch(setHasPending(data));
+                console.log("data" + data);
+                debugger;
+            });
         }
 
         if (jegtyUser.id === undefined) {
@@ -65,6 +76,8 @@ export const Dashboard = () => {
         const { pathname } = location;
         setCurrentLocation(pathname);
     }, [location]);
+
+
 
     const transformCurrentLocation = () => {
         if (location.pathname === "/") {
@@ -83,7 +96,7 @@ export const Dashboard = () => {
                                 <IconSvg className="logoIconApp p-2"></IconSvg>
                                 <span className="brand-span-container pl-3">Jegty</span>
                             </div>
-                            <NavigationMenu elems={navitagionElemens}></NavigationMenu>
+                            <NavigationMenu elems={navitagionElemens} friendsPending={hasPending}></NavigationMenu>
                             <div className="new-game-container position-fixed d-flex justify-content-center mt-5">
                                 {currentLocation !== "/new-game" ? <button
                                     onClick={() => history.push("/new-game")}

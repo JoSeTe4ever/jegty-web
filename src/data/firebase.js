@@ -2,6 +2,7 @@ import * as firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/analytics'
 import 'firebase/firestore'
+import 'firebase/database'
 
 const firebaseConfig = {
   apiKey: "AIzaSyASlzY28VU4kyofRvwoS_7q_Y9Cy2F_Les",
@@ -20,6 +21,8 @@ firebase.analytics();
 const db = firebase.firestore();
 let currentIdToken = "wtfJopi";
 
+const realTimeDb = firebase.database();
+
 const baseFirebaseUrl = () => "https://us-central1-jegty-a863a.cloudfunctions.net"
 
 app.auth().onAuthStateChanged((user) => {
@@ -27,10 +30,7 @@ app.auth().onAuthStateChanged((user) => {
     console.log('not logged in');
     return;
   }
-
-
   firebase.auth().currentUser.getIdToken( /* forceRefresh */ true).then(function (idToken) {
-    debugger;
     currentIdToken = idToken;
   }).catch(function (error) {
     // Handle error
@@ -40,6 +40,7 @@ app.auth().onAuthStateChanged((user) => {
 export {
   app,
   db,
+  realTimeDb,
   baseFirebaseUrl,
   currentIdToken
 };

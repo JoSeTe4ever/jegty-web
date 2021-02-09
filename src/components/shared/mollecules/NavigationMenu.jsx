@@ -8,7 +8,7 @@ import './Mollecules.scss'
 
 export const NavigationMenu = (props) => {
 
-    const { elems } = props;
+    const { elems, friendsPending } = props;
     const history = useHistory();
 
     return (
@@ -24,6 +24,7 @@ export const NavigationMenu = (props) => {
                     />
                 </li>)}
             </ul>
+            {friendsPending}
         </div>
     )
 }

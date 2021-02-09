@@ -41,3 +41,8 @@ export const cacheJegtyUser = (jegtyUser) => ({
     type: ActionTypes.CACHE_JEGTY_USER,
     payload: jegtyUser
 });
+
+export const setHasPending = (hasPending) => ({
+    type: ActionTypes.SET_PENDING,
+    payload: hasPending
+});

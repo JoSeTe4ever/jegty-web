@@ -80,6 +80,11 @@ function rootReducer(state = initialState, action) {
         return newState;
     }
 
+    if (action.type === ActionTypes.SET_PENDING) {
+        newState.hasPending = action.payload;
+        return newState;
+    }
+
 return newState;
 };
 
