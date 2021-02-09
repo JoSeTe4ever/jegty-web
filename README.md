@@ -45,3 +45,7 @@ Mirar el tema de las traducciones.
 Configurar limite de gasto en firebase. https://cloud.google.com/appengine/docs/managing-costs?hl=es
 Habilitar la app para Edge.
 Cambiar la cloud functions que está generando los links para localhost.
+Crear la lista de pending users / block users? 
+
+## BUGS 
+No está creando usuario en la tabla users cuando se registra uno nuevo

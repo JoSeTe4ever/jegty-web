@@ -30,7 +30,7 @@ export const Profile = (props) => {
     const history = useHistory();
 
     const _logout = () => {
-        realTimeDb.off();
+//        realTimeDb.off();
         dispatch(logValidUser(false));
     }
 

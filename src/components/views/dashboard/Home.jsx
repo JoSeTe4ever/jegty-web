@@ -3,15 +3,17 @@ import { InputField } from './../../shared/atoms/InputField'
 import { Icon } from './../../shared/atoms/Icon'
 import { connect } from "react-redux";
 import { AvatarList } from './../../shared/mollecules/AvatarList'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { VALID_EMAIL } from "./../../../helpers/validators"
 import { sendInviteMail } from "./../../../data/cloud-functions"
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import { app, admin } from "../../../data/firebase";
+import { addFriendidToFriendList } from '../../../redux/actions/actions';
+import { app, realTimeDb, db } from "../../../data/firebase";
 
 export const Home = (props) => {
 
+    const dispatch = useDispatch();
     const SEARCH_FRIENDS_INPUT_ID = "searchForFriends";
     const EMAIL_TO_FRIEND = "inviteEmail";
     const searchFriendsRef = useRef(null);
@@ -24,7 +26,7 @@ export const Home = (props) => {
 
     const friendsIdList = useSelector((state) => state.friends);
 
-    const sendRecommendEmail = (inviteEmail)=> {
+    const sendRecommendEmail = (inviteEmail) => {
         sendInviteMail(inviteEmail).then(res => {
             setSeverity("success");
             setMessage("invitation email sucessfully sent");
@@ -37,28 +39,28 @@ export const Home = (props) => {
         window.$('#addFriendDialog').modal('hide');
     };
 
-    const sendInternalInvite = (inviteEmail)=> {
+    const sendInternalInvite = (inviteEmail) => {
         //get user by Id and add it in the page.
-       // admin.auth().getUserByEmail(inviteEmail).then(function(userRecord) {
-       //     // See the UserRecord reference doc for the contents of userRecord.
-       //     console.log('Successfully fetched user data:', userRecord.toJSON());
-       //     setSeverity("success");
-       //     setMessage("internal invitation sucessfully sent");
-       //     window.$('#addFriendDialog').modal('hide');
-       //     debugger;
-       //     setOpenSnackbar(true);
-       //   })
-       //   .catch(function(error) {
-       //    console.log('Error fetching user data:', error);
-       //    setSeverity("error");
-       //    setMessage("Error while sending internal invite");
-       //    setOpenSnackbar(true);
-       //   });
-          setSeverity("success");
-          setMessage("internal invitation sucessfully sent");
-          window.$('#addFriendDialog').modal('hide');
-          debugger;
-          setOpenSnackbar(true);
+        //https://gist.github.com/katowulf/6479129
+
+        db.collection("users").where("email", "==", inviteEmail).get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+                // doc.data() is never undefined for query doc snapshots
+                console.log(doc.id, " => ", doc.data());
+                //change to pending users.
+                dispatch(addFriendidToFriendList(doc.id))
+                setSeverity("success");
+                setMessage("internal invitation sucessfully sent");
+                window.$('#addFriendDialog').modal('hide');
+                setOpenSnackbar(true);
+            });
+        })
+        .catch(function(error) {
+            console.log("Error getting documents: ", error);
+            setSeverity("error");
+            setMessage("Error while sending internal invite");
+            setOpenSnackbar(true);
+        });
 
     };
 
@@ -67,15 +69,15 @@ export const Home = (props) => {
         const inviteEmail = inviteFriendEmailRef.current.value;
         debugger;
         app.auth().fetchSignInMethodsForEmail(inviteEmail)
-        .then(providers => {
-          if (providers.length === 0) {
-            // this email hasn't signed up yet
-             sendRecommendEmail(inviteEmail);
-          } else {
-            // has signed up
-            sendInternalInvite(inviteEmail);
-          }
-        });
+            .then(providers => {
+                if (providers.length === 0) {
+                    // this email hasn't signed up yet
+                    sendRecommendEmail(inviteEmail);
+                } else {
+                    // has signed up
+                    sendInternalInvite(inviteEmail);
+                }
+            });
 
     }
 

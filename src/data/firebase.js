@@ -22,7 +22,6 @@ const db = firebase.firestore();
 let currentIdToken = "wtfJopi";
 
 const realTimeDb = firebase.database();
-
 const baseFirebaseUrl = () => "https://us-central1-jegty-a863a.cloudfunctions.net"
 
 app.auth().onAuthStateChanged((user) => {
