@@ -12,15 +12,16 @@ import { Home } from '../views/dashboard/Home';
 import { NotFound } from './NotFound';
 import { NavigationMenu } from './../../components/shared/mollecules/NavigationMenu';
 import { db, realTimeDb } from "./../../data/firebase";
-import { addJegtyUser, addGameidToUserList, addFriendidToFriendList, setHasPending } from "./../../redux/actions/actions";
+import { addJegtyUser, addGameidToUserList, 
+    addFriendidToFriendList, setHasPending, 
+    addFriendRequestidToPendingList } from "./../../redux/actions/actions";
 import { AvatarBadge } from '../shared/mollecules/AvatarBadge';
-import { getGamesByJegtyUserId, getFriendsByJegtyUserId } from "../../data/jegty-api";
+import { getGamesByJegtyUserId, getFriendsByJegtyUserId, getPendingFriendRequesFromUserEmail } from "../../data/jegty-api";
 import { emailEncoder } from "./../../helpers/idEncoder"
 
 export const Dashboard = () => {
     const LoggedRoute = GuardedRoute(true);
     const user = useSelector((state) => state.user);
-    const hasPending = useSelector((state) => state.hasPending);
     const dispatch = useDispatch();
     const jegtyUser = useSelector((state) => state.jegtyUser);
     const location = useLocation();
@@ -50,6 +51,14 @@ export const Dashboard = () => {
                     dispatch(addFriendidToFriendList(friend.data().id));
                 });
             });
+            debugger;
+            getPendingFriendRequesFromUserEmail(user.email).then(pendingList => {
+                debugger;
+                pendingList.docs.map(pendingFriend => {
+                    debugger;
+                    dispatch(addFriendRequestidToPendingList(pendingFriend.data().id));
+                });
+            })
 
             // listen to the realtime database 
             var pendingRequestsRef = realTimeDb.ref(`pendingRequests/${emailEncoder(user.email)}`);

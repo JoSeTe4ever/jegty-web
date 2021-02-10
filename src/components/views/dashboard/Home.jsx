@@ -21,10 +21,15 @@ export const Home = (props) => {
     const [searchQueryText, setQueryText] = useState('');
     const [inviteEmail, setInviteEmail] = useState('');
     const [openSnackbar, setOpenSnackbar] = useState(false);
+
     const [severity, setSeverity] = useState("");
     const [message, setMessage] = useState("");
 
     const friendsIdList = useSelector((state) => state.friends);
+    const friendRequestIdList = useSelector((state) => state.pendingRequests);
+
+    const [friendsIds, setFriendsIfList] = useState(friendsIdList);
+
 
     const sendRecommendEmail = (inviteEmail) => {
         sendInviteMail(inviteEmail).then(res => {
@@ -104,7 +109,7 @@ export const Home = (props) => {
             <div className="homeContainer">
                 <InputField id={SEARCH_FRIENDS_INPUT_ID} labelText="Search friends" value={searchQueryText} innerRef={searchFriendsRef}></InputField>
                 <Icon icon={'plus-circle'} aria-hidden="true" onClickCallback={() => showAddFriendDialog()}></Icon>
-                <AvatarList friends={friendsIdList}></AvatarList>
+                <AvatarList friends={friendsIds}></AvatarList>
 
                 <div className="modal fade" id="addFriendDialog" role="dialog">
                     <div className="modal-dialog">

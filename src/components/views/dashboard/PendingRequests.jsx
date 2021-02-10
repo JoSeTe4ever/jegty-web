@@ -10,6 +10,7 @@ export const PendingRequests = props => {
 
     const storePendingRequest = useSelector((state) => state.pendingRequests);
     const cachedJegtyUsers = useSelector((state) => state.cache.jegtyUsers);
+    const [requestsIds, setFriendsIfList] = useState(storePendingRequest);
 
     const acceptFriend = (requestId) => {
         dispatch(addFriendidToFriendList(requestId))
@@ -23,7 +24,7 @@ export const PendingRequests = props => {
     return (
         <div>
             <h3>pending requests</h3>
-            <AvatarList friends={storePendingRequest}
+            <AvatarList friends={requestsIds}
                 onAccept={acceptFriend}
                 onDelete={rejectFriend}
                 acceptable={true} deletable={true}></AvatarList>

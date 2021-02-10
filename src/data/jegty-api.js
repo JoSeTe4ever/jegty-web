@@ -1,6 +1,7 @@
 import {
     db
 } from './firebase'
+import { emailEncoder } from "./../helpers/idEncoder"
 
 export const getJegtyUserById = async (jegtUserId) => {
     let user = {};
@@ -25,6 +26,18 @@ export const getGameById = async (jegtyGameId) => {
         game = {}
     }
     return game;
+}
+
+/**
+ * get the uids of the pending friendship request 
+ * of the table pending/userEmail
+ * @param {string} userEmail 
+ * @returns promise of an array of ids
+ */
+export const getPendingFriendRequesFromUserEmail = async (userEmail) => {
+    const encodedEmail = emailEncoder(userEmail)
+    const pendingIds = await db.collection('pendings').doc(encodedEmail).get();
+    return pendingIds;
 }
 
 /**

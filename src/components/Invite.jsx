@@ -46,6 +46,7 @@ export const Invite = () => {
         if (inviteData) {
             //setSignIn(false);
             email = inviteData.invite;
+
         }
     }
 
@@ -76,6 +77,9 @@ export const Invite = () => {
     const submitRegisterForm = async e => {
         setLoading(true);
         const userInput = inputEmail.current.value;
+        if(!userInput){
+            inputEmail.current.value = email;
+        }
         const passInput = inputPassword.current.value;
         const repeatInput = inputRepeat.current.value;
 
@@ -92,8 +96,12 @@ export const Invite = () => {
                     seterror('');
                     db.collection('users').doc(result.user.uid).set({
                         email: result.user.email,
-                        id: result.user.uid
+                        id: result.user.uid,
+                        name: "",
+                        birthdate: "",
+                        createdAt: new Date()
                     });
+                    debugger;
                     setLoading(false);
                 })
                 .catch(error => {
