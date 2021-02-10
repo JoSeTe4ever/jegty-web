@@ -3,6 +3,7 @@ export const initialState = {
     hasPending: false,
     user: {},
     friends: [],
+    pendingRequests: [],
     userGames: [],
     jegtyUser: {},
     selectedRoom: {},

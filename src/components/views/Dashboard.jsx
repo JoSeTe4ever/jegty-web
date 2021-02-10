@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect, useSelector, useDispatch } from 'react-redux';
 import { Switch, useLocation, useHistory } from "react-router-dom";
 import { ReactComponent as IconSvg } from '../../assets/icons/icono.svg';
-import { Friends } from "../../components/views/dashboard/Friends";
+import { Friends } from "./dashboard/PendingRequests";
 import { Profile } from "../../components/views/dashboard/Profile";
 import { Tournaments } from "../../components/views/dashboard/Tournaments";
 import { Games } from "../../components/views/dashboard/Games";

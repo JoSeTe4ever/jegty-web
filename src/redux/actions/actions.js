@@ -37,6 +37,11 @@ export const addFriendidToFriendList = (friendId)  => ({
     payload: friendId
 });
 
+export const addFriendRequestidToPendingList = (friendId)  => ({
+    type: ActionTypes.ADD_FRIEND_REQUEST_ID,
+    payload: friendId
+});
+
 export const cacheJegtyUser = (jegtyUser) => ({
     type: ActionTypes.CACHE_JEGTY_USER,
     payload: jegtyUser
