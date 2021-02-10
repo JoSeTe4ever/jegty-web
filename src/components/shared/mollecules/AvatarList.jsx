@@ -10,6 +10,11 @@ import { useDispatch, useSelector } from 'react-redux';
  * It caches in the store any data saved 
  * 
  * @param {*} props 
+ * 
+ * friends -> id list
+ * deletable -> show an X badge and uses onDelete as callback
+ * accepteble -> show a ✔ badge and uses on Accept as callback
+ * 
  */
 export const AvatarList = (props) => {
 

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { connect, useSelector, useDispatch } from 'react-redux';
 import { Switch, useLocation, useHistory } from "react-router-dom";
 import { ReactComponent as IconSvg } from '../../assets/icons/icono.svg';
-import { Friends } from "./dashboard/PendingRequests";
 import { Profile } from "../../components/views/dashboard/Profile";
 import { Tournaments } from "../../components/views/dashboard/Tournaments";
 import { Games } from "../../components/views/dashboard/Games";
@@ -16,6 +15,7 @@ import { db, realTimeDb } from "./../../data/firebase";
 import { addJegtyUser, addGameidToUserList, addFriendidToFriendList, setHasPending } from "./../../redux/actions/actions";
 import { AvatarBadge } from '../shared/mollecules/AvatarBadge';
 import { getGamesByJegtyUserId, getFriendsByJegtyUserId } from "../../data/jegty-api";
+import { emailEncoder } from "./../../helpers/idEncoder"
 
 export const Dashboard = () => {
     const LoggedRoute = GuardedRoute(true);
@@ -26,11 +26,10 @@ export const Dashboard = () => {
     const location = useLocation();
     const history = useHistory();
     const [currentLocation, setCurrentLocation] = useState(location.pathname);
-
-    const navitagionElemens = [{ icon: 'gamepad', navLocation: '/games', navText: 'Games' },
-    { icon: 'users', navLocation: '/', navText: 'Friends' },
-    { icon: 'futbol-o', navLocation: '/tournaments', navText: 'Tournaments' },
-    { icon: 'user', navLocation: '/profile', navText: 'Profile' }];
+    const [navitagionElemens, setNavigationElemens] = useState([{ icon: 'gamepad', navLocation: '/games', navText: 'Games', isPending: false },
+    { icon: 'users', navLocation: '/', navText: 'Friends', isPending: false },
+    { icon: 'futbol-o', navLocation: '/tournaments', navText: 'Tournaments', isPending: false },
+    { icon: 'user', navLocation: '/profile', navText: 'Profile', isPending: false }]);
 
     // remove backdrop from modal if exists.
     // this is like onInit.
@@ -53,11 +52,12 @@ export const Dashboard = () => {
             });
 
             // listen to the realtime database 
-            var pendingRequestsRef = realTimeDb.ref(`pendingRequests/${user.uid}`);
+            var pendingRequestsRef = realTimeDb.ref(`pendingRequests/${emailEncoder(user.email)}`);
             pendingRequestsRef.on('value', (snapshot) => {
                 const data = snapshot.val();
+                navitagionElemens[1].isPending = data;
+                setNavigationElemens([...navitagionElemens]);
                 dispatch(setHasPending(data));
-                console.log("data" + data);
             });
         }
 
@@ -95,7 +95,7 @@ export const Dashboard = () => {
                                 <IconSvg className="logoIconApp p-2"></IconSvg>
                                 <span className="brand-span-container pl-3">Jegty</span>
                             </div>
-                            <NavigationMenu elems={navitagionElemens} friendsPending={hasPending}></NavigationMenu>
+                            <NavigationMenu elems={navitagionElemens}></NavigationMenu>
                             <div className="new-game-container position-fixed d-flex justify-content-center mt-5">
                                 {currentLocation !== "/new-game" ? <button
                                     onClick={() => history.push("/new-game")}
@@ -111,7 +111,6 @@ export const Dashboard = () => {
                             <Switch>
                                 <LoggedRoute exact path="/" component={Home} />
                                 <LoggedRoute exact path="/profile" component={Profile} />
-                                <LoggedRoute exact path="/friends" component={Friends} />
                                 <LoggedRoute exact path="/tournaments" component={Tournaments} />
                                 <LoggedRoute exact path="/games" component={Games} />
                                 <LoggedRoute exact path="/new-game" component={CreateGame} />

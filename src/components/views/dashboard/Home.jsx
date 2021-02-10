@@ -1,15 +1,15 @@
-import React, { useRef, useState } from 'react'
-import { InputField } from './../../shared/atoms/InputField'
-import { Icon } from './../../shared/atoms/Icon'
-import { connect } from "react-redux";
-import { AvatarList } from './../../shared/mollecules/AvatarList'
-import { useSelector, useDispatch } from 'react-redux';
-import { VALID_EMAIL } from "./../../../helpers/validators"
-import { sendInviteMail } from "./../../../data/cloud-functions"
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import { addFriendidToFriendList } from '../../../redux/actions/actions';
-import { app, realTimeDb, db } from "../../../data/firebase";
+import React, { useRef, useState } from 'react';
+import { connect, useDispatch, useSelector } from "react-redux";
+import { app, db } from "../../../data/firebase";
+import { addFriendRequestidToPendingList } from '../../../redux/actions/actions';
+import { sendInviteMail } from "./../../../data/cloud-functions";
+import { VALID_EMAIL } from "./../../../helpers/validators";
+import { Icon } from './../../shared/atoms/Icon';
+import { InputField } from './../../shared/atoms/InputField';
+import { AvatarList } from './../../shared/mollecules/AvatarList';
+import { PendingRequests } from './PendingRequests';
 
 export const Home = (props) => {
 
@@ -48,7 +48,7 @@ export const Home = (props) => {
                 // doc.data() is never undefined for query doc snapshots
                 console.log(doc.id, " => ", doc.data());
                 //change to pending users.
-                dispatch(addFriendidToFriendList(doc.id))
+                dispatch(addFriendRequestidToPendingList(doc.id))
                 setSeverity("success");
                 setMessage("internal invitation sucessfully sent");
                 window.$('#addFriendDialog').modal('hide');
@@ -127,6 +127,8 @@ export const Home = (props) => {
                     </div>
                 </div>
             </div>
+
+            <PendingRequests></PendingRequests>
         </React.Fragment>
 
     )

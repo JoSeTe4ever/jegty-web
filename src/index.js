@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './App';
 import { Provider } from 'react-redux'
-import {createStore, applyMiddleware} from 'redux';
+import {createStore, applyMiddleware, compose} from 'redux';
 import {composeWithDevTools} from 'redux-devtools-extension/developmentOnly';
 import rootReducer from './redux/reducers/rootReducer.js';
 import thunk from 'redux-thunk';
@@ -22,11 +22,16 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
+//const initialState = createStore(
+//  persistedReducer,
+//  composeWithDevTools(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__
+//  ? window.__REDUX_DEVTOOLS_EXTENSION__()
+//  : f => f)
+//);
+
 const initialState = createStore(
   persistedReducer,
-  composeWithDevTools(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__
-  ? window.__REDUX_DEVTOOLS_EXTENSION__()
-  : f => f)
+  compose(applyMiddleware(thunk),window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 );
 
 let persistor = persistStore(initialState)
