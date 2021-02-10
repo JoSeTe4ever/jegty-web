@@ -5,7 +5,19 @@ import './Mollecules.scss';
 
 export const AvatarBadge = (props) => {
 
-    const { email, name, deletable } = props;
+    const { email, name, deletable, acceptable, id, onDelete, onAccept } = props;
+
+    const deleteBadge = (content) => {
+        return <Badge onClick={() => onDelete(id)} badgeContent={'X'} color="error" className="cursor-pointer">{content}</Badge>;
+    }
+
+    const acceptBadge = (content) => {
+        return <Badge onClick={() => onAccept(id)} badgeContent={'✔'} color="primary" className="cursor-pointer" anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+        }}>{content}</Badge>;
+    }
+
     const avatarContent = <div className="d-flex justify-content-center">
         <div className="avatarContainer">
             <Avatar email={email} customClass="miniAvatar coolEfect"></Avatar>
@@ -15,8 +27,8 @@ export const AvatarBadge = (props) => {
             </div>
         </div>
     </div>;
-    const toReturn = deletable ? <Badge badgeContent={'X'} color="error" className="cursor-pointer">
-        {avatarContent}
-    </Badge> : avatarContent
-    return toReturn;
+
+    let toReturn = deletable ? deleteBadge(avatarContent) : avatarContent;
+    return acceptable ? acceptBadge(toReturn) : toReturn;
+
 }      

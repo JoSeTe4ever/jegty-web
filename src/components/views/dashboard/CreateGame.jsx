@@ -218,7 +218,7 @@ export const CreateGame = () => {
                                 {user.name}
                             </option>)}
                     </Select>
-                    <AvatarList friends={newGameFriends} deletable={true} onDelete={onDeleteFriend}></AvatarList>
+                    <AvatarList friends={newGameFriends} acceptable={false} deletable={true} onDelete={onDeleteFriend}></AvatarList>
                 </div>
             </div>
             <div className="d-flex justify-content-center">

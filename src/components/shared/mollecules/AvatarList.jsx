@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
  */
 export const AvatarList = (props) => {
 
-    const { friends, deletable, onDelete } = props;
+    const { friends, deletable, acceptable, onDelete, onAccept } = props;
     const [loadedFriends, setFriends] = useState([]);
     const [isLoading, setLoading] = useState(false);
     const dispatch = useDispatch();
@@ -72,9 +72,10 @@ export const AvatarList = (props) => {
         <div className="d-flex flex-column">
             {isLoading ? loading : null}
             <ul className="list-unstyled">
-                {loadedFriends.map((user, index) => <li className="media mr-2" key={index} onClick={() => { deletable ? onDelete(user.id) : console.log("no action") }}>
-                    <AvatarBadge email={user.email} name={user.name} deletable={deletable}
-
+                {loadedFriends.map((user, index) => <li className="media mr-2" key={index}>
+                    <AvatarBadge id={user.id} email={user.email} name={user.name} deletable={deletable} acceptable={acceptable}
+                    onDelete={onDelete} 
+                    onAccept={onAccept}
                     ></AvatarBadge>
                 </li>)}
             </ul>
