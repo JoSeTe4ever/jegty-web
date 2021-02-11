@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { AvatarList } from './../../shared/mollecules/AvatarList';
-import { addFriendidToFriendList } from '../../../redux/actions/actions';
+import { addFriendidToFriendList, removeFriendRequest, addPendingFriendRequest } from '../../../redux/actions/actions';
 import { removePendingFriendRequest } from '../../../data/jegty-api';
 
 export const PendingRequests = props => {
@@ -16,11 +16,13 @@ export const PendingRequests = props => {
     const acceptFriend = (requestId) => {
         dispatch(addFriendidToFriendList(requestId))
         setFriendsReqList([...requestsIds, requestId]);
+        addPendingFriendRequest(currentUser.email, requestId);
     };
 
     const rejectFriend = (requestId) => {
-        dispatch(addFriendidToFriendList(requestId))
-        setFriendsReqList([...requestsIds].filter())
+        debugger;
+        dispatch(removeFriendRequest(requestId))
+        setFriendsReqList([...requestsIds].filter(e => e != requestId));
         removePendingFriendRequest(currentUser.email, requestId);
     };
 

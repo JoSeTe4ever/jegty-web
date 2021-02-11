@@ -54,6 +54,9 @@ export const removePendingFriendRequest = async (userEmail, uid) => {
     return db.collection("pendings").doc(encodedEmail).collection('users').doc(uid).delete();
 }
 
+
+export const addPendingFriendRequest jopi
+
 /**
  * Returns a promise of the List of participants id of a jegty room
  * @param {id} roomId 

@@ -32,12 +32,17 @@ export const addGameidToUserList = (roomGameId) => ({
     payload: roomGameId
 });
 
-export const addFriendidToFriendList = (friendId)  => ({
+export const addFriendidToFriendList = (friendId) => ({
     type: ActionTypes.ADD_FRIEND_ID,
     payload: friendId
 });
 
-export const addFriendRequestidToPendingList = (friendId)  => ({
+export const removeFriendRequest = (friendId) => ({
+    type: ActionTypes.REMOVE_FRIEND_REQUEST_ID,
+    payload: friendId
+});
+
+export const addFriendRequestidToPendingList = (friendId) => ({
     type: ActionTypes.ADD_FRIEND_REQUEST_ID,
     payload: friendId
 });
