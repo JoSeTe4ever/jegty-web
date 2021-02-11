@@ -1,7 +1,9 @@
 import {
     db
 } from './firebase'
-import { emailEncoder } from "./../helpers/idEncoder"
+import {
+    emailEncoder
+} from "./../helpers/idEncoder"
 
 export const getJegtyUserById = async (jegtUserId) => {
     let user = {};
@@ -36,8 +38,20 @@ export const getGameById = async (jegtyGameId) => {
  */
 export const getPendingFriendRequesFromUserEmail = async (userEmail) => {
     const encodedEmail = emailEncoder(userEmail)
-    const pendingIds = await db.collection('pendings').doc(encodedEmail).get();
+    const pendingIds = await db.collection('pendings').doc(encodedEmail).collection('users').get();
     return pendingIds;
+}
+
+/**
+ * removes a friend request, it can be used when accepting 
+ * or rejecting the friend request from the friend view. 
+ * 
+ * @param {*} userEmail 
+ * @param {*} uid 
+ */
+export const removePendingFriendRequest = async (userEmail, uid) => {
+    const encodedEmail = emailEncoder(userEmail);
+    return db.collection("pendings").doc(encodedEmail).collection('users').doc(uid).delete();
 }
 
 /**

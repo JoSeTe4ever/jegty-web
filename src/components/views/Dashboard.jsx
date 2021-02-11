@@ -51,11 +51,11 @@ export const Dashboard = () => {
                     dispatch(addFriendidToFriendList(friend.data().id));
                 });
             });
-            debugger;
+            
             getPendingFriendRequesFromUserEmail(user.email).then(pendingList => {
-                debugger;
                 pendingList.docs.map(pendingFriend => {
-                    debugger;
+                    var test = pendingFriend.data().id;
+                    console.log("test" + test);
                     dispatch(addFriendRequestidToPendingList(pendingFriend.data().id));
                 });
             })

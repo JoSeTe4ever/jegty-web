@@ -46,6 +46,6 @@ Configurar limite de gasto en firebase. https://cloud.google.com/appengine/docs/
 Habilitar la app para Edge.
 Cambiar la cloud functions que está generando los links para localhost.
 Crear la lista de pending users / block users? 
-
+¡las reglas de pendings en jegty-cli!
 ## BUGS 
 No está creando usuario en la tabla users cuando se registra uno nuevo

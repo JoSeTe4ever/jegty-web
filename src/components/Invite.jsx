@@ -101,7 +101,6 @@ export const Invite = () => {
                         birthdate: "",
                         createdAt: new Date()
                     });
-                    debugger;
                     setLoading(false);
                 })
                 .catch(error => {

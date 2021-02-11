@@ -2,23 +2,26 @@ import React, { useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { AvatarList } from './../../shared/mollecules/AvatarList';
 import { addFriendidToFriendList } from '../../../redux/actions/actions';
+import { removePendingFriendRequest } from '../../../data/jegty-api';
 
 export const PendingRequests = props => {
 
     const dispatch = useDispatch();
-    const [pendingRequests, setPendingRequests] = useState([]);
 
     const storePendingRequest = useSelector((state) => state.pendingRequests);
     const cachedJegtyUsers = useSelector((state) => state.cache.jegtyUsers);
-    const [requestsIds, setFriendsIfList] = useState(storePendingRequest);
+    const currentUser = useSelector((state) => state.user);
+    const [requestsIds, setFriendsReqList] = useState(storePendingRequest);
 
     const acceptFriend = (requestId) => {
         dispatch(addFriendidToFriendList(requestId))
-        setPendingRequests([...pendingRequests, requestId]);
+        setFriendsReqList([...requestsIds, requestId]);
     };
 
     const rejectFriend = (requestId) => {
-
+        dispatch(addFriendidToFriendList(requestId))
+        setFriendsReqList([...requestsIds].filter())
+        removePendingFriendRequest(currentUser.email, requestId);
     };
 
     return (
