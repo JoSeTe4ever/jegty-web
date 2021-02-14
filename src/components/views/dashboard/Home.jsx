@@ -10,6 +10,7 @@ import { Icon } from './../../shared/atoms/Icon';
 import { InputField } from './../../shared/atoms/InputField';
 import { AvatarList } from './../../shared/mollecules/AvatarList';
 import { PendingRequests } from './PendingRequests';
+import { addFriendPendingRequest } from 'data/jegty-api'
 
 export const Home = (props) => {
 
@@ -27,6 +28,7 @@ export const Home = (props) => {
 
     const friendsIdList = useSelector((state) => state.friends);
     const friendRequestIdList = useSelector((state) => state.pendingRequests);
+    const currentUser = useSelector((state) => state.user);
 
     const [friendsIds, setFriendsIfList] = useState(friendsIdList);
 
@@ -47,18 +49,16 @@ export const Home = (props) => {
     const sendInternalInvite = (inviteEmail) => {
         //get user by Id and add it in the page.
         //https://gist.github.com/katowulf/6479129
+        console.log("inviteEmail" + inviteEmail);
+        console.log("currentUser.id" + currentUser.uid);
 
-        db.collection("users").where("email", "==", inviteEmail).get().then(function (querySnapshot) {
-            querySnapshot.forEach(function (doc) {
-                // doc.data() is never undefined for query doc snapshots
-                console.log(doc.id, " => ", doc.data());
-                //change to pending users.
-                dispatch(addFriendRequestidToPendingList(doc.id))
-                setSeverity("success");
-                setMessage("internal invitation sucessfully sent");
-                window.$('#addFriendDialog').modal('hide');
-                setOpenSnackbar(true);
-            });
+        addFriendPendingRequest(inviteEmail, currentUser.uid).then(function (querySnapshot) {
+            //change to pending users.
+            //dispatch(addFriendRequestidToPendingList(doc.id))
+            setSeverity("success");
+            setMessage("internal invitation sucessfully sent");
+            window.$('#addFriendDialog').modal('hide');
+            setOpenSnackbar(true);
         })
             .catch(function (error) {
                 console.log("Error getting documents: ", error);
@@ -66,6 +66,8 @@ export const Home = (props) => {
                 setMessage("Error while sending internal invite");
                 setOpenSnackbar(true);
             });
+
+
 
     };
 

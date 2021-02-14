@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { AvatarList } from './../../shared/mollecules/AvatarList';
-import { addFriendidToFriendList, removeFriendRequest, addPendingFriendRequest } from '../../../redux/actions/actions';
-import { removePendingFriendRequest } from '../../../data/jegty-api';
+import { addFriendidToFriendList, removeFriendRequest } from '../../../redux/actions/actions';
+import { removePendingFriendRequest, acceptPendingFriendRequest } from '../../../data/jegty-api';
 
 export const PendingRequests = props => {
 
@@ -13,17 +13,20 @@ export const PendingRequests = props => {
     const currentUser = useSelector((state) => state.user);
     const [requestsIds, setFriendsReqList] = useState(storePendingRequest);
 
-    const acceptFriend = (requestId) => {
+    const acceptFriend = ($event, requestId) => {
+        debugger;
         dispatch(addFriendidToFriendList(requestId))
         setFriendsReqList([...requestsIds, requestId]);
-        addPendingFriendRequest(currentUser.email, requestId);
+        acceptPendingFriendRequest(currentUser.email, requestId, currentUser.uid);
+        $event.stopPropagation();
     };
 
-    const rejectFriend = (requestId) => {
+    const rejectFriend = ($event, requestId) => {
         debugger;
         dispatch(removeFriendRequest(requestId))
         setFriendsReqList([...requestsIds].filter(e => e != requestId));
         removePendingFriendRequest(currentUser.email, requestId);
+        $event.stopPropagation();
     };
 
     return (

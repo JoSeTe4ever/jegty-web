@@ -1,5 +1,6 @@
 import {
-    db
+    db,
+    realTimeDb
 } from './firebase'
 import {
     emailEncoder
@@ -51,11 +52,44 @@ export const getPendingFriendRequesFromUserEmail = async (userEmail) => {
  */
 export const removePendingFriendRequest = async (userEmail, uid) => {
     const encodedEmail = emailEncoder(userEmail);
-    return db.collection("pendings").doc(encodedEmail).collection('users').doc(uid).delete();
+    return await db.collection("pendings").doc(encodedEmail).collection('users').doc(uid).delete();
+}
+
+/**
+ * adds a friend request. It will set the realtime database to true in case it is not 
+ * set.
+ * 
+ * @param {*} userEmail 
+ * @param {*} uid 
+ */
+export const addFriendPendingRequest = async (userEmail, uid) => {
+    const encodedEmail = emailEncoder(userEmail);
+    return await db.collection("pendings").doc(encodedEmail).collection('users').doc(uid).set({
+        id: uid
+    }).then(ok => {
+        var pendingRequestsRef = realTimeDb.ref(`pendingRequests/${encodedEmail}`);
+        pendingRequestsRef.set(true);
+    });
 }
 
 
-export const addPendingFriendRequest jopi
+/**
+ * Add the pending friend request, it should create the 
+ * entry on the friend zone.
+ * 
+ * @param {*} userEmail 
+ * @param {*} uid 
+ * @param {*} userEmail current User.
+ */
+export const acceptPendingFriendRequest = async (userEmail, uid, currentUserId) => {
+    const encodedEmail = emailEncoder(userEmail);
+    return await removePendingFriendRequest(encodedEmail, uid).then(async (ok) => {
+        await db.collection('friendZone').doc(currentUserId).collection("friends").doc(uid).set({
+            id: uid
+        })
+    });
+}
+
 
 /**
  * Returns a promise of the List of participants id of a jegty room
