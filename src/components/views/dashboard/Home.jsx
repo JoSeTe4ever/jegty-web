@@ -49,26 +49,23 @@ export const Home = (props) => {
     const sendInternalInvite = (inviteEmail) => {
         //get user by Id and add it in the page.
         //https://gist.github.com/katowulf/6479129
-        console.log("inviteEmail" + inviteEmail);
-        console.log("currentUser.id" + currentUser.uid);
 
         addFriendPendingRequest(inviteEmail, currentUser.uid).then(function (querySnapshot) {
             //change to pending users.
             //dispatch(addFriendRequestidToPendingList(doc.id))
             setSeverity("success");
             setMessage("internal invitation sucessfully sent");
-            window.$('#addFriendDialog').modal('hide');
             setOpenSnackbar(true);
+
         })
             .catch(function (error) {
                 console.log("Error getting documents: ", error);
                 setSeverity("error");
                 setMessage("Error while sending internal invite");
                 setOpenSnackbar(true);
+            }).finally(() => {
+                window.$('#addFriendDialog').modal('hide');
             });
-
-
-
     };
 
     const addUser = () => {

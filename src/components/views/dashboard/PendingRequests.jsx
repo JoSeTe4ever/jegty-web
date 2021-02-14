@@ -14,15 +14,15 @@ export const PendingRequests = props => {
     const [requestsIds, setFriendsReqList] = useState(storePendingRequest);
 
     const acceptFriend = ($event, requestId) => {
-        debugger;
         dispatch(addFriendidToFriendList(requestId))
         setFriendsReqList([...requestsIds, requestId]);
-        acceptPendingFriendRequest(currentUser.email, requestId, currentUser.uid);
+        acceptPendingFriendRequest(currentUser.email, requestId, currentUser.uid).then(ok => {
+            removePendingFriendRequest(currentUser.email, requestId);
+        });
         $event.stopPropagation();
     };
 
     const rejectFriend = ($event, requestId) => {
-        debugger;
         dispatch(removeFriendRequest(requestId))
         setFriendsReqList([...requestsIds].filter(e => e != requestId));
         removePendingFriendRequest(currentUser.email, requestId);
