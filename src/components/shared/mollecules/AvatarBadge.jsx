@@ -8,11 +8,11 @@ export const AvatarBadge = (props) => {
     const { email, name, deletable, acceptable, id, onDelete, onAccept } = props;
 
     const deleteBadge = (content) => {
-        return <Badge onClick={($event) => onDelete($event, id)} badgeContent={'X'} color="error" className="cursor-pointer">{content}</Badge>;
+        return <Badge onClick={($event) => { onDelete(id); $event.stopPropagation() }} badgeContent={'X'} color="error" className="cursor-pointer">{content}</Badge>;
     }
 
     const acceptBadge = (content) => {
-        return <Badge onClick={($event) => onAccept($event, id)} badgeContent={'✔'} color="primary" className="cursor-pointer" anchorOrigin={{
+        return <Badge onClick={($event) => {onAccept(id); $event.stopPropagation() }} badgeContent={'✔'} color="primary" className="cursor-pointer" anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'right',
         }}>{content}</Badge>;

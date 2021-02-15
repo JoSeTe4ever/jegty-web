@@ -73,6 +73,13 @@ function rootReducer(state = initialState, action) {
         return newState;
     }
 
+    if (action.type === ActionTypes.REMOVE_FRIEND_ID) {
+        if (!newState.friends.some(id => id === action.payload)) {
+            newState.friends = [...newState.friends].filter(e => e !== action.payload);
+        }
+        return newState;
+    }
+
     if (action.type === ActionTypes.ADD_FRIEND_REQUEST_ID) {
         if (!newState.pendingRequests.some(id => id === action.payload)) {
             newState.pendingRequests.push(action.payload);

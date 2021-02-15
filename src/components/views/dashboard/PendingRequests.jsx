@@ -11,22 +11,22 @@ export const PendingRequests = props => {
     const storePendingRequest = useSelector((state) => state.pendingRequests);
     const cachedJegtyUsers = useSelector((state) => state.cache.jegtyUsers);
     const currentUser = useSelector((state) => state.user);
-    const [requestsIds, setFriendsReqList] = useState(storePendingRequest);
+    const [requestsIds, setPendingFriendsReqList] = useState(storePendingRequest);
 
-    const acceptFriend = ($event, requestId) => {
+    const acceptFriend = (requestId) => {
         dispatch(addFriendidToFriendList(requestId))
-        setFriendsReqList([...requestsIds, requestId]);
+
         acceptPendingFriendRequest(currentUser.email, requestId, currentUser.uid).then(ok => {
             removePendingFriendRequest(currentUser.email, requestId);
+            dispatch(removeFriendRequest(requestId))
+            setPendingFriendsReqList([...requestsIds].filter(e => e != requestId));
         });
-        $event.stopPropagation();
     };
 
-    const rejectFriend = ($event, requestId) => {
+    const rejectFriend = (requestId) => {
         dispatch(removeFriendRequest(requestId))
-        setFriendsReqList([...requestsIds].filter(e => e != requestId));
+        setPendingFriendsReqList([...requestsIds].filter(e => e != requestId));
         removePendingFriendRequest(currentUser.email, requestId);
-        $event.stopPropagation();
     };
 
     return (

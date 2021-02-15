@@ -37,6 +37,11 @@ export const addFriendidToFriendList = (friendId) => ({
     payload: friendId
 });
 
+export const removeFriendidfromFriendList = (friendId) => ({
+    type: ActionTypes.REMOVE_FRIEND_ID,
+    payload: friendId
+});
+
 export const removeFriendRequest = (friendId) => ({
     type: ActionTypes.REMOVE_FRIEND_REQUEST_ID,
     payload: friendId

@@ -56,6 +56,18 @@ export const removePendingFriendRequest = async (userEmail, uid) => {
 }
 
 /**
+ * Removes a friend relationship in Firebase.
+ * 
+ * @param {string} currentUserUid 
+ * @param {string} friendUid 
+ */
+export const removeFriend = async (currentUserUid, friendUid) => {
+    return await db.collection("friendZone").doc(friendUid).collection('friends').doc(currentUserUid).delete().then(async () => {
+        return await db.collection("friendZone").doc(currentUserUid).collection('friends').doc(friendUid).delete();
+    });
+}
+
+/**
  * adds a friend request. It will set the realtime database to true in case it is not 
  * set.
  * 

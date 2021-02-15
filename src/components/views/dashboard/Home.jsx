@@ -10,7 +10,8 @@ import { Icon } from './../../shared/atoms/Icon';
 import { InputField } from './../../shared/atoms/InputField';
 import { AvatarList } from './../../shared/mollecules/AvatarList';
 import { PendingRequests } from './PendingRequests';
-import { addFriendPendingRequest } from 'data/jegty-api'
+import { addFriendPendingRequest, removeFriend } from 'data/jegty-api';
+import { removeFriendRequest } from '../../../redux/actions/actions';
 
 export const Home = (props) => {
 
@@ -30,7 +31,7 @@ export const Home = (props) => {
     const friendRequestIdList = useSelector((state) => state.pendingRequests);
     const currentUser = useSelector((state) => state.user);
 
-    const [friendsIds, setFriendsIfList] = useState(friendsIdList);
+    const [friendsIds, setFriendsIdList] = useState(friendsIdList);
 
 
     const sendRecommendEmail = (inviteEmail) => {
@@ -67,6 +68,13 @@ export const Home = (props) => {
                 window.$('#addFriendDialog').modal('hide');
             });
     };
+
+    const removeUser = (id) => {
+        removeFriend(currentUser.uid, id).then(() => {
+            dispatch(removeFriendRequest(id));
+            setFriendsIdList(friendsIds.filter(e => e != id))
+        });
+    }
 
     const addUser = () => {
         //check if the user exist jopi
@@ -108,7 +116,7 @@ export const Home = (props) => {
             <div className="homeContainer">
                 <InputField id={SEARCH_FRIENDS_INPUT_ID} labelText="Search friends" value={searchQueryText} innerRef={searchFriendsRef}></InputField>
                 <Icon icon={'plus-circle'} aria-hidden="true" onClickCallback={() => showAddFriendDialog()}></Icon>
-                <AvatarList friends={friendsIds}></AvatarList>
+                <AvatarList onDelete={removeUser} friends={friendsIds} deletable={true}></AvatarList>
 
                 <div className="modal fade" id="addFriendDialog" role="dialog">
                     <div className="modal-dialog">
@@ -131,7 +139,6 @@ export const Home = (props) => {
                     </div>
                 </div>
             </div>
-
             <PendingRequests></PendingRequests>
         </React.Fragment>
 
