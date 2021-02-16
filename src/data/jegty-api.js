@@ -52,7 +52,12 @@ export const getPendingFriendRequesFromUserEmail = async (userEmail) => {
  */
 export const removePendingFriendRequest = async (userEmail, uid) => {
     const encodedEmail = emailEncoder(userEmail);
-    return await db.collection("pendings").doc(encodedEmail).collection('users').doc(uid).delete();
+    //check if there is no pending request, if so remove alert.
+    return await db.collection("pendings").doc(encodedEmail).collection('users').doc(uid).delete().then(() => {
+        var pendingRequestsRef = realTimeDb.ref(`pendingRequests/${encodedEmail}`);
+        console.log("jopi " + pendingRequestsRef.hasChild("users")); jopi
+    });
+
 }
 
 /**

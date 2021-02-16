@@ -38,6 +38,7 @@ export const Home = (props) => {
             removePendingFriendRequest(currentUser.email, requestId);
             dispatch(removeFriendRequest(requestId))
             setPendingFriendsReqList([...requestsIds].filter(e => e != requestId));
+            setFriendsIdList([...friendsIds, requestId]);
         });
     };
 
@@ -152,8 +153,6 @@ export const Home = (props) => {
                     </div>
                 </div>
             </div>
-
-
             <div>
                 <h3>pending requests</h3>
                 <AvatarList friends={requestsIds}
