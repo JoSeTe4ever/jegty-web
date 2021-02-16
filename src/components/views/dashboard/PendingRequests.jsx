@@ -6,28 +6,7 @@ import { removePendingFriendRequest, acceptPendingFriendRequest } from '../../..
 
 export const PendingRequests = props => {
 
-    const dispatch = useDispatch();
 
-    const storePendingRequest = useSelector((state) => state.pendingRequests);
-    const cachedJegtyUsers = useSelector((state) => state.cache.jegtyUsers);
-    const currentUser = useSelector((state) => state.user);
-    const [requestsIds, setPendingFriendsReqList] = useState(storePendingRequest);
-
-    const acceptFriend = (requestId) => {
-        dispatch(addFriendidToFriendList(requestId))
-
-        acceptPendingFriendRequest(currentUser.email, requestId, currentUser.uid).then(ok => {
-            removePendingFriendRequest(currentUser.email, requestId);
-            dispatch(removeFriendRequest(requestId))
-            setPendingFriendsReqList([...requestsIds].filter(e => e != requestId));
-        });
-    };
-
-    const rejectFriend = (requestId) => {
-        dispatch(removeFriendRequest(requestId))
-        setPendingFriendsReqList([...requestsIds].filter(e => e != requestId));
-        removePendingFriendRequest(currentUser.email, requestId);
-    };
 
     return (
         <div>

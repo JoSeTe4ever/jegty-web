@@ -1,17 +1,16 @@
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import React, { useRef, useState } from 'react';
+import { addFriendPendingRequest, removeFriend } from 'data/jegty-api';
+import { default as React, useRef, useState } from 'react';
 import { connect, useDispatch, useSelector } from "react-redux";
-import { app, db } from "../../../data/firebase";
-import { addFriendRequestidToPendingList } from '../../../redux/actions/actions';
+import { app } from "../../../data/firebase";
+import { acceptPendingFriendRequest, removePendingFriendRequest } from '../../../data/jegty-api';
+import { addFriendidToFriendList, removeFriendRequest } from '../../../redux/actions/actions';
 import { sendInviteMail } from "./../../../data/cloud-functions";
 import { VALID_EMAIL } from "./../../../helpers/validators";
 import { Icon } from './../../shared/atoms/Icon';
 import { InputField } from './../../shared/atoms/InputField';
 import { AvatarList } from './../../shared/mollecules/AvatarList';
-import { PendingRequests } from './PendingRequests';
-import { addFriendPendingRequest, removeFriend } from 'data/jegty-api';
-import { removeFriendRequest } from '../../../redux/actions/actions';
 
 export const Home = (props) => {
 
@@ -28,11 +27,25 @@ export const Home = (props) => {
     const [message, setMessage] = useState("");
 
     const friendsIdList = useSelector((state) => state.friends);
-    const friendRequestIdList = useSelector((state) => state.pendingRequests);
     const currentUser = useSelector((state) => state.user);
-
     const [friendsIds, setFriendsIdList] = useState(friendsIdList);
+    const storePendingRequest = useSelector((state) => state.pendingRequests);
+    const [requestsIds, setPendingFriendsReqList] = useState(storePendingRequest);
 
+    const acceptFriend = (requestId) => {
+        dispatch(addFriendidToFriendList(requestId))
+        acceptPendingFriendRequest(currentUser.email, requestId, currentUser.uid).then(ok => {
+            removePendingFriendRequest(currentUser.email, requestId);
+            dispatch(removeFriendRequest(requestId))
+            setPendingFriendsReqList([...requestsIds].filter(e => e != requestId));
+        });
+    };
+
+    const rejectFriend = (requestId) => {
+        dispatch(removeFriendRequest(requestId))
+        setPendingFriendsReqList([...requestsIds].filter(e => e != requestId));
+        removePendingFriendRequest(currentUser.email, requestId);
+    };
 
     const sendRecommendEmail = (inviteEmail) => {
         sendInviteMail(inviteEmail).then(res => {
@@ -139,7 +152,16 @@ export const Home = (props) => {
                     </div>
                 </div>
             </div>
-            <PendingRequests></PendingRequests>
+
+
+            <div>
+                <h3>pending requests</h3>
+                <AvatarList friends={requestsIds}
+                    onAccept={acceptFriend}
+                    onDelete={rejectFriend}
+                    acceptable={true} deletable={true}></AvatarList>
+            </div>
+
         </React.Fragment>
 
     )
