@@ -61,7 +61,7 @@ export const Login = () => {
         if (passInput !== repeatInput) {
             seterror("Password and repeat password does not match");
             setLoading(false);
-        } else {
+        } else { 
             await app
                 .auth()
                 .createUserWithEmailAndPassword(userInput, passInput)
@@ -71,7 +71,10 @@ export const Login = () => {
                     seterror('');
                     db.collection('users').doc(result.user.uid).set({
                         email: result.user.email,
-                        id: result.user.uid
+                        id: result.user.uid,
+                        name: '',
+                        birthdate: '',
+                        createdAt: new Date()
                     });
                     setLoading(false);
                 })
