@@ -43,6 +43,18 @@ export const getPendingFriendRequesFromUserEmail = async (userEmail) => {
     return pendingIds;
 }
 
+/****
+ * Removes the entry from the realtime database 
+ * it is invoked when there are no pending requests 
+ * @param {string} userEmail 
+ */
+export const removePendingWarning = async (userEmail) => {
+    const encodedEmail = emailEncoder(userEmail)
+    const pendingIds = await db.collection('pendings').doc(encodedEmail).collection('users').get();
+    return pendingIds;
+}
+
+
 /**
  * removes a friend request, it can be used when accepting 
  * or rejecting the friend request from the friend view. 
@@ -52,10 +64,16 @@ export const getPendingFriendRequesFromUserEmail = async (userEmail) => {
  */
 export const removePendingFriendRequest = async (userEmail, uid) => {
     const encodedEmail = emailEncoder(userEmail);
+    const pendingUsersRef = db.collection("pendings").doc(encodedEmail).collection('users')
     //check if there is no pending request, if so remove alert.
-    return await db.collection("pendings").doc(encodedEmail).collection('users').doc(uid).delete().then(() => {
-        var pendingRequestsRef = realTimeDb.ref(`pendingRequests/${encodedEmail}`);
-        console.log("jopi " + pendingRequestsRef.hasChild("users")); jopi
+    return await pendingUsersRef.doc(uid).delete().then(() => {
+
+        return getPendingFriendRequesFromUserEmail(userEmail).then(pendingList => {
+            if (pendingList && pendingList.docs && pendingList.docs.length === 0) {
+                jopi
+                return removePendingWarning(userEmail);
+            }
+        })
     });
 
 }
@@ -109,7 +127,8 @@ export const acceptPendingFriendRequest = async (userEmail, uid, currentUserId) 
 
 
 /**
- * Returns a promise of the List of participants id of a jegty room
+ * Returns a promise of the List of participants 
+ * id of a jegty room
  * @param {id} roomId 
  */
 export const getParticipantsIdFromRoomId = async (roomId) => {
@@ -123,6 +142,7 @@ export const getParticipantsIdFromRoomId = async (roomId) => {
 export const addNewFriend = async (friendId) => {
     return friendId;
 }
+
 
 /**
  * Creates a new game. 

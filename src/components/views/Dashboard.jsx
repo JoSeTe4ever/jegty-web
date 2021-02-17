@@ -64,7 +64,7 @@ export const Dashboard = () => {
             var pendingRequestsRef = realTimeDb.ref(`pendingRequests/${emailEncoder(user.email)}`);
             pendingRequestsRef.on('value', (snapshot) => {
                 const data = snapshot.val();
-                navitagionElemens[1].isPending = data;
+                navitagionElemens[1].isPending = data; // set the menu badge 
                 setNavigationElemens([...navitagionElemens]);
                 dispatch(setHasPending(data));
             });
