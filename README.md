@@ -47,7 +47,6 @@ Habilitar la app para Edge.
 Cambiar la cloud functions que está generando los links para localhost.
 Crear la lista de pending users / block users? 
 ¡las reglas de pendings en jegty-cli!
-jopi: Cómo hacer para forzar un re-render de un componente padre.
 
 ## BUGS 
 No está creando usuario en la tabla users cuando se registra uno nuevo

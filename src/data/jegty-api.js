@@ -50,8 +50,8 @@ export const getPendingFriendRequesFromUserEmail = async (userEmail) => {
  */
 export const removePendingWarning = async (userEmail) => {
     const encodedEmail = emailEncoder(userEmail)
-    const pendingIds = await db.collection('pendings').doc(encodedEmail).collection('users').get();
-    return pendingIds;
+    var pendingRequestsRef = realTimeDb.ref(`pendingRequests/${encodedEmail}`);
+    return await pendingRequestsRef.set(false);
 }
 
 
@@ -70,7 +70,6 @@ export const removePendingFriendRequest = async (userEmail, uid) => {
 
         return getPendingFriendRequesFromUserEmail(userEmail).then(pendingList => {
             if (pendingList && pendingList.docs && pendingList.docs.length === 0) {
-                jopi
                 return removePendingWarning(userEmail);
             }
         })

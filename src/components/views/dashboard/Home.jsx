@@ -5,7 +5,7 @@ import { default as React, useRef, useState } from 'react';
 import { connect, useDispatch, useSelector } from "react-redux";
 import { app } from "../../../data/firebase";
 import { acceptPendingFriendRequest, removePendingFriendRequest } from '../../../data/jegty-api';
-import { addFriendidToFriendList, removeFriendRequest } from '../../../redux/actions/actions';
+import { addFriendidToFriendList, removeFriendRequest, removeFriendidfromFriendList } from '../../../redux/actions/actions';
 import { sendInviteMail } from "./../../../data/cloud-functions";
 import { VALID_EMAIL } from "./../../../helpers/validators";
 import { Icon } from './../../shared/atoms/Icon';
@@ -34,12 +34,10 @@ export const Home = (props) => {
 
     const acceptFriend = (requestId) => {
         dispatch(addFriendidToFriendList(requestId))
-        acceptPendingFriendRequest(currentUser.email, requestId, currentUser.uid).then(ok => {
-            removePendingFriendRequest(currentUser.email, requestId);
-            dispatch(removeFriendRequest(requestId))
-            setPendingFriendsReqList([...requestsIds].filter(e => e != requestId));
-            setFriendsIdList([...friendsIds, requestId]);
-        });
+        acceptPendingFriendRequest(currentUser.email, requestId, currentUser.uid);
+        removePendingFriendRequest(currentUser.email, requestId);
+        dispatch(removeFriendRequest(requestId))
+        setPendingFriendsReqList([...requestsIds].filter(e => e != requestId));
     };
 
     const rejectFriend = (requestId) => {
@@ -84,10 +82,8 @@ export const Home = (props) => {
     };
 
     const removeUser = (id) => {
-        removeFriend(currentUser.uid, id).then(() => {
-            dispatch(removeFriendRequest(id));
-            setFriendsIdList(friendsIds.filter(e => e != id))
-        });
+        removeFriend(currentUser.uid, id)
+        dispatch(removeFriendidfromFriendList(id));
     }
 
     const addUser = () => {
