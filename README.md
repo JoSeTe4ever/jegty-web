@@ -49,4 +49,3 @@ Crear la lista de pending users / block users?
 ¡las reglas de pendings en jegty-cli!
 
 ## BUGS 
-No está creando usuario en la tabla users cuando se registra uno nuevo
