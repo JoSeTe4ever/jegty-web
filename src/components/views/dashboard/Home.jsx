@@ -28,7 +28,6 @@ export const Home = (props) => {
 
     const friendsIdList = useSelector((state) => state.friends);
     const currentUser = useSelector((state) => state.user);
-    const [friendsIds, setFriendsIdList] = useState(friendsIdList);
     const storePendingRequest = useSelector((state) => state.pendingRequests);
     const [requestsIds, setPendingFriendsReqList] = useState(storePendingRequest);
 
@@ -81,7 +80,7 @@ export const Home = (props) => {
             });
     };
 
-    const removeUser = (id) => {
+    const removeUserFriend = (id) => {
         removeFriend(currentUser.uid, id)
         dispatch(removeFriendidfromFriendList(id));
     }
@@ -126,7 +125,7 @@ export const Home = (props) => {
             <div className="homeContainer">
                 <InputField id={SEARCH_FRIENDS_INPUT_ID} labelText="Search friends" value={searchQueryText} innerRef={searchFriendsRef}></InputField>
                 <Icon icon={'plus-circle'} aria-hidden="true" onClickCallback={() => showAddFriendDialog()}></Icon>
-                <AvatarList onDelete={removeUser} friends={friendsIds} deletable={true}></AvatarList>
+                <AvatarList onDelete={removeUserFriend} friends={friendsIdList} deletable={true}></AvatarList>
 
                 <div className="modal fade" id="addFriendDialog" role="dialog">
                     <div className="modal-dialog">
