@@ -112,20 +112,28 @@ export const addFriendPendingRequest = async (userEmail, uid) => {
  * Add the pending friend request, it should create the 
  * entry on the friend zone.
  * 
- * @param {*} userEmail 
- * @param {*} uid 
+ * @param {*} userEmail email of the current user.
+ * @param {*} uid  friend to accept.
  * @param {*} userEmail current User.
  */
 export const acceptPendingFriendRequest = async (userEmail, uid, currentUserId) => {
     const encodedEmail = emailEncoder(userEmail);
     return await removePendingFriendRequest(encodedEmail, uid).then(async (ok) => {
-        return await db.collection('friendZone').doc(currentUserId).collection("friends").doc(uid).set({
+        const batch = db.batch();
+        const friendDocument = db.collection('friendZone').doc(currentUserId).collection("friends").doc(uid);
+        const userDocument = db.collection('friendZone').doc(uid).collection("friends").doc(currentUserId);
+
+        batch.set(friendDocument, {
             id: uid
-        }).then(async () => {
-            return await db.collection('friendZone').doc(uid).collection("friends").doc(currentUserId).set({
-                id: uid
-            });
-        })
+        });
+        batch.set(userDocument, {
+            id: currentUserId
+        });
+        return batch.commit().then(() => {
+            return uid;
+        }).catch(error => {
+            throw new Error(error);
+        });
     });
 }
 
