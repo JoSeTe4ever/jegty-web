@@ -47,5 +47,5 @@ Habilitar la app para Edge.
 Cambiar la cloud functions que está generando los links para localhost.
 Crear la lista de pending users / block users? 
 ¡las reglas de pendings en jegty-cli!
-
+acceptPendingFriendRequest mirar si se puede hacer con batch.
 ## BUGS 

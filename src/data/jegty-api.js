@@ -70,6 +70,7 @@ export const removePendingFriendRequest = async (userEmail, uid) => {
 
         return getPendingFriendRequesFromUserEmail(userEmail).then(pendingList => {
             if (pendingList && pendingList.docs && pendingList.docs.length === 0) {
+                debugger;
                 return removePendingWarning(userEmail);
             }
         })
@@ -118,8 +119,12 @@ export const addFriendPendingRequest = async (userEmail, uid) => {
 export const acceptPendingFriendRequest = async (userEmail, uid, currentUserId) => {
     const encodedEmail = emailEncoder(userEmail);
     return await removePendingFriendRequest(encodedEmail, uid).then(async (ok) => {
-        await db.collection('friendZone').doc(currentUserId).collection("friends").doc(uid).set({
+        return await db.collection('friendZone').doc(currentUserId).collection("friends").doc(uid).set({
             id: uid
+        }).then(async () => {
+            return await db.collection('friendZone').doc(uid).collection("friends").doc(currentUserId).set({
+                id: uid
+            });
         })
     });
 }
