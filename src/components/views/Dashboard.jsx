@@ -54,8 +54,6 @@ export const Dashboard = () => {
             
             getPendingFriendRequesFromUserEmail(user.email).then(pendingList => {
                 pendingList.docs.map(pendingFriend => {
-                    var test = pendingFriend.data().id;
-                    console.log("test" + test);
                     dispatch(addFriendRequestidToPendingList(pendingFriend.data().id));
                 });
             })

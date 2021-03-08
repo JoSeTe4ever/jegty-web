@@ -70,7 +70,6 @@ export const removePendingFriendRequest = async (userEmail, uid) => {
 
         return getPendingFriendRequesFromUserEmail(userEmail).then(pendingList => {
             if (pendingList && pendingList.docs && pendingList.docs.length === 0) {
-                debugger;
                 return removePendingWarning(userEmail);
             }
         })

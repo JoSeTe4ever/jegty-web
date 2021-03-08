@@ -22,17 +22,18 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
+// uncomment this for testing in a browser without dev tools
 //const initialState = createStore(
-//  persistedReducer,
-//  composeWithDevTools(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__
-//  ? window.__REDUX_DEVTOOLS_EXTENSION__()
-//  : f => f)
+// persistedReducer,
+// composeWithDevTools(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__
+// ? window.__REDUX_DEVTOOLS_EXTENSION__()
+// : f => f)
 //);
 
-const initialState = createStore(
-  persistedReducer,
-  compose(applyMiddleware(thunk),window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
-);
+ const initialState = createStore(
+   persistedReducer,
+   compose(applyMiddleware(thunk),window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+ );
 
 let persistor = persistStore(initialState)
 ReactDOM.render(
