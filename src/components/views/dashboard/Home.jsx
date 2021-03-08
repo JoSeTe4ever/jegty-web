@@ -1,11 +1,11 @@
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { addFriendPendingRequest, removeFriend } from 'data/jegty-api';
-import { default as React, useRef, useState } from 'react';
+import { default as React, useRef, useState, useEffect } from 'react';
 import { connect, useDispatch, useSelector } from "react-redux";
 import { app } from "../../../data/firebase";
-import { acceptPendingFriendRequest, removePendingFriendRequest } from '../../../data/jegty-api';
-import { addFriendidToFriendList, removeFriendRequest, removeFriendidfromFriendList } from '../../../redux/actions/actions';
+import { acceptPendingFriendRequest, removePendingFriendRequest, getFriendsByJegtyUserId, getPendingFriendRequesFromUserEmail } from '../../../data/jegty-api';
+import { addFriendidToFriendList, removeFriendidfromFriendList, removeFriendRequest, addFriendRequestidToPendingList } from '../../../redux/actions/actions';
 import { sendInviteMail } from "./../../../data/cloud-functions";
 import { VALID_EMAIL } from "./../../../helpers/validators";
 import { Icon } from './../../shared/atoms/Icon';
@@ -114,6 +114,21 @@ export const Home = (props) => {
     function Alert(props) {
         return <MuiAlert elevation={6} variant="filled" {...props} />;
     }
+
+    useEffect(() => {
+
+        getFriendsByJegtyUserId(currentUser.uid).then(friendsList => {
+            friendsList = friendsList.docs.map(friend => {
+                dispatch(addFriendidToFriendList(friend.data().id));
+            });
+        });
+
+        getPendingFriendRequesFromUserEmail(currentUser.email).then(pendingList => {
+            pendingList.docs.map(pendingFriend => {
+                dispatch(addFriendRequestidToPendingList(pendingFriend.data().id));
+            });
+        })
+    }, []);
 
     return (
         <React.Fragment>

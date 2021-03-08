@@ -31,6 +31,7 @@ export const Profile = (props) => {
 
     const _logout = () => {
 //        realTimeDb.off();
+        history.push("/");
         dispatch(logValidUser(false));
     }
 

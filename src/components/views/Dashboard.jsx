@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { connect, useSelector, useDispatch } from 'react-redux';
-import { Switch, useLocation, useHistory } from "react-router-dom";
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { Switch, useHistory, useLocation } from "react-router-dom";
 import { ReactComponent as IconSvg } from '../../assets/icons/icono.svg';
-import { Profile } from "../../components/views/dashboard/Profile";
-import { Tournaments } from "../../components/views/dashboard/Tournaments";
-import { Games } from "../../components/views/dashboard/Games";
 import { CreateGame } from "../../components/views/dashboard/CreateGame";
 import { GameDetails } from "../../components/views/dashboard/GameDetails";
+import { Games } from "../../components/views/dashboard/Games";
+import { Profile } from "../../components/views/dashboard/Profile";
+import { Tournaments } from "../../components/views/dashboard/Tournaments";
+import { getGamesByJegtyUserId } from "../../data/jegty-api";
 import GuardedRoute from '../shared/GuardedRoute';
+import { AvatarBadge } from '../shared/mollecules/AvatarBadge';
 import { Home } from '../views/dashboard/Home';
-import { NotFound } from './NotFound';
 import { NavigationMenu } from './../../components/shared/mollecules/NavigationMenu';
 import { db, realTimeDb } from "./../../data/firebase";
-import { addJegtyUser, addGameidToUserList, 
-    addFriendidToFriendList, setHasPending, 
-    addFriendRequestidToPendingList } from "./../../redux/actions/actions";
-import { AvatarBadge } from '../shared/mollecules/AvatarBadge';
-import { getGamesByJegtyUserId, getFriendsByJegtyUserId, getPendingFriendRequesFromUserEmail } from "../../data/jegty-api";
-import { emailEncoder } from "./../../helpers/idEncoder"
+import { emailEncoder } from "./../../helpers/idEncoder";
+import {
+    addGameidToUserList, addJegtyUser,
+    setHasPending
+} from "./../../redux/actions/actions";
+import { NotFound } from './NotFound';
 
 export const Dashboard = () => {
     const LoggedRoute = GuardedRoute(true);
@@ -46,17 +47,6 @@ export const Dashboard = () => {
                 });
             });
 
-            getFriendsByJegtyUserId(user.uid).then(friendsList => {
-                friendsList = friendsList.docs.map(friend => {
-                    dispatch(addFriendidToFriendList(friend.data().id));
-                });
-            });
-            
-            getPendingFriendRequesFromUserEmail(user.email).then(pendingList => {
-                pendingList.docs.map(pendingFriend => {
-                    dispatch(addFriendRequestidToPendingList(pendingFriend.data().id));
-                });
-            })
 
             // listen to the realtime database 
             var pendingRequestsRef = realTimeDb.ref(`pendingRequests/${emailEncoder(user.email)}`);

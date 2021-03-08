@@ -49,3 +49,5 @@ Crear la lista de pending users / block users?
 ¡las reglas de pendings en jegty-cli!
 acceptPendingFriendRequest mirar si se puede hacer con batch.
 ## BUGS 
+
+Al estar deslogeado y entrar en una ruta se queda en blanco, arreglar.
