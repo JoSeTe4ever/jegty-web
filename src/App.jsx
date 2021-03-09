@@ -33,7 +33,7 @@ export class App extends Component {
     return !isLogged ? (
       <div>
         <Switch>
-          <Route exact path="/">
+          <Route>
             <Login></Login>
             <Header data={this.state.landingPageData.Header} />
             <div id="modal-root"></div>

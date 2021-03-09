@@ -29,7 +29,7 @@ app.auth().onAuthStateChanged((user) => {
     console.log('not logged in');
     return;
   }
-  firebase.auth().currentUser.getIdToken( /* forceRefresh */ true).then(function (idToken) {
+  firebase.auth().currentUser.getIdToken( /* forceRefresh */ false).then(function (idToken) {
     currentIdToken = idToken;
   }).catch(function (error) {
     // Handle error
