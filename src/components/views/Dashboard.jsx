@@ -42,6 +42,7 @@ export const Dashboard = () => {
         }
         if (user !== undefined && user.uid !== undefined) {
             getGamesByJegtyUserId(user.uid).then(gamesList => {
+                debugger;
                 gamesList = gamesList.docs.map(doc => {
                     dispatch(addGameidToUserList(doc.data().id));
                 });

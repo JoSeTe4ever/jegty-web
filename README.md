@@ -48,6 +48,8 @@ Cambiar la cloud functions que está generando los links para localhost.
 Crear la lista de pending users / block users? 
 ¡las reglas de pendings en jegty-cli!
 acceptPendingFriendRequest mirar si se puede hacer con batch.
+HAY QUE METERLE UN CREATION DATE A userGames  para que no se descuajeringue y ordene por fecha.
+HAY QUE meterle caña al game details, al menos hacer los selector que cojan toda la info
 ## BUGS 
 
 Que esta ruta no rompa nada.

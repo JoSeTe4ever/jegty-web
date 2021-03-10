@@ -1,6 +1,7 @@
 import React from 'react'
 import { GameCard } from './../../shared/mollecules/Card'
 import { connect, useSelector } from 'react-redux';
+
 export const Games = props => {
 
     const userGames = useSelector((state) => {

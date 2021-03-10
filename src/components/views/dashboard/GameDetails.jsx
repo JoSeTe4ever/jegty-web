@@ -29,10 +29,10 @@ export const GameDetails = (props) => {
                 Organizer:
             </div>
             <div className="date">
-                Organizer:
+                Date:
             </div>
             <div className="social">
-                Organizer:
+                Social:
             </div>
             <h3 className="gameTitle">
                 Game: {rawGame.name}
