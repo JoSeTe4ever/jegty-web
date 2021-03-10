@@ -5,6 +5,8 @@ import Header from './components/header';
 import { Login } from './components/Login';
 import { Invite } from './components/Invite';
 import { Dashboard } from './components/views/Dashboard';
+import { app } from 'data/firebase';
+
 
 
 export class App extends Component {
@@ -40,7 +42,7 @@ export class App extends Component {
           </Route>
           <Route path="/invite">
             <Invite></Invite>
-            <Header data={this.state.landingPageData.Header} openOnLoad="true"/>
+            <Header data={this.state.landingPageData.Header} openOnLoad="true" />
             <div id="modal-root"></div>
           </Route>
         </Switch>

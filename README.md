@@ -50,4 +50,5 @@ Crear la lista de pending users / block users?
 acceptPendingFriendRequest mirar si se puede hacer con batch.
 ## BUGS 
 
-Al estar deslogeado y entrar en una ruta se queda en blanco, arreglar.
+Que esta ruta no rompa nada.
+http://localhost:3000/profile/test

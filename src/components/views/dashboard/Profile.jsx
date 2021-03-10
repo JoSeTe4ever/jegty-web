@@ -8,6 +8,7 @@ import { InputField } from './../../shared/atoms/InputField';
 import { LoadingBar } from './../../shared/atoms/LoadingBar';
 import './../../views/views.scss';
 import { Avatar } from '../../shared/atoms/Avatar';
+import firebase from 'firebase';
 
 export const Profile = (props) => {
 
@@ -30,9 +31,14 @@ export const Profile = (props) => {
     const history = useHistory();
 
     const _logout = () => {
-//        realTimeDb.off();
-        history.push("/");
-        dispatch(logValidUser(false));
+        //        realTimeDb.off();
+        firebase.auth().signOut().then(() => {
+            history.push("/");
+            dispatch(logValidUser(false));
+        }).catch((error) => {
+            // An error happened.
+        });
+
     }
 
     const displayMessage = (message, type) => {
@@ -84,7 +90,7 @@ export const Profile = (props) => {
             }
         )
     }
-    
+
     return (
         <div className="container profileContainer">
             {error ? <div className="alert alert-danger mt-3 fade show" htmlrole="alert">{error}</div> : null}
@@ -100,7 +106,7 @@ export const Profile = (props) => {
                         <div className=".col-md-6 .offset-md-3">
                             <InputField id={NICKNAME_INPUT_ID} labelText="nickname" value={jegtyUser.name} innerRef={inputNickName} required helperText="your display name"></InputField>
                             <InputField id={CAKEDATE_INPUT_ID} labelText="Cake date" value={jegtyUser.birthday} innerRef={inputBirthdate}
-                            helperText="your birthday" type="datetime-local"></InputField>
+                                helperText="your birthday" type="datetime-local"></InputField>
                             <InputField id={EMAIL_INPUT_ID} labelText="email" value={jegtyUser.email} innerRef={email} readonly={true} helperText="your email"></InputField>
                         </div>
                     </div>
@@ -110,7 +116,7 @@ export const Profile = (props) => {
                             <Icon icon="sign-out" aria-hidden="true" onClickCallback={() => _logout()}></Icon>
                             <span>Sign out</span>
                         </div>
-                        
+
                         <div className="form-icon">
                             <Icon icon="ban" aria-hidden="true" onClickCallback={() => history.push("friends")}></Icon>
                             <span>Banned people</span>

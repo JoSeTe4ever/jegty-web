@@ -41,7 +41,7 @@ export const Login = () => {
                     dispatch(logValidUser(true));
                 })
                 .catch(error => {
-                    seterror(error.message, "Error while authenticating");
+                    seterror(`${error.message} Error while authenticating`);
                 }).finally(() => {
                     setLoading(false);
                 });
