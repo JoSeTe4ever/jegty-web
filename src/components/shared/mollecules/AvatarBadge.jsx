@@ -21,7 +21,13 @@ export const AvatarBadge = (props) => {
     }
 
     const acceptBadge = (content) => {
-        return <Badge onClick={($event) => { $event.stopPropagation(); onAccept(id); }} badgeContent={'✔'} color="primary" className="cursor-pointer" anchorOrigin={{
+        return <Badge onClick={($event) => {
+            const toSt = $event.target.outerHTML + "";
+            if (toSt.includes("colorPrimary")) {
+                $event.stopPropagation();
+                onAccept(id);
+            }
+        }} badgeContent={'✔'} color="primary" className="cursor-pointer" anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'right',
         }}>{content}</Badge>;
@@ -40,4 +46,4 @@ export const AvatarBadge = (props) => {
     let toReturn = deletable ? deleteBadge(avatarContent) : avatarContent;
     return acceptable ? acceptBadge(toReturn) : toReturn;
 
-}      
+}
