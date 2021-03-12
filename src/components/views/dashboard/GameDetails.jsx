@@ -1,3 +1,4 @@
+import { getDateFromSeconds } from 'helpers/dates';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { cacheJegtyUser } from 'redux/actions/actions';
@@ -13,6 +14,7 @@ export const GameDetails = (props) => {
     const [ownerUser, setOwnerUser] = useState({});
     const dispatch = useDispatch();
     const cachedOwnerUser = useSelector(getCachedUserById(jegtyGame.ownerId));
+    const gameDate = getDateFromSeconds(jegtyGame.startAt.seconds);
 
     useEffect(() => {
         if (!cachedOwnerUser) {
@@ -44,7 +46,7 @@ export const GameDetails = (props) => {
                 Organizer: {ownerUser.name}
             </div>
             <div className="date">
-                Date:
+                Date: {gameDate.toDateString()}
             </div>
             <div className="social">
                 Social:

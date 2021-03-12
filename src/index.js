@@ -1,18 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.scss';
-import App from './App';
-import { Provider } from 'react-redux'
-import {createStore, applyMiddleware, compose} from 'redux';
-import {composeWithDevTools} from 'redux-devtools-extension/developmentOnly';
-import rootReducer from './redux/reducers/rootReducer.js';
-import thunk from 'redux-thunk';
+import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from "react-router-dom";
-import { AuthContext } from "./context/AuthContext";
-import { persistStore, persistReducer } from 'redux-persist'
-import { PersistGate } from 'redux-persist/integration/react'
-import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
+import { applyMiddleware, compose, createStore } from 'redux';
+import { persistReducer, persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
+import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+import thunk from 'redux-thunk';
+import App from './App';
+import { AuthContext } from "./context/AuthContext";
+import './index.scss';
+import rootReducer from './redux/reducers/rootReducer.js';
 
 const persistConfig = {
   key: 'root',
