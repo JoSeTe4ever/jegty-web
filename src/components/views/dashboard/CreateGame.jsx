@@ -201,7 +201,7 @@ export const CreateGame = () => {
 
                 <div className="friendsAgregator mt-3 border">
                     <AddIcon onClick={addNewGameFriend} />
-                    <InputLabel htmlFor="outlined-age-native-simple">Age2</InputLabel>
+                    <InputLabel htmlFor="outlined-age-native-simple">Friends</InputLabel>
                     <Select
                         native
                         value={selectedFriend}

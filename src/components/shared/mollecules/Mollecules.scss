@@ -11,11 +11,15 @@ span.brand-span-container {
 
 div.searchInputContainer {
 
-    & .searchResultsContainer {}
+    & .searchResultsContainer {
+        max-height: 20rem;
+        overflow-y: auto;
+    }
 
     & .game-img-thumbnail {
         width: 204px;
         height: auto;
+        max-height: 204px;
     }
 }
 
