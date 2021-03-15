@@ -18,13 +18,3 @@ export const Games = props => {
         </div>
     )
 }
-
-const mapStateToProps = (state) => ({
-
-})
-
-const mapDispatchToProps = {
-
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Games)

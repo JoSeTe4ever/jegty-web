@@ -64,11 +64,12 @@ export const Invite = () => {
                 })
                 .catch(error => {
                     seterror(error.message, "Error while authenticating");
+                    throw new Error(error);
                 }).finally(() => {
                     setLoading(false);
                 });
         } catch (e) {
-            console.log("e" + e);
+            console.error(e);
         } finally {
             setLoading(false);
         }

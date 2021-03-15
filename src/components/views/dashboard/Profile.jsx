@@ -27,7 +27,7 @@ export const Profile = (props) => {
     const userBday = getDateFromSeconds(jegtyUser.birthdate.seconds);
     const [birthday, setBirthday] = useState(userBday);
 
-    const inputNickName = useRef(null);
+    const inputNickName = useRef(jegtyUser.name);
     const email = useRef(null);
 
     const dispatch = useDispatch();
@@ -40,6 +40,8 @@ export const Profile = (props) => {
             dispatch(logValidUser(false));
         }).catch((error) => {
             // An error happened.
+            console.error(error);
+            throw new Error(error);
         });
 
     }
@@ -62,14 +64,22 @@ export const Profile = (props) => {
 
     const updateUser = async () => {
         setLoading(true);
-        const updatedUser = { ...jegtyUser, displayName: inputNickName.current.value, birthday: birthday };
-        db.collection('users').doc(user.uid).set(updatedUser).then(
+        if (!inputNickName.current.value) {
+            inputNickName.current.value = jegtyUser.name
+        }
+        const updatedUser = { name: inputNickName.current.value, birthdate: birthday };
+
+        db.collection('users').doc(user.uid).update(updatedUser).then(
             (result) => {
                 displayMessage(`User ${result} sucessfully updated`, "INFO");
-                dispatch(addJegtyUser(updatedUser));
+                const newUpdatedUser = {...jegtyUser};
+                newUpdatedUser.name = inputNickName.current.value
+                newUpdatedUser.birthdate = birthday;
+                dispatch(addJegtyUser(newUpdatedUser));
                 setLoading(false);
             }
         ).catch(error => {
+            console.error(error);
             displayMessage(`Error updating, ${error}`, "ERROR");
             setLoading(false);
         })
@@ -107,16 +117,16 @@ export const Profile = (props) => {
                 <div className="col-10">
                     <div className="form-group">
                         <div className=".col-md-6 .offset-md-3">
-                            <InputField id={NICKNAME_INPUT_ID} labelText="nickname" value={jegtyUser.name} 
-                            innerRef={inputNickName} required helperText="your display name"></InputField>
+                            <InputField id={NICKNAME_INPUT_ID} labelText="nickname" value={jegtyUser.name}
+                                innerRef={inputNickName} required helperText="your display name"></InputField>
                             <DateTimePicker
-                                    variant="inline"
-                                    label="Cake date"
-                                    value={birthday}
-                                    onChange={setBirthday}
-                                    inputVariant="outlined"/>
-                            <InputField id={EMAIL_INPUT_ID} labelText="email" value={jegtyUser.email} 
-                            innerRef={email} readonly={true} helperText="your email"></InputField>
+                                variant="inline"
+                                label="Cake date"
+                                value={birthday}
+                                onChange={setBirthday}
+                                inputVariant="outlined" />
+                            <InputField id={EMAIL_INPUT_ID} labelText="email" value={jegtyUser.email}
+                                innerRef={email} readonly={true} helperText="your email"></InputField>
                         </div>
                     </div>
 

@@ -84,7 +84,6 @@ export const GameCard = (props) => {
             { rawGame && rawGame.background_image ? (
                 <Card className="gameCard mb-3"
                     onClick={() => {
-                        console.log("navigate to details!!!!! ");
                         history.push("/game-details", { id: gameId, jegtyGame: jegtyGame, rawGame: rawGame })
                     }}>
                     <CardMedia

@@ -37,9 +37,14 @@ export const Dashboard = () => {
     // this is like onInit.
     useEffect(() => {
         const modalBackgroundArray = document.getElementsByClassName("modal-backdrop fade show")
+        const body = document.getElementById("page-top");
+        body.classList.remove("modal-open");
+        
         if (modalBackgroundArray && modalBackgroundArray.length > 0) {
             modalBackgroundArray[0].remove();
         }
+
+
         if (user !== undefined && user.uid !== undefined) {
             getGamesByJegtyUserId(user.uid).then(gamesList => {
                 gamesList = gamesList.docs.map(doc => {
@@ -66,6 +71,8 @@ export const Dashboard = () => {
                 console.log(`ERROR ${error}`, "ERROR");
             });
         }
+
+        return undefined;
     }, [])
 
     useEffect(() => {
