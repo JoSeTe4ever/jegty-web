@@ -131,7 +131,7 @@ export const Home = (props) => {
     }, []);
 
     return (
-        <React.Fragment>
+        <>
             <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
                 <Alert onClose={handleClose} severity={severity}>
                     {message}
@@ -171,8 +171,7 @@ export const Home = (props) => {
                     acceptable={true} deletable={true}></AvatarList>
             </div>
 
-        </React.Fragment>
-
+        </>
     )
 }
 

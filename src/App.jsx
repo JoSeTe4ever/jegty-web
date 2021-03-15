@@ -6,6 +6,8 @@ import { Login } from './components/Login';
 import { Invite } from './components/Invite';
 import { Dashboard } from './components/views/Dashboard';
 import { app } from 'data/firebase';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 
 
@@ -47,7 +49,10 @@ export class App extends Component {
           </Route>
         </Switch>
       </div>
-    ) : <Dashboard></Dashboard>
+    ) :
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <Dashboard></Dashboard>
+      </MuiPickersUtilsProvider>
   }
 }
 

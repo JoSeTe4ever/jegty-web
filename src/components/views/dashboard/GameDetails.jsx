@@ -33,6 +33,8 @@ export const GameDetails = (props) => {
             });
             setParticipantList(participantList);
         })
+
+        return undefined;
     }, []);
 
 

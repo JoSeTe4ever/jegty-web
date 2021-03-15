@@ -83,7 +83,7 @@ export const Dashboard = () => {
         return name.charAt(0).toUpperCase() + name.slice(1)
     }
     return (
-        <React.Fragment>
+        <>
             <section>
                 <div>
                     <div className="row h-100">
@@ -127,7 +127,7 @@ export const Dashboard = () => {
                 <footer>
                 </footer>
             </section>
-        </React.Fragment>
+        </>
     )
 }
 

@@ -9,6 +9,8 @@ import { LoadingBar } from './../../shared/atoms/LoadingBar';
 import './../../views/views.scss';
 import { Avatar } from '../../shared/atoms/Avatar';
 import firebase from 'firebase';
+import { DateTimePicker } from '@material-ui/pickers';
+import { getDateFromSeconds } from 'helpers/dates';
 
 export const Profile = (props) => {
 
@@ -22,9 +24,10 @@ export const Profile = (props) => {
     const [error, setError] = useState('');
     const [info, setInfo] = useState('');
     const [isLoading, setLoading] = useState(false);
+    const userBday = getDateFromSeconds(jegtyUser.birthdate.seconds);
+    const [birthday, setBirthday] = useState(userBday);
 
     const inputNickName = useRef(null);
-    const inputBirthdate = useRef(null);
     const email = useRef(null);
 
     const dispatch = useDispatch();
@@ -59,7 +62,7 @@ export const Profile = (props) => {
 
     const updateUser = async () => {
         setLoading(true);
-        const updatedUser = { ...jegtyUser, displayName: inputNickName.current.value, birthday: inputBirthdate.current.value };
+        const updatedUser = { ...jegtyUser, displayName: inputNickName.current.value, birthday: birthday };
         db.collection('users').doc(user.uid).set(updatedUser).then(
             (result) => {
                 displayMessage(`User ${result} sucessfully updated`, "INFO");
@@ -104,10 +107,16 @@ export const Profile = (props) => {
                 <div className="col-10">
                     <div className="form-group">
                         <div className=".col-md-6 .offset-md-3">
-                            <InputField id={NICKNAME_INPUT_ID} labelText="nickname" value={jegtyUser.name} innerRef={inputNickName} required helperText="your display name"></InputField>
-                            <InputField id={CAKEDATE_INPUT_ID} labelText="Cake date" value={jegtyUser.birthday} innerRef={inputBirthdate}
-                                helperText="your birthday" type="datetime-local"></InputField>
-                            <InputField id={EMAIL_INPUT_ID} labelText="email" value={jegtyUser.email} innerRef={email} readonly={true} helperText="your email"></InputField>
+                            <InputField id={NICKNAME_INPUT_ID} labelText="nickname" value={jegtyUser.name} 
+                            innerRef={inputNickName} required helperText="your display name"></InputField>
+                            <DateTimePicker
+                                    variant="inline"
+                                    label="Cake date"
+                                    value={birthday}
+                                    onChange={setBirthday}
+                                    inputVariant="outlined"/>
+                            <InputField id={EMAIL_INPUT_ID} labelText="email" value={jegtyUser.email} 
+                            innerRef={email} readonly={true} helperText="your email"></InputField>
                         </div>
                     </div>
 

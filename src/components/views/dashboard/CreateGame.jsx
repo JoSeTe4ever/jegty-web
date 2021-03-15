@@ -184,7 +184,7 @@ export const CreateGame = () => {
         }
     }
     return (
-        <React.Fragment>
+        <>
             <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
                 <Alert onClose={handleClose} severity={severity}>
                     {message}
@@ -231,7 +231,7 @@ export const CreateGame = () => {
                       </button> : null}
 
             </div>
-        </React.Fragment>
+        </>
     )
 }
 

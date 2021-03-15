@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import TextField from '@material-ui/core/TextField';
+import { DateTimePicker } from '@material-ui/pickers';
 
 /**
  * Input field 
@@ -13,8 +14,9 @@ import TextField from '@material-ui/core/TextField';
  */
 export const InputField = (props) => {
 
-    const { id, labelText, value, innerRef, type, readonly, helperText, validator, required, errorText } = props;
+    const { id, selectedDate, labelText, value, innerRef, type, readonly, helperText, validator, required, errorText } = props;
     const [text, setText] = useState(value);
+
     let hasError = false;
     let helper = "";
 
@@ -28,7 +30,6 @@ export const InputField = (props) => {
     const handleChange = (e) => {
         setText(e.target.value);
         innerRef.current.value = e.target.value;
-
     }
 
     let regularTextField = <TextField
@@ -42,7 +43,6 @@ export const InputField = (props) => {
         {...(required ? { required: true } : { required: false })}
         {...(helper ? { helperText: helper } : {})}
         {...(type === "password" ? { type: "password" } : {})}
-        {...(type === "datetime-local" ? { type: "datetime-local" } : {})}
         ref={innerRef}
     />;
 

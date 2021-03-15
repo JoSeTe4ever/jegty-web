@@ -11,12 +11,13 @@ import { getJegtyUserById, getGameById } from "./../../../data/jegty-api"
 import { getRawGameById } from "./../../../data/games-api"
 import { cacheRawGame, cacheRoomGame } from "./../../../redux/actions/actions"
 import { useHistory } from 'react-router'
+import { LoadingSpinner } from '../atoms/LoadingSpinner';
 
 export const GameCard = (props) => {
     const { gameId } = props;
     const [isSelected, setIsSelected] = useState(false);
     const [jegtyGame, setJegtyGame] = useState({});
-    const [rawGame, setRawGame] = useState({});
+    const [rawGame, setRawGame] = useState(undefined);
     const currentJegtyuser = useSelector((state) => state.user);
     const cachedRawGames = useSelector((state) => state.cache.rawGames);
     const cachedRoomGames = useSelector((state) => state.cache.roomGames);
@@ -63,7 +64,7 @@ export const GameCard = (props) => {
                 _loadUserInfo(room.ownerId);
             });
         }
-
+        return undefined;
     }, [])
 
     const MiniAvatarList = (props) => {
@@ -79,47 +80,47 @@ export const GameCard = (props) => {
     }
 
     return (
-        <React.Fragment>
-            <Card className="gameCard mb-3"
-                onClick={() => {
-                    console.log("navigate to details!!!!! ");
-                    history.push("/game-details", { id: gameId, jegtyGame: jegtyGame, rawGame: rawGame })
-                }}
-            >
-                <CardMedia
-                    className="gameCover"
-                    image={rawGame.background_image}
-                    title="Live from space album cover"
-                />
-                <div className="details">
-                    <CardContent className="gameContent">
+        <>
+            { rawGame && rawGame.background_image ? (
+                <Card className="gameCard mb-3"
+                    onClick={() => {
+                        console.log("navigate to details!!!!! ");
+                        history.push("/game-details", { id: gameId, jegtyGame: jegtyGame, rawGame: rawGame })
+                    }}>
+                    <CardMedia
+                        className="gameCover"
+                        image={rawGame.background_image}
+                        title="Live from space album cover"
+                    />
+                    <div className="details">
+                        <CardContent className="gameContent">
 
-                        <Typography component="h5" variant="h5">
-                            Organizer:
+                            <Typography component="h5" variant="h5">
+                                Organizer:
                         </Typography>
-                        <span className="creationDate"></span>
-                        <div className="socialContainer">
-                            <div>discord</div>
-                            <div>twitch</div>
+                            <span className="creationDate"></span>
+                            <div className="socialContainer">
+                                <div>discord</div>
+                                <div>twitch</div>
 
-                        </div>
-                        <Typography variant="subtitle1" color="textSecondary">
-                            {gameJegtyUser.name}
-                        </Typography>
+                            </div>
+                            <Typography variant="subtitle1" color="textSecondary">
+                                {gameJegtyUser.name}
+                            </Typography>
 
-                        <div className="descriptionContainer">
-                            <div dangerouslySetInnerHTML={{ __html: rawGame.description }}></div>
-                        </div>
-                    </CardContent>
+                            <div className="descriptionContainer">
+                                <div dangerouslySetInnerHTML={{ __html: rawGame.description }}></div>
+                            </div>
+                        </CardContent>
 
-                </div>
-                <Fab color="primary" aria-label="add" onClick={() => {
-                    setIsSelected(!isSelected);
-                }}>
-                    <AddIcon />
-                </Fab>
-                {isSelected ? <MiniAvatarList></MiniAvatarList> : null}
-            </Card>
-        </React.Fragment>
+                    </div>
+                    <Fab color="primary" aria-label="add" onClick={() => {
+                        setIsSelected(!isSelected);
+                    }}>
+                        <AddIcon />
+                    </Fab>
+                    {isSelected ? <MiniAvatarList></MiniAvatarList> : null}
+                </Card>) : (<LoadingSpinner></LoadingSpinner>)}
+        </>
     )
 }
