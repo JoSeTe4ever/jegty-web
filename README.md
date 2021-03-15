@@ -31,9 +31,9 @@ font-awesome versión 4.3.0
 ## Componentes
 
 https://material-ui.com/es/components/autocomplete/
+https://github.com/mui-org/material-ui-pickers
 
-
-## MVP de Xavi
+## MVP de Xavi y otros enlaces de interés
 
 https://xd.adobe.com/view/c68b1025-a3f9-47c1-8e1d-31be4259e085-93d8/screen/f908b69e-9854-4bcb-b3b5-cd90e3751792
 

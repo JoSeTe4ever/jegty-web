@@ -192,7 +192,7 @@ export const CreateGame = () => {
             </Snackbar>
             <div className="container d-flex flex-column">
                 <InputField id={NAME_INPUT_ID} labelText="Name" variant="outlined" innerRef={inputName} helperText="The name of your room" required></InputField>
-                <InputField id={GAME_DATE_INPUT_ID} labelText="Cake date" innerRef={inputSelectedDate}
+                <InputField id={GAME_DATE_INPUT_ID} labelText="Game date event" innerRef={inputSelectedDate}
                     helperText="When the game starts" type="datetime-local"></InputField>
 
                 <SearchInput innerRef={inputSelectedGame}></SearchInput>
