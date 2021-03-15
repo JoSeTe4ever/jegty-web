@@ -1,12 +1,7 @@
-import React, { useState } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import { AvatarList } from './../../shared/mollecules/AvatarList';
-import { addFriendidToFriendList, removeFriendRequest } from '../../../redux/actions/actions';
-import { removePendingFriendRequest, acceptPendingFriendRequest } from '../../../data/jegty-api';
 
 export const PendingRequests = props => {
-
-
 
     return (
         <div>
@@ -18,14 +13,3 @@ export const PendingRequests = props => {
         </div>
     )
 }
-
-
-const mapStateToProps = (state) => ({
-
-})
-
-const mapDispatchToProps = {
-
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PendingRequests)

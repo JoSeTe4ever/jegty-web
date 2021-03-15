@@ -15,7 +15,6 @@ import { getDateFromSeconds } from 'helpers/dates';
 export const Profile = (props) => {
 
     const NICKNAME_INPUT_ID = "nickname";
-    const CAKEDATE_INPUT_ID = "cakedate";
     const EMAIL_INPUT_ID = "email";
 
     const user = useSelector((state) => state.user);

@@ -1,11 +1,10 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { useHistory } from 'react-router'
-import { Icon } from './../atoms/Icon'
-import Chip from '@material-ui/core/Chip';
-
-import './Mollecules.scss'
 import { Badge } from '@material-ui/core';
+import Chip from '@material-ui/core/Chip';
+import React from 'react';
+import { useHistory } from 'react-router';
+import { Icon } from './../atoms/Icon';
+import './Mollecules.scss';
+
 
 export const NavigationMenu = (props) => {
 
@@ -29,13 +28,3 @@ export const NavigationMenu = (props) => {
         </div>
     )
 }
-
-const mapStateToProps = (state) => ({
-
-})
-
-const mapDispatchToProps = {
-
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(NavigationMenu)

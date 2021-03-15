@@ -14,7 +14,7 @@ import { DateTimePicker } from '@material-ui/pickers';
  */
 export const InputField = (props) => {
 
-    const { id, selectedDate, labelText, value, innerRef, type, readonly, helperText, validator, required, errorText } = props;
+    const { id, labelText, value, innerRef, type, readonly, helperText, validator, required, errorText } = props;
     const [text, setText] = useState(value);
 
     let hasError = false;

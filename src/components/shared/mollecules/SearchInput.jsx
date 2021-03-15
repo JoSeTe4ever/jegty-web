@@ -1,6 +1,5 @@
 import TextField from '@material-ui/core/TextField';
-import React, { useRef, useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
 import { getRawGamesByName } from "./../../../data/games-api";
 import { useDebouncedSearch } from "./../../../hooks/useDebouncedSearch";
 import { LoadingSpinner } from './../atoms/LoadingSpinner';
@@ -11,8 +10,6 @@ const useSearchGames = () => useDebouncedSearch(text => getRawGamesByName(text))
 export const SearchInput = (props) => {
 
     const {innerRef} = props;
-    const [hasText, setHasText] = useState(false);
-    const [isLoading, setLoading] = useState(false);
     const [selectedGame, setSelectedGame] = useState({});
     const { inputText, setInputText, searchResults } = useSearchGames();
 
@@ -24,16 +21,9 @@ export const SearchInput = (props) => {
     // TODO hay que usar el useEffect y no olvida hacer el unsubscribe, correspondiente. 
     const handleChange = (e) => {
         setInputText(e.target.value);
-        setHasText(true)
-        setLoading(true);
 
         if (selectedGame) {
             setSelectedGame({});
-        }
-
-        if (e.target.value === "") {
-            setLoading(false);
-            setHasText(false);
         }
     }
     let searchResult = null;
@@ -66,13 +56,3 @@ export const SearchInput = (props) => {
         </div>
     )
 }
-
-const mapStateToProps = (state) => ({
-
-})
-
-const mapDispatchToProps = {
-
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SearchInput)

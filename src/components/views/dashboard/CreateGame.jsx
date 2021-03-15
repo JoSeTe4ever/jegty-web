@@ -4,7 +4,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import AddIcon from '@material-ui/icons/Add';
 import MuiAlert from '@material-ui/lab/Alert';
 import React, { useEffect, useRef, useState } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createNewGame, getJegtyUserById } from '../../../data/jegty-api';
 import { InputField } from '../../shared/atoms/InputField';
 import { SearchInput } from '../../shared/mollecules/SearchInput';
@@ -53,7 +53,7 @@ export const CreateGame = () => {
     }
 
     const addNewGameFriend = () => {
-        if (selectedFriend != "") {
+        if (selectedFriend !== "") {
             newGameFriends.push(selectedFriend);
             setNewGameFriends([...newGameFriends]);
         }
@@ -234,13 +234,3 @@ export const CreateGame = () => {
         </>
     )
 }
-
-const mapStateToProps = (state) => ({
-
-})
-
-const mapDispatchToProps = {
-
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CreateGame)

@@ -1,6 +1,6 @@
-import React from 'react'
-import { GameCard } from './../../shared/mollecules/Card'
-import { connect, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { GameCard } from './../../shared/mollecules/Card';
 
 export const Games = props => {
 
