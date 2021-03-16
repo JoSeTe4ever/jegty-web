@@ -3,6 +3,7 @@ import { db } from '../../../data/firebase';
 import { AvatarBadge } from './AvatarBadge';
 import { cacheJegtyUser } from './../../../redux/actions/actions'
 import { useDispatch, useSelector } from 'react-redux';
+import './Mollecules.scss';
 
 /**
  * It loads the data from firebase, from 
@@ -14,6 +15,8 @@ import { useDispatch, useSelector } from 'react-redux';
  * friends -> id list
  * deletable -> show an X badge and uses onDelete as callback
  * accepteble -> show a ✔ badge and uses on Accept as callback
+ * onAccept -> callback when accepting
+ * onDelete ->  callback when deleting
  * 
  */
 export const AvatarList = (props) => {
@@ -29,7 +32,7 @@ export const AvatarList = (props) => {
     const loadDataFromFirebase = async (userIds) => {
         setLoading(true);
         const refs = userIds.map(id => db.collection('users').doc(`${id}`).get())
-        // ahcer un push q.all
+        
         Promise.all(refs).then(friendsList => {
             const list = friendsList.map(e => e.data());
             setFriends(list);
@@ -74,10 +77,10 @@ export const AvatarList = (props) => {
         <span className="sr-only">Loading...</span>
     </div>);
     return (
-        <div className="d-flex flex-column">
+        <div>
             {isLoading ? loading : null}
-            <ul className="list-unstyled">
-                {loadedFriends.map((user, index) => <li className="media mr-2" key={index}>
+            <ul className="list-unstyled d-flex flex-row flex-wrap justify-content-center">
+                {loadedFriends.map((user, index) => <li className="avatarItem media mr-2" key={index}>
                     <AvatarBadge id={user.id} email={user.email} name={user.name} deletable={deletable} acceptable={acceptable}
                     onDelete={onDelete} 
                     onAccept={onAccept}

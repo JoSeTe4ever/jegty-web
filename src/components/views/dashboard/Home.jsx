@@ -25,6 +25,7 @@ export const Home = (props) => {
 
     const [severity, setSeverity] = useState("");
     const [message, setMessage] = useState("");
+    const [render, reRender] = useState(false);
 
     const friendsIdList = useSelector((state) => state.friends);
     const currentUser = useSelector((state) => state.user);
@@ -120,14 +121,18 @@ export const Home = (props) => {
         getFriendsByJegtyUserId(currentUser.uid).then(friendsList => {
             friendsList = friendsList.docs.map(friend => {
                 dispatch(addFriendidToFriendList(friend.data().id));
+                reRender(true);
             });
         });
 
         getPendingFriendRequesFromUserEmail(currentUser.email).then(pendingList => {
             pendingList.docs.map(pendingFriend => {
                 dispatch(addFriendRequestidToPendingList(pendingFriend.data().id));
+                reRender(true);
             });
         })
+
+        return undefined;
     }, []);
 
     return (

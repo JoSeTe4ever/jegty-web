@@ -3,6 +3,19 @@ import { Avatar } from '../atoms/Avatar';
 import Badge from '@material-ui/core/Badge';
 import './Mollecules.scss';
 
+/**
+ * This is the abatar badge shown 
+ * 
+ * @param {*} props 
+ * email -> it is used with the gravatar md5 to paint the avatar
+ * name -> dsiplay name
+ * deletable -> 
+ * id -> 
+ * onDelete -> 
+ * onAccept -> 
+ * 
+ * @returns 
+ */
 export const AvatarBadge = (props) => {
 
     const { email, name, deletable, acceptable, id, onDelete, onAccept } = props;

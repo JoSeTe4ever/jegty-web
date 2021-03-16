@@ -1,11 +1,13 @@
+import { Fab } from '@material-ui/core';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import Snackbar from '@material-ui/core/Snackbar';
 import AddIcon from '@material-ui/icons/Add';
 import MuiAlert from '@material-ui/lab/Alert';
+import { AvatarBadge } from 'components/shared/mollecules/AvatarBadge';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createNewGame, getJegtyUserById } from '../../../data/jegty-api';
+import { createNewGame, getFriendsByJegtyUserId, getJegtyUserById } from '../../../data/jegty-api';
 import { InputField } from '../../shared/atoms/InputField';
 import { SearchInput } from '../../shared/mollecules/SearchInput';
 import { addGameidToUserList, cacheJegtyUser, cacheRoomGame } from './../../../redux/actions/actions';
@@ -53,7 +55,7 @@ export const CreateGame = () => {
     }
 
     const addNewGameFriend = () => {
-        if (selectedFriend !== "") {
+        if (!newGameFriends.some( e => e === selectedFriend) && selectedFriend !== "") {
             newGameFriends.push(selectedFriend);
             setNewGameFriends([...newGameFriends]);
         }
@@ -80,6 +82,7 @@ export const CreateGame = () => {
     }
     useEffect(() => {
         if (friendsList && friendsList.length > 0) {
+            setSelectedFriend(friendsList[0]);
             const totalLength = friendsList.length;
             const cachedIds = cachedJegtyUsers.map(e => e.id);
             const foundIds = friendsList.some(r => cachedIds.includes(r));
@@ -94,9 +97,13 @@ export const CreateGame = () => {
                 loadFriendsFromDatabase(friendsList);
             }
         } else {
-            setPartyFriends([]);
+            getFriendsByJegtyUserId(currentLoggedUser.uid).then(friendsList => {
+                friendsList = friendsList.docs.map(friend => friend.data().id);
+                loadFriendsFromDatabase(friendsList);
+                setSelectedFriend(friendsList[0]);
+            });
         }
-    }, []);
+    }, [friendsList]);
 
     const sanityCheck = () => {
         const roomName = inputName.current;
@@ -200,7 +207,7 @@ export const CreateGame = () => {
                 <InputField id={DISCORD_INPUT_ID} labelText="DiscordLink" variant="outlined" innerRef={inputDiscord} helperText="Share it with discord" required></InputField>
 
                 <div className="friendsAgregator mt-3 border">
-                    <AddIcon onClick={addNewGameFriend} />
+
                     <InputLabel htmlFor="outlined-age-native-simple">Friends</InputLabel>
                     <Select
                         native
@@ -210,14 +217,16 @@ export const CreateGame = () => {
                         inputProps={{
                             name: 'friends',
                             id: SEARCH_FRIENDS_INPUT_ID,
-                        }}
-                    >
+                        }}>
 
                         {partyFriends.map((user, index) =>
                             <option key={index} value={user.id}>
                                 {user.name}
                             </option>)}
                     </Select>
+                    <Fab color="primary" aria-label="add" onClick={ ()=> addNewGameFriend()}>
+                        <AddIcon />
+                    </Fab>
                     <AvatarList friends={newGameFriends} acceptable={false} deletable={true} onDelete={onDeleteFriend}></AvatarList>
                 </div>
             </div>
