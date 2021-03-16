@@ -4,6 +4,7 @@ import Select from '@material-ui/core/Select';
 import Snackbar from '@material-ui/core/Snackbar';
 import AddIcon from '@material-ui/icons/Add';
 import MuiAlert from '@material-ui/lab/Alert';
+import { DateTimePicker } from '@material-ui/pickers';
 import { AvatarBadge } from 'components/shared/mollecules/AvatarBadge';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,7 +16,6 @@ import { AvatarList } from './../../shared/mollecules/AvatarList';
 
 export const CreateGame = () => {
 
-    // jopi meter esto en otro componente. al menos el datepicker.
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [partyFriends, setPartyFriends] = useState([]);
     const [newGameFriends, setNewGameFriends] = useState([]);
@@ -36,11 +36,9 @@ export const CreateGame = () => {
     const inputDescription = useRef(null);
     const inputDiscord = useRef(null);
     const inputSelectedGame = useRef(null);
-    const inputSelectedDate = useRef(new Date());
 
     const SEARCH_FRIENDS_INPUT_ID = "searchFriends";
     const NAME_INPUT_ID = "nameInput";
-    const GAME_DATE_INPUT_ID = "gameDateInput";
     const DESCRIPTION_INPUT_ID = "descriptionInput";
     const DISCORD_INPUT_ID = "discordInput";
 
@@ -113,6 +111,10 @@ export const CreateGame = () => {
         if ((roomName && rawgGameId && ownerId && startAt)) {
             return true;
         }
+        console.error(`!sanity check failed roomName => ${roomName} 
+        rawgGameId => ${rawgGameId} 
+        ownerId => ${ownerId} 
+        startAt => ${startAt}` )
         return false;
     }
 
@@ -199,8 +201,12 @@ export const CreateGame = () => {
             </Snackbar>
             <div className="container d-flex flex-column">
                 <InputField id={NAME_INPUT_ID} labelText="Name" variant="outlined" innerRef={inputName} helperText="The name of your room" required></InputField>
-                <InputField id={GAME_DATE_INPUT_ID} labelText="Game date event" innerRef={inputSelectedDate}
-                    helperText="When the game starts" type="datetime-local"></InputField>
+                <DateTimePicker
+                                variant="inline"
+                                label="Cake date"
+                                value={selectedDate}
+                                onChange={setSelectedDate}
+                                inputVariant="outlined" />
 
                 <SearchInput innerRef={inputSelectedGame}></SearchInput>
                 <InputField id={DESCRIPTION_INPUT_ID} labelText="Description" variant="outlined" innerRef={inputDescription} helperText="Some insights" required></InputField>
