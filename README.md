@@ -51,5 +51,5 @@ HAY QUE METERLE UN CREATION DATE A userGames  para que no se descuajeringue y or
 HAY QUE meterle caña al game details, al menos hacer los selector que cojan toda la info
 ## BUGS 
 
-Que esta ruta no rompa nada.
-http://localhost:3000/profile/test
+Ver porqué la api está devolviendo CORS 
+Gestionar los errors, que si no carga que salga una tarjeta con un error o algo. 

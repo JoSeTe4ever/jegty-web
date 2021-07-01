@@ -34,6 +34,9 @@ export class App extends Component {
     return !isLogged ? (
       <div>
         <Switch>
+          <Route path="/*/**">
+            <Redirect to="/home" />
+          </Route>
           <Route>
             <Login></Login>
             <Header data={this.state.landingPageData.Header} />
