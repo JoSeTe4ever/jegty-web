@@ -119,7 +119,7 @@ export const Dashboard = () => {
                                 <LoggedRoute exact path="/games" component={Games} />
                                 <LoggedRoute exact path="/new-game" component={CreateGame} />
                                 <LoggedRoute exact path="/game-details" component={GameDetails} />
-                                <LoggedRoute path="*">
+                                <LoggedRoute path="*" component={NotFound}>
                                     <NotFound></NotFound>
                                 </LoggedRoute>
                             </Switch>

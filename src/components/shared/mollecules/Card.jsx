@@ -30,8 +30,10 @@ export const GameCard = (props) => {
             setRawGame(cachedArray.find(e => e.id === elem.rawgGameId))
         } else if (elem && elem.rawgGameId) {
             getRawGameById(elem.rawgGameId).then(rawGame => {
-                setRawGame(rawGame)
-                dispatch(cacheRawGame(rawGame));
+                if (rawGame) { // sometimes rawg API is returning CORS problems
+                    setRawGame(rawGame);
+                    dispatch(cacheRawGame(rawGame));
+                }
             })
         }
     };

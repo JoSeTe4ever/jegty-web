@@ -1,15 +1,12 @@
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { Route, Switch } from "react-router";
+import { Route, Switch, Redirect } from "react-router";
 import Header from './components/header';
-import { Login } from './components/Login';
 import { Invite } from './components/Invite';
+import { Login } from './components/Login';
 import { Dashboard } from './components/views/Dashboard';
-import { app } from 'data/firebase';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
-
-
 
 export class App extends Component {
 
@@ -40,14 +37,13 @@ export class App extends Component {
           <Route>
             <Login></Login>
             <Header data={this.state.landingPageData.Header} />
-            <div id="modal-root"></div>
           </Route>
           <Route path="/invite">
             <Invite></Invite>
             <Header data={this.state.landingPageData.Header} openOnLoad="true" />
-            <div id="modal-root"></div>
           </Route>
         </Switch>
+        <div id="modal-root"></div>
       </div>
     ) :
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
