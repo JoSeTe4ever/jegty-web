@@ -15,6 +15,7 @@ import { LoadingSpinner } from '../atoms/LoadingSpinner';
 
 export const GameCard = (props) => {
     const { gameId } = props;
+    const [isErrorLoading, setIsErrorLoading] = useState(false);
     const [isSelected, setIsSelected] = useState(false);
     const [jegtyGame, setJegtyGame] = useState({});
     const [rawGame, setRawGame] = useState(undefined);
@@ -34,6 +35,9 @@ export const GameCard = (props) => {
                     setRawGame(rawGame);
                     dispatch(cacheRawGame(rawGame));
                 }
+            }).catch(error => {
+                console.error(error);
+                setIsErrorLoading(true);
             })
         }
     };
@@ -51,22 +55,29 @@ export const GameCard = (props) => {
 
     useEffect(() => {
         // if cached, displayit. If not cached,  display it & cache it
-        let room = {};
-        if (cachedRoomGames.some(room => room.id === gameId)) {
-            room = cachedRoomGames.find(room => room.id === gameId);
-            setJegtyGame(room);
-            _displayAndCatchRawGame(cachedRawGames, room);
-            _loadUserInfo(room.ownerId);
-        } else {
-            getGameById(gameId).then((game) => {
-                room = { ...game.data() };
+        try {
+            let room = {};
+            if (cachedRoomGames.some(room => room.id === gameId)) {
+                room = cachedRoomGames.find(room => room.id === gameId);
                 setJegtyGame(room);
-                dispatch(cacheRoomGame(room));
                 _displayAndCatchRawGame(cachedRawGames, room);
                 _loadUserInfo(room.ownerId);
-            });
+            } else {
+                getGameById(gameId).then((game) => {
+                    room = { ...game.data() };
+                    setJegtyGame(room);
+                    dispatch(cacheRoomGame(room));
+                    _displayAndCatchRawGame(cachedRawGames, room);
+                    _loadUserInfo(room.ownerId);
+                });
+            }
+        } catch (error) {
+            debugger;
+            return undefined;
+        } finally {
+            return undefined;
         }
-        return undefined;
+
     }, [])
 
     const MiniAvatarList = (props) => {
@@ -80,6 +91,11 @@ export const GameCard = (props) => {
             <li className="ml-3 mb-3"><Avatar customClass="smallAvatar"></Avatar><span className="ml-3">Friend1</span></li>
         </ul>)
     }
+
+    if (isErrorLoading) {
+        return <Card >ERROR</Card>
+    }
+
 
     return (
         <>
