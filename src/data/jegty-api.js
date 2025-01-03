@@ -200,7 +200,7 @@ export const createNewGame = async (game, userId, friendList) => {
             id: e.id
         });
     });
-
+p
     gamesBatchedReferences.forEach(e => {
         batch.set(e.reference, {
             accepted: false,

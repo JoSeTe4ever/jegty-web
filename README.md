@@ -39,6 +39,7 @@ https://xd.adobe.com/view/c68b1025-a3f9-47c1-8e1d-31be4259e085-93d8/screen/f908b
 
 ## TODO 
 
+Quitar firebase y poner mongo
 Quitar el development redux tools para cuando se vaya a prod. https://github.com/reduxjs/redux/issues/2359
 Controlar los errores cuando se envia un mail.
 Mirar el tema de las traducciones.
@@ -49,6 +50,7 @@ Crear la lista de pending users / block users?
 acceptPendingFriendRequest mirar si se puede hacer con batch.
 HAY QUE METERLE UN CREATION DATE A userGames  para que no se descuajeringue y ordene por fecha.
 HAY QUE meterle caña al game details, al menos hacer los selector que cojan toda la info
+
 ## BUGS 
 
 Ver porqué la api está devolviendo CORS 
