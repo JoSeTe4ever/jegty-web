@@ -100,7 +100,7 @@ export const Dashboard = () => {
                                 <span className="brand-span-container pl-3">Jegty</span>
                             </div>
                             <NavigationMenu elems={navitagionElemens}></NavigationMenu>
-                            <div className="new-game-container position-fixed d-flex justify-content-center mt-5">
+                            <div className="new-game-container d-flex justify-content-center mt-5">
                                 {currentLocation !== "/new-game" ? <button
                                     onClick={() => history.push("/new-game")}
                                     className="btn btn-custom btn-lg page-scroll">

@@ -1,0 +1,47 @@
+import React from "react";
+import "./Mollecules.scss"; // Asegúrate de importar el archivo CSS correspondiente
+
+const GamePadController = () => {
+  return (
+    <>
+      <div className="cable"></div>
+      <div className="controller">
+        <div className="centerBlue">
+          <div className="centerLeft"></div>
+          <div className="centerRight"></div>
+        </div>
+        <div className="centerStart">
+          <div className="SLeft"></div>
+          <div className="SRight"></div>
+        </div>
+        <div className="centerSelect">
+          <div className="SLeft"></div>
+          <div className="SRight"></div>
+        </div>
+
+        <div className="controllerLeft">
+          <div className="circle"></div>
+          <div className="crossCenter">
+            <div className="crossTop"></div>
+            <div className="crossBottom"></div>
+            <div className="crossLeft"></div>
+            <div className="crossRight"></div>
+            <div className="crossCircle"></div>
+          </div>
+        </div>
+        <div className="controllerRight">
+          <div className="backButton1Center">
+            <div className="cornerLeft1"></div>
+            <div className="cornerRight1"></div>
+          </div>
+          <div className="backButton2Center">
+            <div className="cornerLeft2"></div>
+            <div className="cornerRight2"></div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default GamePadController;
