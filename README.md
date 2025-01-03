@@ -53,3 +53,7 @@ HAY QUE meterle caña al game details, al menos hacer los selector que cojan tod
 
 Ver porqué la api está devolviendo CORS 
 Gestionar los errors, que si no carga que salga una tarjeta con un error o algo. 
+
+
+## Links de interés
+https://codepen.io/Illusion/pen/dopjOx
