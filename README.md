@@ -24,8 +24,7 @@ en Bootstrap 4. Y también componentes de react-material.
 
 font-awesome versión 4.3.0
 
-2. Para la API de juegos rawg.io se usa este wrapper de la API en node. 
- https://www.npmjs.com/package/rawger
+2. Para la API de juegos rawg.io. 
 
 
 ## Componentes

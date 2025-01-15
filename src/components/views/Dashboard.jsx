@@ -28,7 +28,9 @@ export const Dashboard = () => {
     const location = useLocation();
     const history = useHistory();
     const [currentLocation, setCurrentLocation] = useState(location.pathname);
-    const [navitagionElemens, setNavigationElemens] = useState([{ icon: 'gamepad', navLocation: '/games', navText: 'Games', isPending: false },
+    const [navitagionElemens, setNavigationElemens] = useState([
+    { icon: 'dashboard', navLocation: '/games-catalogue', navText: 'Games Catalogue', isPending: false },
+    { icon: 'gamepad', navLocation: '/games', navText: 'My Games', isPending: false },
     { icon: 'users', navLocation: '/', navText: 'Friends', isPending: false },
     { icon: 'futbol-o', navLocation: '/tournaments', navText: 'Tournaments', isPending: false },
     { icon: 'user', navLocation: '/profile', navText: 'Profile', isPending: false }]);

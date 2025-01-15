@@ -1,5 +1,12 @@
 @import './../../../styles/base.scss';
 
+*{
+  margin: auto;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+
 // navbar
 
 span.brand-span-container {
@@ -88,6 +95,13 @@ li.navigationElemnList {
             border: outset;
         }
     }
+
+    .avatarInfo {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-left: 1rem;
+    }
 }
 
 // game card
@@ -129,6 +143,14 @@ div.descriptionContainer {
 
 
 // game pad controller 
+
+.gamePadController {
+  margin: auto;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 
 .controller{
     margin-top: 100px;
@@ -357,7 +379,7 @@ div.descriptionContainer {
     background-color: black;
     width: 10px;
     height: 150px;
-    position: absolute;
+    position: relative;
     margin-left: 49.7%;
     margin-top: -100px;
     box-shadow: 7px 8px 15px rgba(0,0,0,0.2);

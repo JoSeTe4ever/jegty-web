@@ -26,13 +26,13 @@ export const SearchInput = (props) => {
             setSelectedGame({});
         }
     }
-    let searchResult = null;
+    let searchResultJSX = null;
     let selectedGameResult = null;
 
-    if (searchResults && searchResults.status === "success" && searchResults.result && searchResults.result.raw) {
-        searchResult = <div className="searchResultsContainer"><ResultsList onSelect={selectGame} elements={searchResults ? searchResults.result.raw() : []}></ResultsList></div>;
+    if (searchResults && searchResults.status === "success" && searchResults.result && Array.isArray(searchResults.result.results)) {
+        searchResultJSX = <div className="searchResultsContainer"><ResultsList onSelect={selectGame} elements={searchResults ? searchResults.result.results : []}></ResultsList></div>;
     } else if (searchResults && searchResults.status === "loading") {
-        searchResult = (<div className="searchResultsContainer"> <LoadingSpinner></LoadingSpinner></div>)
+        searchResultJSX = (<div className="searchResultsContainer"> <LoadingSpinner></LoadingSpinner></div>)
     }
 
     if (selectedGame.slug) {
@@ -52,7 +52,7 @@ export const SearchInput = (props) => {
     return (
         <div className="form-group has-search searchInputContainer">
             <TextField id="outlined-basic" label="Search" variant="outlined" onChange={handleChange} />
-            {searchResult}
+            {searchResultJSX}
         </div>
     )
 }

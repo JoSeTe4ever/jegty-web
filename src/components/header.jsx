@@ -1,14 +1,14 @@
 import React, { Component } from "react";
-import family from './../assets/img/family.png';
-import { ReactComponent as IntroIconSvg } from './../assets/img/jegty_oval.svg';
+import family from "./../assets/img/family.png";
+import { ReactComponent as IntroIconSvg } from "./../assets/img/jegty_oval.svg";
+import GamePadController from "./shared/mollecules/GamePadController";
 
 export class Header extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
       landingPageData: {},
-      openOnLoad: props.openOnLoad
+      openOnLoad: props.openOnLoad,
     };
 
     this.handleShow = this.handleShow.bind(this);
@@ -24,7 +24,7 @@ export class Header extends Component {
   }
 
   componentDidMount() {
-    if (this.props.openOnLoad){
+    if (this.props.openOnLoad) {
       document.getElementById("modalButton").click();
     }
   }
@@ -47,15 +47,10 @@ export class Header extends Component {
             </div>
           </div>
         </div>
-        <div className="d-flex justify-content-center">
-          <button id="modalButton"
-            data-toggle="modal" data-target="#myModal"
-            onClick={() => console.log(true)}
-            className="btn btn-custom btn-lg page-scroll mt-5"
-          >
-            start
-                  </button>
+        <div className="">
+        <GamePadController></GamePadController>
         </div>
+
       </header>
     );
   }

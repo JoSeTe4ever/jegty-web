@@ -3,12 +3,15 @@ import "./Mollecules.scss"; // Asegúrate de importar el archivo CSS correspondi
 
 const GamePadController = () => {
   return (
-    <>
+    <div className="gamePadController">
       <div className="cable"></div>
       <div className="controller">
-        <div className="centerBlue">
-          <div className="centerLeft"></div>
-          <div className="centerRight"></div>
+        <div className="centerBlue" 
+                    id="modalButton"
+                    data-toggle="modal"
+                    data-target="#myModal"
+                   >
+                    START
         </div>
         <div className="centerStart">
           <div className="SLeft"></div>
@@ -40,7 +43,7 @@ const GamePadController = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
