@@ -4,9 +4,6 @@ import "./Mollecules.scss"; // Asegúrate de importar el archivo CSS correspondi
 const GamePadController = () => {
   return (
     <div className="gamePadController" aria-label="Open login">
-      <div className="cable">
-        <div className="cablePlug"></div>
-      </div>
       <div className="controller">
         <div className="controllerShine"></div>
         <div className="centerBlue" 

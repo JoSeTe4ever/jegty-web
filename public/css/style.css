@@ -240,6 +240,113 @@ a:focus,
 }
 
 /* Header Section */
+#header {
+	position: relative;
+	overflow: hidden;
+	background:
+		radial-gradient(circle at 18% 70%, rgba(57, 234, 145, 0.22) 0, rgba(57, 234, 145, 0) 28%),
+		radial-gradient(circle at 86% 38%, rgba(0, 153, 255, 0.2) 0, rgba(0, 153, 255, 0) 24%),
+		linear-gradient(180deg, #f7fbff 0%, #eef8f3 48%, #fff8e6 100%);
+}
+
+#header::before {
+	content: "";
+	position: absolute;
+	left: -8%;
+	right: -8%;
+	bottom: -120px;
+	height: 360px;
+	background:
+		linear-gradient(90deg, rgba(18, 56, 95, 0.05) 1px, transparent 1px),
+		linear-gradient(0deg, rgba(18, 56, 95, 0.05) 1px, transparent 1px);
+	background-size: 34px 34px;
+	transform: rotate(-3deg);
+	pointer-events: none;
+}
+
+#header::after {
+	content: "";
+	width: min(82vw, 760px);
+	height: 160px;
+	position: absolute;
+	left: 50%;
+	bottom: 18px;
+	transform: translateX(-50%);
+	border-radius: 50%;
+	background: radial-gradient(ellipse at center, rgba(0, 43, 69, 0.18) 0%, rgba(0, 43, 69, 0.08) 42%, rgba(0, 43, 69, 0) 70%);
+	filter: blur(4px);
+	pointer-events: none;
+}
+
+.controller-stage {
+	position: relative;
+	z-index: 1;
+	min-height: 340px;
+	padding: 18px 0 56px;
+	overflow: visible;
+	background:
+		linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.48) 34%, rgba(4, 15, 28, 0.36) 100%),
+		radial-gradient(circle at 50% 12%, rgba(57, 234, 145, 0.44) 0, rgba(57, 234, 145, 0) 34%);
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.78),
+		inset 0 46px 70px rgba(255, 255, 255, 0.72),
+		inset 0 -64px 90px rgba(2, 13, 24, 0.38);
+}
+
+.controller-stage__video {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center 46%;
+	filter: saturate(0.95) contrast(0.96) brightness(1.08);
+	pointer-events: none;
+}
+
+.controller-stage::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	background:
+		linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+		linear-gradient(0deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+		linear-gradient(180deg, rgba(255, 255, 255, 0.66) 0%, rgba(255, 255, 255, 0.2) 42%, rgba(1, 9, 17, 0.16) 100%);
+	background-size: 42px 42px, 42px 42px, auto;
+	pointer-events: none;
+}
+
+.controller-stage::after {
+	content: "";
+	position: absolute;
+	left: 50%;
+	bottom: 26px;
+	z-index: 1;
+	width: min(86vw, 720px);
+	height: 140px;
+	transform: translateX(-50%);
+	border-radius: 50%;
+	background: radial-gradient(ellipse at center, rgba(0, 43, 69, 0.36) 0%, rgba(0, 43, 69, 0.15) 44%, rgba(0, 43, 69, 0) 72%);
+	filter: blur(6px);
+	pointer-events: none;
+}
+
+.controller-stage__glow {
+	position: absolute;
+	left: 50%;
+	top: -62px;
+	z-index: 1;
+	width: min(76vw, 620px);
+	height: 240px;
+	transform: translateX(-50%);
+	border-radius: 999px;
+	background: radial-gradient(ellipse at center, rgba(57, 234, 145, 0.38) 0%, rgba(0, 153, 255, 0.18) 42%, rgba(0, 153, 255, 0) 72%);
+	filter: blur(12px);
+	pointer-events: none;
+}
+
 .intro {
 	display: table;
 	width: 100%;
@@ -922,6 +1029,18 @@ svg.auth-modal__logo {
 
 	#header .subtitle {
 		top: 0.8rem;
+	}
+
+	.controller-stage {
+		min-height: 280px;
+		padding: 22px 0 36px;
+		background-position: center center;
+	}
+
+	.controller-stage__glow {
+		top: -28px;
+		width: 92vw;
+		height: 190px;
 	}
 
 	.auth-modal__dialog {

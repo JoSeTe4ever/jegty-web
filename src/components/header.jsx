@@ -47,8 +47,12 @@ export class Header extends Component {
             </div>
           </div>
         </div>
-        <div className="">
-        <GamePadController></GamePadController>
+        <div className="controller-stage" aria-label="Start playing">
+          <video className="controller-stage__video" autoPlay muted loop playsInline poster="/img/videojeguil.gif" aria-hidden="true">
+            <source src="/img/videojeguil.mp4" type="video/mp4" />
+          </video>
+          <div className="controller-stage__glow" aria-hidden="true"></div>
+          <GamePadController></GamePadController>
         </div>
 
       </header>
