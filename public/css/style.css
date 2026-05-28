@@ -244,18 +244,31 @@ a:focus,
 	display: table;
 	width: 100%;
 	padding: 0;
-	background-color: #456386;
+	min-height: 58vh;
+	background:
+		radial-gradient(circle at 18% 22%, rgba(57, 234, 145, 0.28) 0, rgba(57, 234, 145, 0) 24%),
+		radial-gradient(circle at 78% 16%, rgba(255, 165, 0, 0.2) 0, rgba(255, 165, 0, 0) 22%),
+		linear-gradient(135deg, #071827 0%, #12385f 48%, #06131f 100%);
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	background-size: cover;
 	-o-background-size: cover;
+	position: relative;
+	overflow: hidden;
 }
 
 .intro .overlay {
 	top: 0px;
 	left: 0px;
-	background: #456386 0% 0% no-repeat padding-box;
+	min-height: 58vh;
+	background:
+		linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+		linear-gradient(0deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+	background-size: 44px 44px;
 	opacity: 1;
+	position: relative;
+	z-index: 1;
+	box-shadow: inset 0 -60px 80px rgba(3, 11, 20, 0.32);
 }
 
 .introLogo {
@@ -285,32 +298,38 @@ a:focus,
 	font-weight: 300;
 	line-height: 30px;
 	margin: 0 auto;
-	margin-bottom: 60px;
+	margin-bottom: 28px;
 }
 
 header .intro-text {
-	padding-bottom: 100px;
+	padding: 44px 20px 58px;
 	text-align: center;
+	position: relative;
+	z-index: 2;
 }
 
 .familyLogo {
 	vertical-align: middle;
 	border-style: none;
-	top: 289px;
-	left: 79px;
-	width: 749px;
-	height: 429px;
+	width: min(64vw, 560px);
+	height: auto;
 	position: absolute;
+	left: clamp(8px, 8vw, 90px);
+	bottom: -92px;
+	opacity: 0.9;
+	filter: drop-shadow(0 24px 38px rgba(0, 0, 0, 0.26));
+	pointer-events: none;
 }
 
 #header .subtitle {
 	font-family: 'Comfortaa Light';
 	text-transform: uppercase;
-	font-size: 4.6rem;
-	letter-spacing: 0.3em;
+	font-size: clamp(2rem, 6vw, 4.6rem);
+	letter-spacing: clamp(0.16em, 2vw, 0.3em);
 	color: #38EA91;
 	position: relative;
-	top: 7rem;
+	top: 1.4rem;
+	text-shadow: 0 0 24px rgba(57, 234, 145, 0.36), 0 5px 0 rgba(0, 0, 0, 0.18);
 }
 
 /* Features Section */
@@ -687,4 +706,229 @@ svg.logoIcon {
 span.signUpLink {
 	color: blue !important;
 	cursor: pointer;
+}
+
+.auth-modal .modal-backdrop {
+	background-color: #05111d;
+}
+
+.auth-modal__dialog {
+	max-width: 460px;
+	margin: 1.75rem auto;
+}
+
+.auth-modal__content {
+	position: relative;
+	overflow: hidden;
+	border: 0;
+	border-radius: 30px;
+	background:
+		radial-gradient(circle at 12% 0%, rgba(57, 234, 145, 0.24) 0, rgba(57, 234, 145, 0) 35%),
+		linear-gradient(155deg, #fff8e9 0%, #f1eadb 46%, #d9d0bd 100%);
+	box-shadow: 0 28px 80px rgba(3, 11, 20, 0.42), 0 0 0 1px rgba(255, 255, 255, 0.6);
+	color: #14233a;
+}
+
+.auth-modal__content::before {
+	content: "";
+	width: 220px;
+	height: 220px;
+	position: absolute;
+	top: -118px;
+	right: -92px;
+	border-radius: 50%;
+	background: repeating-conic-gradient(from 18deg, rgba(20, 35, 58, 0.1) 0 10deg, transparent 10deg 20deg);
+}
+
+.auth-modal__content::after {
+	content: "";
+	position: absolute;
+	inset: 12px;
+	border: 1px solid rgba(20, 35, 58, 0.1);
+	border-radius: 22px;
+	pointer-events: none;
+}
+
+.auth-modal__close {
+	width: 42px;
+	height: 42px;
+	position: absolute;
+	top: 18px;
+	right: 18px;
+	z-index: 3;
+	border: 0;
+	border-radius: 50%;
+	background: rgba(20, 35, 58, 0.08);
+	color: #14233a;
+	font-size: 28px;
+	line-height: 1;
+	cursor: pointer;
+	transition: transform 180ms ease, background 180ms ease;
+}
+
+.auth-modal__close:hover {
+	background: rgba(20, 35, 58, 0.14);
+	transform: rotate(8deg) scale(1.04);
+}
+
+.auth-modal__hero {
+	position: relative;
+	min-height: 152px;
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	padding-top: 28px;
+	background:
+		linear-gradient(135deg, rgba(7, 24, 39, 0.95) 0%, rgba(18, 56, 95, 0.92) 100%),
+		linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+	background-size: auto, 32px 32px;
+	clip-path: polygon(0 0, 100% 0, 100% 82%, 58% 100%, 0 84%);
+}
+
+.auth-modal__badge {
+	position: absolute;
+	top: 26px;
+	left: 24px;
+	padding: 7px 10px 6px;
+	border: 1px solid rgba(57, 234, 145, 0.48);
+	border-radius: 999px;
+	color: #39EA91;
+	font-family: Comfortaa Bold;
+	font-size: 0.68rem;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	background: rgba(5, 17, 29, 0.5);
+}
+
+svg.auth-modal__logo {
+	width: 122px;
+	height: 122px;
+	position: relative;
+	z-index: 2;
+	margin-bottom: -2px;
+	padding: 12px;
+	border-radius: 28px;
+	background: rgba(255, 255, 255, 0.92);
+	filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.28));
+}
+
+.auth-modal__body {
+	padding: 34px 38px 36px;
+}
+
+.auth-modal__eyebrow {
+	margin: 0 0 8px;
+	color: #007b59;
+	font-family: Comfortaa Bold;
+	font-size: 0.72rem;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+}
+
+.auth-modal__title {
+	margin: 0;
+	color: #102238;
+	font-family: Comfortaa Bold;
+	font-size: clamp(1.9rem, 6vw, 2.65rem);
+	line-height: 1.02;
+	text-transform: none;
+}
+
+.auth-modal__description {
+	max-width: 31ch;
+	margin: 14px 0 24px;
+	color: #52616e;
+	line-height: 1.55;
+}
+
+.auth-modal__form {
+	display: flex;
+	flex-direction: column;
+}
+
+.auth-modal .MuiFormControl-root {
+	margin-bottom: 14px !important;
+	background: rgba(255, 255, 255, 0.72);
+	border-radius: 14px;
+}
+
+.auth-modal .MuiOutlinedInput-root {
+	border-radius: 14px;
+}
+
+.auth-modal .MuiOutlinedInput-notchedOutline {
+	border-color: rgba(20, 35, 58, 0.18);
+}
+
+.auth-modal .MuiInputLabel-root {
+	font-family: Comfortaa Medium;
+	color: #5d6a74;
+}
+
+.auth-modal__submit {
+	width: 100%;
+	margin-top: 4px;
+	padding: 14px 18px;
+	border: 0;
+	border-radius: 16px;
+	background: linear-gradient(135deg, #11243a 0%, #0b7255 100%);
+	box-shadow: 0 12px 0 #073926, 0 18px 28px rgba(0, 43, 69, 0.22);
+	color: #fff;
+	font-family: Comfortaa Bold;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+}
+
+.auth-modal__submit:hover,
+.auth-modal__submit:focus {
+	background: linear-gradient(135deg, #142f4d 0%, #0d8b67 100%);
+	box-shadow: 0 9px 0 #073926, 0 14px 22px rgba(0, 43, 69, 0.22);
+	filter: saturate(1.08);
+	transform: translateY(3px);
+}
+
+.auth-modal__switch {
+	margin-top: 22px;
+	text-align: center;
+	color: #52616e;
+	font-size: 0.92rem;
+}
+
+.auth-modal__switch-button {
+	padding: 0;
+	color: #006fda;
+	font-family: Comfortaa Bold;
+	vertical-align: baseline;
+}
+
+.auth-modal__switch-button:hover {
+	color: #004a93;
+	text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+	header .intro-text {
+		padding-top: 26px;
+		padding-bottom: 38px;
+	}
+
+	.familyLogo {
+		width: 82vw;
+		left: -18vw;
+		bottom: -62px;
+		opacity: 0.38;
+	}
+
+	#header .subtitle {
+		top: 0.8rem;
+	}
+
+	.auth-modal__dialog {
+		margin: 0.8rem;
+	}
+
+	.auth-modal__body {
+		padding: 30px 24px 30px;
+	}
 }

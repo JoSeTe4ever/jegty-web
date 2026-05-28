@@ -145,244 +145,307 @@ div.descriptionContainer {
 // game pad controller 
 
 .gamePadController {
-  margin: auto;
+  width: 90vw;
+  max-width: 560px;
+  height: 360px;
+  margin: -34px auto 50px;
   padding: 0;
+  position: relative;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-}
+  transform: rotate(-1.5deg);
 
-
-.controller{
-    margin-top: 100px;
-    height: 200px;
-    width: 400px;
-    background-color: #E6E6E6;
-    position: relative;
-    box-shadow: 15px 15px 15px rgba(0,0,0,0.2);
+  * {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
   }
-  
-  .controllerLeft{
-    height: 250px;
-    width: 250px;
-    background-color: #E6E6E6;
+
+  .cable {
+    width: 18px;
+    height: 122px;
     position: absolute;
-    border-radius: 100%;
-    margin-left: -125px;
-    box-shadow: -15px 8px 15px rgba(0,0,0,0.2);
+    top: 0;
+    left: 50%;
+    z-index: 0;
+    transform: translateX(-50%);
+    border-radius: 12px 12px 8px 8px;
+    background: linear-gradient(90deg, #050505 0%, #2a2a2a 45%, #050505 100%);
+    box-shadow: 8px 14px 24px rgba(0, 0, 0, 0.24);
   }
-  
-  .controllerRight{
-    height: 250px;
-    width: 250px;
-    background-color: #B8B8B8;
+
+  .cable::before {
+    content: "";
+    width: 120px;
+    height: 68px;
+    position: absolute;
+    top: -50px;
+    left: 7px;
+    border-top: 16px solid #111;
+    border-right: 16px solid #111;
+    border-radius: 0 80px 0 0;
+    transform: rotate(-8deg);
+    filter: drop-shadow(10px 16px 16px rgba(0, 0, 0, 0.2));
+  }
+
+  .cablePlug {
+    width: 56px;
+    height: 24px;
+    position: absolute;
+    left: 50%;
+    bottom: -4px;
+    transform: translateX(-50%);
+    border-radius: 14px 14px 6px 6px;
+    background: linear-gradient(180deg, #2f3438 0%, #08090a 100%);
+    box-shadow: inset 0 4px 0 rgba(255, 255, 255, 0.12);
+  }
+
+  .controller {
+    height: 205px;
+    width: 420px;
+    margin: 96px auto 0;
+    background: linear-gradient(160deg, #f7f4e9 0%, #d5d3cc 56%, #aaa9a3 100%);
     position: relative;
-    border-radius: 100%;
-    margin-right: -125px;
-    border: solid 15px rgba(230, 230, 230,1);
-    box-shadow: 15px 8px 15px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 44px 44px 82px 82px;
+    box-shadow:
+      0 30px 45px rgba(0, 0, 0, 0.24),
+      inset 0 6px 0 rgba(255, 255, 255, 0.74),
+      inset 0 -14px 18px rgba(0, 0, 0, 0.12);
   }
-  
-  .circle{
+
+  .controller::before {
+    content: "";
+    width: 64px;
+    height: 22px;
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    z-index: 3;
+    transform: translateX(-50%);
+    border-radius: 0 0 18px 18px;
+    background: #252525;
+    box-shadow: inset 0 -5px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .controllerShine {
+    width: 76%;
+    height: 46px;
+    position: absolute;
+    top: 18px;
+    left: 12%;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.46), rgba(255, 255, 255, 0));
+    pointer-events: none;
+  }
+
+  .controllerLeft,
+  .controllerRight {
+    height: 248px;
+    width: 248px;
+    position: absolute;
+    top: -22px;
+    border-radius: 100%;
+  }
+
+  .controllerLeft {
+    left: -106px;
+    background: linear-gradient(145deg, #f6f3e9 0%, #d8d6ce 100%);
+    box-shadow: -18px 18px 28px rgba(0, 0, 0, 0.22), inset 8px 8px 0 rgba(255, 255, 255, 0.35);
+  }
+
+  .controllerRight {
+    right: -106px;
+    background: linear-gradient(145deg, #d1d0ca 0%, #9b9a95 100%);
+    border: solid 15px rgba(232, 230, 220, 1);
+    box-shadow: 18px 18px 28px rgba(0, 0, 0, 0.22), inset -8px -8px 0 rgba(0, 0, 0, 0.08);
+  }
+
+  .circle {
     height: 150px;
     width: 150px;
-    background-color: #E6E6E6;
+    background: linear-gradient(150deg, #efede5 0%, #cfcdc5 100%);
     position: absolute;
     border-radius: 100%;
-    border: solid 5px rgba(184, 184, 184, 1);
-    margin-left: 42px;
-    margin-top: 52px;
+    border: solid 5px rgba(150, 150, 146, 1);
+    left: 42px;
+    top: 52px;
+    box-shadow: inset 0 8px 12px rgba(255, 255, 255, 0.38);
   }
-  
-  .crossCenter{
-    background-color: #333333;
+
+  .crossCenter {
+    background-color: #202020;
     width: 35px;
     height: 35px;
-    margin-top: 110px;
-    margin-left: 100px;
+    top: 110px;
+    left: 100px;
     position: relative;
+    z-index: 2;
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.22);
   }
-  
-  .crossCircle{
-    background-color: #292929;
+
+  .crossCircle {
+    background-color: #0f0f0f;
     width: 25px;
     height: 25px;
     position: absolute;
     border-radius: 100%;
-    margin-top: 5px;
-    margin-left: 5px;
-  }
-  
-  .crossTop{
-    background-color: #333333;
-    width: 35px;
-    height: 35px;
-    position: absolute;
-    border-radius: 15%;
-    margin-top: -30px;
-  }
-  
-  .crossBottom{
-    background-color: #333333;
-    width: 35px;
-    height: 35px;
-    position: absolute;
-    border-radius: 15%;
-    margin-top: 30px;
-  }
-  
-  .crossLeft{
-    background-color: #333333;
-    width: 35px;
-    height: 35px;
-    position: absolute;
-    border-radius: 15%;
-    margin-left: -30px;
-  }
-  
-  .crossRight{
-    background-color: #333333;
-    width: 35px;
-    height: 35px;
-    position: absolute;
-    border-radius: 15%;
-    margin-left: 30px;
-  }
-  
-  .centerBlue{
-    position: absolute;
-    width: 50px;
-    height: 20px;
-    margin-left: 175px;
-    margin-top: 30px;
-    background-color: #0099FF;
-  }
-  
-  .centerLeft{
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    margin-left: -10px;
-    margin-top: 0px;
-    background-color: #0099FF;
-    border-radius: 100%;
-  }
-  
-  .centerRight{
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    margin-left: 40px;
-    margin-top: 0px;
-    background-color: #0099FF;
-    border-radius: 100%;
-  }
-  
-  .backButton1Center{
-    position: absolute;
-    width: 80px;
-    height: 50px;
-    background-color: #E6E6E6;
-    -webkit-transform: rotate(-30deg);
-    margin-top: 60px;
-    margin-left: 45px;
-  }
-  
-  .backButton2Center{
-    position: absolute;
-    width: 80px;
-    height: 50px;
-    background-color: #E6E6E6;
-    -webkit-transform: rotate(-30deg);
-    margin-top: 115px;
-    margin-left: 90px;
+    top: 5px;
+    left: 5px;
   }
 
-  
-  
-  .cornerLeft1{
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background-color: #00B800;
-    border-radius: 100%;
-    margin-left: -20px;
-    border: solid 5px rgba(230, 230, 230, 1)
-  }
-  
-  .cornerRight1{
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background-color: #6699FF;
-    border-radius: 100%;
-    margin-left: 60px;
-    border: solid 5px rgba(230, 230, 230, 1)
-  }
-  
-  .cornerLeft2{
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background-color: #CFCF00;
-    border-radius: 100%;
-    margin-left: -20px;
-    border: solid 5px rgba(230, 230, 230, 1)
-  }
-  
-  .cornerRight2{
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background-color: #7D230D;
-    border-radius: 100%;
-    margin-left: 60px;
-    border: solid 5px rgba(230, 230, 230, 1)
-  }
-  
-  .centerStart{
-    background-color: #B8B8B8;
-    position: absolute;
+  .crossTop,
+  .crossBottom,
+  .crossLeft,
+  .crossRight {
+    background-color: #202020;
+    width: 35px;
     height: 35px;
-    width: 10px;
-    margin-left: 180px;
-    margin-top: 110px;
-    -webkit-transform: rotate(20deg);
-  }
-  
-  .centerSelect{
-    background-color: #B8B8B8;
     position: absolute;
-    height: 35px;
-    width: 10px;
-    margin-left: 205px;
-    margin-top: 110px;
-    -webkit-transform: rotate(20deg);
+    border-radius: 15%;
   }
-  
-  .SLeft{
-    background-color: #B8B8B8;
+
+  .crossTop {
+    top: -30px;
+  }
+
+  .crossBottom {
+    top: 30px;
+  }
+
+  .crossLeft {
+    left: -30px;
+  }
+
+  .crossRight {
+    left: 30px;
+  }
+
+  .centerBlue {
+    position: absolute;
+    z-index: 4;
+    width: 78px;
+    height: 32px;
+    left: 50%;
+    top: 36px;
+    transform: translateX(-50%);
+    border: 0;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #38b9ff 0%, #0064d8 100%);
+    color: $white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Comfortaa Bold';
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+    box-shadow: 0 9px 0 #003b83, 0 14px 18px rgba(0, 0, 0, 0.24), inset 0 4px 0 rgba(255, 255, 255, 0.34);
+    transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+  }
+
+  .centerBlue:hover {
+    filter: saturate(1.18) brightness(1.06);
+    transform: translateX(-50%) translateY(2px);
+    box-shadow: 0 7px 0 #003b83, 0 10px 14px rgba(0, 0, 0, 0.22), inset 0 4px 0 rgba(255, 255, 255, 0.34);
+  }
+
+  .backButton1Center,
+  .backButton2Center {
+    position: absolute;
+    width: 80px;
+    height: 50px;
+    background-color: transparent;
+    transform: rotate(-30deg);
+  }
+
+  .backButton1Center {
+    top: 58px;
+    left: 46px;
+  }
+
+  .backButton2Center {
+    top: 114px;
+    left: 90px;
+  }
+
+  .cornerLeft1,
+  .cornerRight1,
+  .cornerLeft2,
+  .cornerRight2 {
+    position: absolute;
+    width: 52px;
+    height: 52px;
+    border-radius: 100%;
+    border: solid 6px rgba(232, 230, 220, 1);
+    box-shadow: 0 8px 0 rgba(0, 0, 0, 0.2), inset 0 5px 0 rgba(255, 255, 255, 0.32);
+  }
+
+  .cornerLeft1 {
+    background-color: #00ad55;
+    left: -20px;
+  }
+
+  .cornerRight1 {
+    background-color: #3f86ff;
+    left: 60px;
+  }
+
+  .cornerLeft2 {
+    background-color: #f1c319;
+    left: -20px;
+  }
+
+  .cornerRight2 {
+    background-color: #c93c26;
+    left: 60px;
+  }
+
+  .centerStart,
+  .centerSelect {
+    background: linear-gradient(180deg, #999 0%, #5e5e5e 100%);
+    position: absolute;
+    height: 38px;
+    width: 12px;
+    top: 112px;
+    transform: rotate(20deg);
+    border-radius: 999px;
+    box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.24);
+  }
+
+  .centerStart {
+    left: 181px;
+  }
+
+  .centerSelect {
+    left: 207px;
+  }
+
+  .SLeft,
+  .SRight {
+    background-color: inherit;
     position: absolute;
     border-radius: 100%;
-    height: 10px;
-    width: 10px;
-    margin-top: 30px;
+    height: 12px;
+    width: 12px;
   }
-  
-  .SRight{
-    background-color: #B8B8B8;
-    position: absolute;
-    border-radius: 100%;
-    height: 10px;
-    width: 10px;
-    margin-top: -5px;
+
+  .SLeft {
+    top: 31px;
   }
-  
-  .cable{
-    background-color: black;
-    width: 10px;
-    height: 150px;
-    position: relative;
-    margin-left: 49.7%;
-    margin-top: -100px;
-    box-shadow: 7px 8px 15px rgba(0,0,0,0.2);
+
+  .SRight {
+    top: -5px;
   }
+}
+
+@media (max-width: $breakpoint-phone) {
+  .gamePadController {
+    width: 430px;
+    max-width: 96vw;
+    height: 310px;
+    transform: scale(0.78) rotate(-1.5deg);
+    transform-origin: top center;
+    margin-bottom: -20px;
+  }
+}
