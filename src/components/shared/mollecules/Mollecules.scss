@@ -148,12 +148,14 @@ div.descriptionContainer {
   width: 90vw;
   max-width: 560px;
   height: 360px;
-  margin: -34px auto 50px;
+  margin: -74px auto 12px;
   padding: 0;
   position: relative;
+  z-index: 2;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   transform: rotate(-1.5deg);
+  filter: drop-shadow(0 34px 34px rgba(0, 22, 38, 0.34));
 
   * {
     -webkit-box-sizing: border-box;
@@ -446,6 +448,6 @@ div.descriptionContainer {
     height: 310px;
     transform: scale(0.78) rotate(-1.5deg);
     transform-origin: top center;
-    margin-bottom: -20px;
+    margin: -38px auto -42px;
   }
 }

@@ -47,8 +47,9 @@ export class Header extends Component {
             </div>
           </div>
         </div>
-        <div className="">
-        <GamePadController></GamePadController>
+        <div className="controller-stage" aria-label="Start playing">
+          <div className="controller-stage__glow" aria-hidden="true"></div>
+          <GamePadController></GamePadController>
         </div>
 
       </header>
