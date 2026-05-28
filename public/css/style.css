@@ -286,19 +286,30 @@ a:focus,
 	overflow: visible;
 	background:
 		linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.48) 34%, rgba(4, 15, 28, 0.36) 100%),
-		radial-gradient(circle at 50% 12%, rgba(57, 234, 145, 0.44) 0, rgba(57, 234, 145, 0) 34%),
-		url('/img/videojeguil.gif') center 46% / cover no-repeat;
+		radial-gradient(circle at 50% 12%, rgba(57, 234, 145, 0.44) 0, rgba(57, 234, 145, 0) 34%);
 	box-shadow:
 		inset 0 1px 0 rgba(255, 255, 255, 0.78),
 		inset 0 46px 70px rgba(255, 255, 255, 0.72),
 		inset 0 -64px 90px rgba(2, 13, 24, 0.38);
 }
 
+.controller-stage__video {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center 46%;
+	filter: saturate(0.95) contrast(0.96) brightness(1.08);
+	pointer-events: none;
+}
+
 .controller-stage::before {
 	content: "";
 	position: absolute;
 	inset: 0;
-	z-index: 0;
+	z-index: 1;
 	background:
 		linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
 		linear-gradient(0deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
@@ -312,7 +323,7 @@ a:focus,
 	position: absolute;
 	left: 50%;
 	bottom: 26px;
-	z-index: 0;
+	z-index: 1;
 	width: min(86vw, 720px);
 	height: 140px;
 	transform: translateX(-50%);
@@ -326,7 +337,7 @@ a:focus,
 	position: absolute;
 	left: 50%;
 	top: -62px;
-	z-index: 0;
+	z-index: 1;
 	width: min(76vw, 620px);
 	height: 240px;
 	transform: translateX(-50%);
