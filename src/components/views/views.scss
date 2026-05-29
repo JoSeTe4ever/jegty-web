@@ -8,11 +8,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    padding: 1.2rem 0 2rem;
 }
 
 .logoIconApp {
-    height: 80px;
-    width: 80px;
+    height: 76px;
+    width: 76px;
+    border-radius: 24px;
+    background: radial-gradient(circle at 36% 28%, rgba(57, 234, 145, 0.46), rgba(17, 238, 255, 0.08) 44%, rgba(255, 255, 255, 0.03) 70%);
+    filter: drop-shadow(0 0 22px rgba(57, 234, 145, 0.42));
 }
 
 
@@ -30,63 +35,259 @@
 }
 
 .profileButton {
+    width: 170px;
     margin-left: auto;
+    border: 0;
+    border-radius: 18px;
+    font-family: 'Comfortaa Bold';
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    box-shadow: 0 10px 0 rgba(0, 0, 0, 0.32), 0 18px 28px rgba(0, 0, 0, 0.22);
 }
 
 .container.profileContainer {
-    padding-left: 12%;
-    padding-right: 12%;
+    max-width: 100%;
+    padding: 0;
+    color: #eafcff;
 }
 
-.form-icon {
-    &>i {
-        margin-right: 10px;
-        margin-bottom: 10px;
+.profileHeader {
+    margin-bottom: 1.4rem;
+    padding: 1.5rem 1.7rem;
+    border: 1px solid rgba(57, 234, 145, 0.18);
+    border-radius: 28px;
+    background: linear-gradient(135deg, rgba(9, 23, 48, 0.9), rgba(17, 45, 77, 0.72));
+    box-shadow: 0 24px 54px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+    h4 {
+        margin: 0;
+        color: $white;
+        font-family: 'Comfortaa Bold';
+        font-size: clamp(2rem, 4vw, 3.8rem);
+        letter-spacing: -0.06em;
+        text-transform: uppercase;
+        text-shadow: 0 0 28px rgba(57, 234, 145, 0.28);
+    }
+
+    p {
+        max-width: 42rem;
+        margin: 0.4rem 0 0;
+        color: rgba(234, 252, 255, 0.74);
     }
 }
 
+.profileKicker,
+.profileStatus {
+    color: #39ea91;
+    font-family: 'Comfortaa Bold';
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+}
+
+.profilePanel {
+    position: relative;
+    margin: 0;
+    padding: 1.6rem;
+    border: 1px solid rgba(62, 219, 255, 0.18);
+    border-radius: 32px;
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.035)),
+        rgba(7, 18, 38, 0.86);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+.profilePanel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(90deg, rgba(57, 234, 145, 0.08) 1px, transparent 1px), linear-gradient(0deg, rgba(57, 234, 145, 0.055) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: linear-gradient(140deg, rgba(0, 0, 0, 0.9), transparent 72%);
+}
+
+.profileAvatarColumn,
+.profileFormColumn {
+    position: relative;
+    z-index: 1;
+}
+
+.profileAvatarColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+    min-width: 160px;
+}
+
+.profileStatus {
+    padding: 0.48rem 0.78rem;
+    border: 1px solid rgba(57, 234, 145, 0.36);
+    border-radius: 999px;
+    background: rgba(57, 234, 145, 0.1);
+    box-shadow: 0 0 24px rgba(57, 234, 145, 0.16);
+}
+
+.profileContainer .MuiFormControl-root {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.profileContainer .MuiOutlinedInput-root {
+    color: $white;
+    border-radius: 18px;
+    background: rgba(2, 10, 25, 0.58);
+}
+
+.profileContainer .MuiOutlinedInput-notchedOutline {
+    border-color: rgba(62, 219, 255, 0.28);
+}
+
+.profileContainer .MuiInputLabel-root,
+.profileContainer .MuiFormHelperText-root {
+    color: rgba(234, 252, 255, 0.66);
+}
+
+.profileContainer .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: #39ea91;
+    box-shadow: 0 0 0 3px rgba(57, 234, 145, 0.12);
+}
+
+.form-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin: 0.4rem 0.8rem 0.4rem 0;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(234, 252, 255, 0.82);
+    cursor: pointer;
+    transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        border-color: rgba(57, 234, 145, 0.34);
+        background: rgba(57, 234, 145, 0.09);
+    }
+
+    &>i {
+        margin: 0;
+        color: #39ea91;
+        font-size: 1.35rem;
+        text-shadow: 0 0 18px rgba(57, 234, 145, 0.44);
+    }
+}
+
+.dashboardShell {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 18% 14%, rgba(57, 234, 145, 0.2), transparent 26%),
+        radial-gradient(circle at 85% 10%, rgba(17, 238, 255, 0.18), transparent 24%),
+        radial-gradient(circle at 52% 88%, rgba(255, 58, 122, 0.14), transparent 26%),
+        linear-gradient(135deg, #071123 0%, #091a36 46%, #120b24 100%);
+    color: $white;
+    overflow: hidden;
+}
+
+.dashboardShell::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(255, 255, 255, 0.026) 1px, transparent 1px);
+    background-size: 54px 54px;
+    mask-image: radial-gradient(circle at 50% 44%, rgba(0, 0, 0, 0.8), transparent 72%);
+}
+
+.dashboardGrid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(230px, 280px) minmax(0, 1fr) minmax(220px, 290px);
+    min-height: 100vh;
+}
+
 .top {
-    background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
-    background: #FFFFFF 0% 0% no-repeat padding-box;
-    box-shadow: 0px 3px 6px #00000029;
-    opacity: 1;
-    left: 465px;
-    margin-bottom: 20px;
-    height: 80px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    margin-bottom: 24px;
+    height: 84px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 28px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.05));
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(16px);
 
     &>.title {
-        width: 90px;
-        height: 37px;
+        display: inline-flex;
+        align-items: center;
+        height: 100%;
+        color: $white;
         letter-spacing: 0.93px;
-        font-size: 25px;
+        font-family: 'Comfortaa Bold';
+        font-size: 1.65rem;
         position: relative;
-        top: 21px;
         left: 32px;
+        text-transform: uppercase;
+        text-shadow: 0 0 24px rgba(57, 234, 145, 0.28);
     }
 }
 
 // home 
 
 .fixedMenu {
-    background-color: #0C305E;
+    position: sticky;
+    top: 0;
+    min-height: 100vh;
+    height: 100vh;
+    padding: 1.2rem 1rem;
+    border-right: 1px solid rgba(57, 234, 145, 0.18);
+    background:
+        linear-gradient(180deg, rgba(4, 13, 30, 0.94), rgba(9, 21, 44, 0.88)),
+        radial-gradient(circle at 50% 0%, rgba(57, 234, 145, 0.18), transparent 42%);
+    box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.05), 22px 0 50px rgba(0, 0, 0, 0.24);
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-y: auto;
 }
 
 .infiniteScroll {
-    background-color: $white;
+    min-height: 100vh;
+    max-height: 100vh;
+    padding: 1.4rem;
+    overflow-y: auto;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025));
 }
 
 
 .friendsList {
-    background-color: #0C305E;
+    position: sticky;
+    top: 0;
+    min-height: 100vh;
+    height: 100vh;
+    padding: 1.4rem 1rem;
+    border-left: 1px solid rgba(62, 219, 255, 0.14);
+    background:
+        linear-gradient(180deg, rgba(4, 13, 30, 0.9), rgba(11, 22, 48, 0.86)),
+        radial-gradient(circle at 50% 10%, rgba(62, 219, 255, 0.14), transparent 44%);
+    overflow-y: auto;
 }
 
 img.avatar.profileAvatar {
-    width: 120px;
-    height: 120px;
-    margin-right: 20px;
+    width: 132px;
+    height: 132px;
+    margin-right: 0;
+    border: 3px solid rgba(57, 234, 145, 0.88);
+    box-shadow: 0 0 0 8px rgba(57, 234, 145, 0.08), 0 24px 44px rgba(0, 0, 0, 0.32), 0 0 42px rgba(57, 234, 145, 0.24);
 }
 
 //game details 
@@ -96,7 +297,88 @@ img.avatar.profileAvatar {
 }
 
 .currentLoggedUser {
-    position: fixed;
-    right: 3%;
-    top: 10%;
+    position: sticky;
+    top: 1.4rem;
+    width: 100%;
+}
+
+.btn.btn-custom,
+.btn.btn-primary,
+.btn.btn-danger {
+    border-radius: 18px;
+    font-family: 'Comfortaa Bold';
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.btn.btn-custom,
+.btn.btn-primary {
+    border: 1px solid rgba(57, 234, 145, 0.42);
+    background: linear-gradient(180deg, #39ea91 0%, #15a96a 100%);
+    color: #04101e;
+    box-shadow: 0 8px 0 #075633, 0 18px 28px rgba(0, 0, 0, 0.24), inset 0 3px 0 rgba(255, 255, 255, 0.28);
+}
+
+.btn.btn-custom:hover,
+.btn.btn-primary:hover {
+    color: #04101e;
+    filter: brightness(1.06) saturate(1.08);
+    transform: translateY(1px);
+    box-shadow: 0 6px 0 #075633, 0 14px 22px rgba(0, 0, 0, 0.22), inset 0 3px 0 rgba(255, 255, 255, 0.28);
+}
+
+.btn.btn-danger {
+    border: 1px solid rgba(255, 70, 114, 0.52);
+    background: linear-gradient(180deg, #ff4779 0%, #a91445 100%);
+    box-shadow: 0 8px 0 #650421, 0 18px 28px rgba(0, 0, 0, 0.24), inset 0 3px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn.btn-danger:hover {
+    filter: brightness(1.06) saturate(1.08);
+    transform: translateY(1px);
+    box-shadow: 0 6px 0 #650421, 0 14px 22px rgba(0, 0, 0, 0.22), inset 0 3px 0 rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: $breakpoint-desktop) {
+    .dashboardGrid {
+        grid-template-columns: 92px minmax(0, 1fr);
+    }
+
+    .friendsList {
+        display: none;
+    }
+
+    .brand-span-container,
+    .navigationChip .MuiChip-label {
+        display: none;
+    }
+
+    .navigationChip {
+        width: 58px;
+    }
+}
+
+@media (max-width: $breakpoint-phone) {
+    .dashboardGrid {
+        display: block;
+    }
+
+    .fixedMenu {
+        position: relative;
+        min-height: auto;
+        height: auto;
+        flex-direction: row;
+        align-items: center;
+        padding: 0.75rem;
+    }
+
+    .infiniteScroll {
+        max-height: none;
+        padding: 0.9rem;
+    }
+
+    .profilePanel {
+        display: block;
+        padding: 1rem;
+    }
 }

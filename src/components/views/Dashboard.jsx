@@ -99,10 +99,9 @@ export const Dashboard = () => {
     }
     return (
         <>
-            <section>
-                <div>
-                    <div className="row h-100">
-                        <div className="col-3 fixedMenu">
+            <section className="dashboardShell">
+                <div className="dashboardGrid">
+                        <aside className="fixedMenu">
                             <div className="brand-container">
                                 <IconSvg className="logoIconApp p-2"></IconSvg>
                                 <span className="brand-span-container pl-3">Jegty</span>
@@ -116,8 +115,8 @@ export const Dashboard = () => {
                                 </button> : null}
                             </div>
 
-                        </div>
-                        <div className="col-6 infiniteScroll">
+                        </aside>
+                        <main className="infiniteScroll">
                             <div className="top">
                                 <span className="title">{transformCurrentLocation()}</span></div>
                             <Switch>
@@ -131,13 +130,12 @@ export const Dashboard = () => {
                                     <NotFound></NotFound>
                                 </LoggedRoute>
                             </Switch>
-                        </div>
-                        <div className="col-3 friendsList">
+                        </main>
+                        <aside className="friendsList">
                             <div className="currentLoggedUser">
                                 {jegtyUser ? <AvatarBadge email={user.email} name={jegtyUser.name}></AvatarBadge> : null}
                             </div>
-                        </div>
-                    </div>
+                        </aside>
                 </div>
                 <footer>
                 </footer>

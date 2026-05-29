@@ -24,7 +24,7 @@ export const getPendingFriendRequesFromUserEmail = async (userEmail) => {
         ? `status = "pending" && (toEmail = "${userEmail}" || toUser = "${currentUserId}")`
         : `status = "pending" && toEmail = "${userEmail}"`;
 
-    const pendingIds = await pb.collection('pending_requests').getFullList({ filter });
+    const pendingIds = await pb.collection('pending_requests').getFullList({ filter, requestKey: null });
     return toQuery(pendingIds, (record) => ({ id: record.fromUser, requestId: record.id, ...record }));
 }
 
@@ -116,6 +116,6 @@ export const getFriendsByJegtyUserId = async (jegtyUserId) => {
         return toQuery([]);
     }
 
-    const friendIdList = await pb.collection('friendships').getFullList({ filter: `user = "${jegtyUserId}"` });
+    const friendIdList = await pb.collection('friendships').getFullList({ filter: `user = "${jegtyUserId}"`, requestKey: null });
     return toQuery(friendIdList, (record) => ({ id: record.friend }));
 }
