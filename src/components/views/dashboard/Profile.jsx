@@ -114,17 +114,22 @@ export const Profile = (props) => {
         </div>
       ) : null}
       {isLoading ? <LoadingBar></LoadingBar> : null}
-      <h4 className="mt-2">SETTINGS</h4>
-      <div className="row mt-2 justify-content-end">
-        <div className="col-2">
+      <div className="profileHeader">
+        <span className="profileKicker">PLAYER CONFIG</span>
+        <h4 className="mt-2">Settings</h4>
+        <p>Fine tune your Jegty identity before jumping into the next match.</p>
+      </div>
+      <div className="profilePanel row mt-2 justify-content-end">
+        <div className="profileAvatarColumn col-2">
           <Avatar
             email={jegtyUser.email}
             value={jegtyUser.name}
             customClass={"profileAvatar"}
           ></Avatar>
+          <span className="profileStatus">Online</span>
         </div>
-        <div className="col-10">
-          <div className="form-group">
+        <div className="profileFormColumn col-10">
+          <div className="profileQuickActions form-group">
             <div className=".col-md-6 .offset-md-3">
               <InputField
                 id={NICKNAME_INPUT_ID}
@@ -172,10 +177,10 @@ export const Profile = (props) => {
             </div>
           </div>
 
-          <div className="form-group">
+          <div className="profileActions form-group">
             <div className="d-flex flex-column">
               <button
-                className="btn btn-primary float-right col-2 profileButton mb-2"
+                className="btn btn-primary float-right profileButton mb-2"
                 onClick={updateUser}
               >
                 Update
@@ -183,7 +188,7 @@ export const Profile = (props) => {
               <button
                 data-toggle="modal"
                 data-target="#confirmationModal"
-                className="btn btn-danger float-right col-2 profileButton"
+                className="btn btn-danger float-right profileButton"
               >
                 Delete
               </button>

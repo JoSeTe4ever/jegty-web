@@ -10,4 +10,13 @@
     cursor: pointer;
 }
 
+.fa {
+    transition: transform 150ms ease, text-shadow 150ms ease, color 150ms ease;
+}
+
+.fa:hover {
+    transform: translateY(-1px) scale(1.04);
+    text-shadow: 0 0 18px rgba(57, 234, 145, 0.44);
+}
+
 

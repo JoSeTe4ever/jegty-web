@@ -1,7 +1,6 @@
 @import './../../../styles/base.scss';
 
 *{
-  margin: auto;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
@@ -11,7 +10,10 @@
 
 span.brand-span-container {
     color: $white;
-    font-size: 3rem;
+    font-family: 'Comfortaa Bold';
+    font-size: 2.4rem;
+    letter-spacing: -0.08em;
+    text-shadow: 0 0 22px rgba(57, 234, 145, 0.48), 0 5px 0 rgba(0, 0, 0, 0.28);
 }
 
 //Search input
@@ -31,14 +33,23 @@ div.searchInputContainer {
 }
 
 div.navigation-menu {
-    color: white
+    width: 100%;
+    color: white;
 }
 
 li.navigationElemnList {
-    height: 40px;
-    margin-bottom: 2rem;
+    min-height: 54px;
+    margin-bottom: 0.95rem;
     cursor: pointer;
-    width: 20%;
+    width: 100%;
+    list-style: none;
+    transform: skew(-5deg);
+    transition: transform 160ms ease, filter 160ms ease;
+
+    &:hover {
+        transform: skew(-5deg) translateX(6px);
+        filter: brightness(1.12);
+    }
 
     &>.container {
         position: relative;
@@ -57,32 +68,66 @@ li.navigationElemnList {
 }
 
 .navigationList {
-
+    width: 100%;
+    padding: 0;
+    margin: 0;
 }
 
 .navigationChip {
-    height: 37px;
-    width: 166px;
+    height: 52px !important;
+    width: 100%;
+    justify-content: flex-start !important;
+    border: 1px solid rgba(62, 219, 255, 0.22) !important;
+    border-radius: 18px !important;
+    background: linear-gradient(135deg, rgba(18, 45, 82, 0.94), rgba(7, 19, 42, 0.98)) !important;
+    color: #eafcff !important;
+    font-family: 'Comfortaa Bold' !important;
+    letter-spacing: 0.02em;
+    box-shadow: 0 9px 0 rgba(0, 0, 0, 0.28), 0 18px 24px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: skew(5deg);
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+
+    &:hover {
+        border-color: rgba(57, 234, 145, 0.62) !important;
+        box-shadow: 0 7px 0 rgba(0, 0, 0, 0.3), 0 0 30px rgba(57, 234, 145, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    }
+
+    .MuiChip-icon {
+        color: #39ea91 !important;
+        margin-left: 14px !important;
+        text-shadow: 0 0 18px rgba(57, 234, 145, 0.58);
+    }
+
+    .MuiChip-label {
+        padding-left: 12px;
+    }
 }
 
 
 .avatarContainer {
-    min-width: 15rem;
-    border-radius: 2.25rem;
+    width: 100%;
+    min-width: 0;
+    border-radius: 1.4rem;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    background-color: #cfd4da;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.04));
+    border: 1px solid rgba(62, 219, 255, 0.16);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     display: flex;
+    padding: 0.75rem;
 
     &>div span.avatarMail {
         display: block;
         font-size: 14px;
         font-style: italic;
+        color: rgba(234, 252, 255, 0.62);
+        word-break: break-word;
     }
 
     &>div span.avatarName {
         font-weight: bold;
         display: block;
         font-size: 1.2rem;
+        color: $white;
     }
 
     &>.miniAvatar {
@@ -90,9 +135,10 @@ li.navigationElemnList {
         heigth: 60px;
 
         &.coolEfect {
-            background-color: #cfd4da;
+            background-color: #071326;
             display: flex;
-            border: outset;
+            border: 2px solid rgba(57, 234, 145, 0.8);
+            box-shadow: 0 0 22px rgba(57, 234, 145, 0.22);
         }
     }
 
