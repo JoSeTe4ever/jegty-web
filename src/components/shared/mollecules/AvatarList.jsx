@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { db } from '../../../data/firebase';
+import { getJegtyUserById } from '../../../data/jegty-api';
 import { AvatarBadge } from './AvatarBadge';
 import { cacheJegtyUser } from './../../../redux/actions/actions'
 import { useDispatch, useSelector } from 'react-redux';
 import './Mollecules.scss';
 
 /**
- * It loads the data from firebase, from 
+ * It loads user data from the backend, from 
  * the id list that is passed at props. 
  * It caches in the store any data saved 
  * 
@@ -29,9 +29,9 @@ export const AvatarList = (props) => {
     const cachedJegtyUsers = useSelector((state) => state.cache.jegtyUsers);
 
     // todo save readings checking cache
-    const loadDataFromFirebase = async (userIds) => {
+    const loadDataFromPocketBase = async (userIds) => {
         setLoading(true);
-        const refs = userIds.map(id => db.collection('users').doc(`${id}`).get())
+        const refs = userIds.map(id => getJegtyUserById(`${id}`))
         
         Promise.all(refs).then(friendsList => {
             const list = friendsList.map(e => e.data());
@@ -58,7 +58,7 @@ export const AvatarList = (props) => {
             }
         }
         if (friends && friends.length > 0) {
-            loadDataFromFirebase(friends);
+            loadDataFromPocketBase(friends);
         }
 
         else {

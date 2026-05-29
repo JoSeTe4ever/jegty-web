@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { addLogedUser, logValidUser } from '../redux/actions/actions';
 import { ReactComponent as IconSvg } from './../assets/icons/icono.svg';
-import { app, db } from './../data/firebase';
+import { getPocketBaseErrorMessage, loginWithEmail, registerWithEmail } from './../data/pocketbase';
 import { InputField } from './shared/atoms/InputField';
 import { LoadingBar } from './shared/atoms/LoadingBar';
 import { VALID_EMAIL } from "./../../src/helpers/validators"
@@ -55,15 +55,13 @@ export const Invite = () => {
             setLoading(true);
             const userInput = inputEmail.current.value;
             const passInput = inputPassword.current.value;
-            await app
-                .auth()
-                .signInWithEmailAndPassword(userInput, passInput)
+            await loginWithEmail(userInput, passInput)
                 .then(result => {
                     dispatch(addLogedUser(result.user));
                     dispatch(logValidUser(true));
                 })
                 .catch(error => {
-                    seterror(error.message, "Error while authenticating");
+                    seterror(getPocketBaseErrorMessage(error), "Error while authenticating");
                     throw new Error(error);
                 }).finally(() => {
                     setLoading(false);
@@ -88,24 +86,15 @@ export const Invite = () => {
             seterror("Password and repeat password does not match");
             setLoading(false);
         } else {
-            await app
-                .auth()
-                .createUserWithEmailAndPassword(userInput, passInput)
+            await registerWithEmail(userInput, passInput)
                 .then(result => {
                     setSignIn(true);
                     setInfo(`User ${result.user.email}successfully created`);
                     seterror('');
-                    db.collection('users').doc(result.user.uid).set({
-                        email: result.user.email,
-                        id: result.user.uid,
-                        name: "",
-                        birthdate: "",
-                        createdAt: new Date()
-                    });
                     setLoading(false);
                 })
                 .catch(error => {
-                    seterror(error.message);
+                    seterror(getPocketBaseErrorMessage(error));
                     setLoading(false);
                 });
         }

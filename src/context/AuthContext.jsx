@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { app } from "../data/firebase";
+import { onAuthStateChanged } from "../data/pocketbase";
 
 export const Auth = React.createContext();
 
@@ -8,10 +8,11 @@ export const AuthContext = ({ children }) => {
     const [showChild, setShowChild] = useState(false);
 
     useEffect(() => {
-        app.auth().onAuthStateChanged(function (user) {
+        const unsubscribe = onAuthStateChanged(function (user) {
             setUser(user);
             setShowChild(true);
         });
+        return unsubscribe;
     }, []);
 
     if (!showChild) {

@@ -2,13 +2,12 @@ import React, { useRef, useState } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Icon } from "../../shared/atoms/Icon";
-import { app, db, realTimeDb } from "./../../../data/firebase";
+import { getPocketBaseErrorMessage, logout, pb } from "./../../../data/pocketbase";
 import { addJegtyUser, logValidUser } from "./../../../redux/actions/actions";
 import { InputField } from "./../../shared/atoms/InputField";
 import { LoadingBar } from "./../../shared/atoms/LoadingBar";
 import "./../../views/views.scss";
 import { Avatar } from "../../shared/atoms/Avatar";
-import firebase from "firebase";
 import { DateTimePicker } from "@material-ui/pickers";
 import { getDateFromSeconds } from "helpers/dates";
 
@@ -22,7 +21,7 @@ export const Profile = (props) => {
   const [error, setError] = useState("");
   const [info, setInfo] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const userBday = getDateFromSeconds(jegtyUser.birthdate.seconds);
+  const userBday = getDateFromSeconds(jegtyUser.birthdate);
   const [birthday, setBirthday] = useState(userBday);
 
   const inputNickName = useRef(jegtyUser.name);
@@ -32,19 +31,9 @@ export const Profile = (props) => {
   const history = useHistory();
 
   const _logout = () => {
-    //        realTimeDb.off();
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        history.push("/");
-        dispatch(logValidUser(false));
-      })
-      .catch((error) => {
-        // An error happened.
-        console.error(error);
-        throw new Error(error);
-      });
+    logout();
+    history.push("/");
+    dispatch(logValidUser(false));
   };
 
   const displayMessage = (message, type) => {
@@ -70,12 +59,14 @@ export const Profile = (props) => {
     }
     const updatedUser = {
       name: inputNickName.current.value,
-      birthdate: birthday,
     };
 
-    db.collection("users")
-      .doc(user.uid)
-      .update(updatedUser)
+    if (birthday) {
+      updatedUser.birthdate = birthday instanceof Date ? birthday.toISOString() : birthday;
+    }
+
+    pb.collection("users")
+      .update(user.uid, updatedUser)
       .then((result) => {
         displayMessage(`User ${result} sucessfully updated`, "INFO");
         const newUpdatedUser = { ...jegtyUser };
@@ -86,32 +77,27 @@ export const Profile = (props) => {
       })
       .catch((error) => {
         console.error(error);
-        displayMessage(`Error updating, ${error}`, "ERROR");
+        displayMessage(`Error updating, ${getPocketBaseErrorMessage(error)}`, "ERROR");
         setLoading(false);
       });
   };
 
   const deleteUser = async (event) => {
     setLoading(true);
-    const currentUser = app.auth().currentUser;
+    const currentUser = pb.authStore.model;
     let errorObtained = undefined;
 
-    await db
+    await pb
       .collection("users")
-      .doc(currentUser.uid)
-      .delete()
+      .delete(currentUser.id)
       .then((result) => {
-        currentUser
-          .delete()
-          .then(() => {
-            displayMessage(`User ${result} sucessfully updated`, "INFO");
-            dispatch(logValidUser(false));
-          })
-          .catch(function (error) {
-            errorObtained = error;
-            displayMessage(errorObtained, "ERROR");
-            setLoading(false);
-          });
+        logout();
+        displayMessage(`User ${result} sucessfully updated`, "INFO");
+        dispatch(logValidUser(false));
+      }).catch(function (error) {
+        errorObtained = error;
+        displayMessage(errorObtained, "ERROR");
+        setLoading(false);
       });
   };
 

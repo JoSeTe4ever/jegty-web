@@ -14,7 +14,7 @@ export const GameDetails = (props) => {
     const [ownerUser, setOwnerUser] = useState({});
     const dispatch = useDispatch();
     const cachedOwnerUser = useSelector(getCachedUserById(jegtyGame.ownerId));
-    const gameDate = getDateFromSeconds(jegtyGame.startAt.seconds);
+    const gameDate = getDateFromSeconds(jegtyGame.startAt);
 
     useEffect(() => {
         if (!cachedOwnerUser) {

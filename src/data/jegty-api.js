@@ -1,256 +1,121 @@
-import {
-    db,
-    realTimeDb
-} from './firebase'
-import {
-    emailEncoder
-} from "./../helpers/idEncoder"
+import { pb, normalizeGame, normalizeUser, toDoc, toQuery } from './pocketbase';
 
 export const getJegtyUserById = async (jegtUserId) => {
-    let user = {};
-    if (jegtUserId) {
-        user = await db.collection('users').doc(jegtUserId).get();
-    } else {
-        user = {}
+    if (!jegtUserId) {
+        return toDoc({}, normalizeUser);
     }
-    return user;
+
+    const user = await pb.collection('users').getOne(jegtUserId);
+    return toDoc(user, normalizeUser);
 }
 
-/**
- * Get a Jegty game From Firestore by its id 
- * 
- * @param {*} jegtyGameId 
- */
 export const getGameById = async (jegtyGameId) => {
-    let game = {};
-    if (jegtyGameId) {
-        game = await db.collection('games').doc(jegtyGameId).get();
-    } else {
-        game = {}
+    if (!jegtyGameId) {
+        return toDoc({}, normalizeGame);
     }
-    return game;
+
+    const game = await pb.collection('games').getOne(jegtyGameId);
+    return toDoc(game, normalizeGame);
 }
 
-/**
- * get the uids of the pending friendship request 
- * of the table pending/userEmail
- * @param {string} userEmail 
- * @returns promise of an array of ids
- */
 export const getPendingFriendRequesFromUserEmail = async (userEmail) => {
-    const encodedEmail = emailEncoder(userEmail)
-    const pendingIds = await db.collection('pendings').doc(encodedEmail).collection('users').get();
-    return pendingIds;
+    const currentUserId = pb.authStore.model && pb.authStore.model.id;
+    const filter = currentUserId
+        ? `status = "pending" && (toEmail = "${userEmail}" || toUser = "${currentUserId}")`
+        : `status = "pending" && toEmail = "${userEmail}"`;
+
+    const pendingIds = await pb.collection('pending_requests').getFullList({ filter });
+    return toQuery(pendingIds, (record) => ({ id: record.fromUser, requestId: record.id, ...record }));
 }
 
-/****
- * Removes the entry from the realtime database 
- * it is invoked when there are no pending requests 
- * @param {string} userEmail 
- */
-export const removePendingWarning = async (userEmail) => {
-    const encodedEmail = emailEncoder(userEmail)
-    var pendingRequestsRef = realTimeDb.ref(`pendingRequests/${encodedEmail}`);
-    return await pendingRequestsRef.set(false);
-}
+export const removePendingWarning = async () => true;
 
-
-/**
- * removes a friend request, it can be used when accepting 
- * or rejecting the friend request from the friend view. 
- * 
- * @param {*} userEmail 
- * @param {*} uid 
- */
 export const removePendingFriendRequest = async (userEmail, uid) => {
-    const encodedEmail = emailEncoder(userEmail);
-    const pendingUsersRef = db.collection("pendings").doc(encodedEmail).collection('users')
-    //check if there is no pending request, if so remove alert.
-    return await pendingUsersRef.doc(uid).delete().then(() => {
-
-        return getPendingFriendRequesFromUserEmail(userEmail).then(pendingList => {
-            if (pendingList && pendingList.docs && pendingList.docs.length === 0) {
-                return removePendingWarning(userEmail);
-            }
-        })
-    });
-
+    const currentUserId = pb.authStore.model && pb.authStore.model.id;
+    const filter = currentUserId
+        ? `(fromUser = "${uid}" || fromUser = "${currentUserId}") && (toEmail = "${userEmail}" || toUser = "${currentUserId}")`
+        : `fromUser = "${uid}" && toEmail = "${userEmail}"`;
+    const requests = await pb.collection('pending_requests').getFullList({ filter });
+    await Promise.all(requests.map((request) => pb.collection('pending_requests').delete(request.id)));
 }
 
-/**
- * Removes a friend relationship in Firebase.
- * 
- * @param {string} currentUserUid 
- * @param {string} friendUid 
- */
 export const removeFriend = async (currentUserUid, friendUid) => {
-    return await db.collection("friendZone").doc(friendUid).collection('friends').doc(currentUserUid).delete().then(async () => {
-        return await db.collection("friendZone").doc(currentUserUid).collection('friends').doc(friendUid).delete();
+    const friendships = await pb.collection('friendships').getFullList({
+        filter: `user = "${currentUserUid}" && friend = "${friendUid}"`,
     });
+
+    await Promise.all(friendships.map((friendship) => pb.collection('friendships').delete(friendship.id)));
 }
 
-/**
- * adds a friend request. It will set the realtime database to true in case it is not 
- * set.
- * 
- * @param {*} userEmail 
- * @param {*} uid 
- */
 export const addFriendPendingRequest = async (userEmail, uid) => {
-    const encodedEmail = emailEncoder(userEmail);
-    return await db.collection("pendings").doc(encodedEmail).collection('users').doc(uid).set({
-        id: uid
-    }).then(ok => {
-        var pendingRequestsRef = realTimeDb.ref(`pendingRequests/${encodedEmail}`);
-        pendingRequestsRef.set(true);
+    let toUser = '';
+    try {
+        const users = await pb.collection('users').getFullList({ filter: `email = "${userEmail}"` });
+        toUser = users && users[0] ? users[0].id : '';
+    } catch (_) {
+        toUser = '';
+    }
+
+    return await pb.collection('pending_requests').create({
+        fromUser: uid,
+        toEmail: userEmail,
+        toUser,
+        status: 'pending',
     });
 }
 
-
-/**
- * Add the pending friend request, it should create the 
- * entry on the friend zone.
- * 
- * @param {*} userEmail email of the current user.
- * @param {*} uid  friend to accept.
- * @param {*} userEmail current User.
- */
 export const acceptPendingFriendRequest = async (userEmail, uid, currentUserId) => {
-    const encodedEmail = emailEncoder(userEmail);
-    return await removePendingFriendRequest(encodedEmail, uid).then(async (ok) => {
-        const batch = db.batch();
-        const friendDocument = db.collection('friendZone').doc(currentUserId).collection("friends").doc(uid);
-        const userDocument = db.collection('friendZone').doc(uid).collection("friends").doc(currentUserId);
-
-        batch.set(friendDocument, {
-            id: uid
-        });
-        batch.set(userDocument, {
-            id: currentUserId
-        });
-        return batch.commit().then(() => {
-            return uid;
-        }).catch(error => {
-            throw new Error(error);
-        });
+    await pb.collection('friendships').create({
+        user: currentUserId,
+        friend: uid,
     });
+    await removePendingFriendRequest(userEmail, uid);
+    return uid;
 }
 
-
-/**
- * Returns a promise of the List of participants 
- * id of a jegty room
- * @param {id} roomId 
- */
 export const getParticipantsIdFromRoomId = async (roomId) => {
-    let participantsIdList = [];
-    if (roomId) {
-        participantsIdList = await db.collection('games').doc(roomId).collection('users').get();
+    if (!roomId) {
+        return toQuery([]);
     }
-    return participantsIdList;
+
+    const participants = await pb.collection('game_participants').getFullList({ filter: `game = "${roomId}"` });
+    return toQuery(participants, (record) => ({ id: record.user, accepted: record.accepted }));
 }
 
-export const addNewFriend = async (friendId) => {
-    return friendId;
-}
+export const addNewFriend = async (friendId) => friendId;
 
-
-/**
- * Creates a new game. 
- * Since Firebase has limitations, it uses interelated 
- * tables.
- * 
- * @param {*} game 
- * @param {*} userId the creator of the game. Owner of the room. 
- * @param {*} friendList id of the list of friends.
- */
 export const createNewGame = async (game, userId, friendList) => {
-
-    const ref = db.collection("users").doc(userId).collection("games").doc();
-    const gameId = ref.id;
-    game.id = gameId;
-
-    await db.collection("games").doc(gameId).set(game);
-
-    const userGame = db.collection("users").doc(userId).collection("games").doc(gameId);
-    const gameUser = db.collection("games").doc(gameId).collection("users").doc(userId);
-
-    let gamesBatchedReferences = [];
-    let userBatchedReferences = [];
-
-    if (friendList && friendList.length > 0) {
-        userBatchedReferences = friendList.map(friendId => {
-            return {
-                reference: db.collection("users").doc(friendId).collection("games").doc(gameId),
-                id: friendId
-            };
-        });
-
-        gamesBatchedReferences = friendList.map(friendId => {
-            return {
-                reference: db.collection("games").doc(gameId).collection("users").doc(friendId),
-                id: friendId
-            }
-        });
-    }
-
-    const batch = db.batch();
-    userBatchedReferences.forEach(e => {
-        batch.set(e.reference, {
-            id: e.id
-        });
+    const newGame = await pb.collection('games').create({
+        roomName: game.roomName,
+        owner: userId,
+        rawgGameId: `${game.rawgGameId}`,
+        startAt: game.startAt instanceof Date ? game.startAt.toISOString() : game.startAt,
     });
 
-    gamesBatchedReferences.forEach(e => {
-        batch.set(e.reference, {
-            accepted: false,
-            id: e.id
-        });
-    });
+    const participantIds = [userId, ...(friendList || [])];
+    await Promise.all(participantIds.map((participantId) => pb.collection('game_participants').create({
+        game: newGame.id,
+        user: participantId,
+        accepted: participantId === userId,
+    })));
 
-    batch.set(userGame, {
-        id: gameId
-    });
-    batch.set(gameUser, {
-        accepted: true,
-        id: userId
-    });
-    return batch.commit().then(() => {
-        return gameId;
-    }).catch(error => {
-        throw new Error(error);
-    });
+    return newGame.id;
 }
 
-
-/**
- * Get a list of Jegty game id From Firestore by its id 
- * 
- * @param {*} jegtyGameId 
- */
 export const getGamesByJegtyUserId = async (jegtyUserId) => {
-    let gameIdList = [];
-
-    if (jegtyUserId) {
-        gameIdList = await db.collection('users').doc(jegtyUserId).collection("games").get();
+    if (!jegtyUserId) {
+        return toQuery([]);
     }
 
-    return gameIdList;
+    const gameIdList = await pb.collection('game_participants').getFullList({ filter: `user = "${jegtyUserId}"` });
+    return toQuery(gameIdList, (record) => ({ id: record.game, accepted: record.accepted }));
 }
 
-
-/**
- * Get a list of Jegty game id From Firestore by its id 
- * Due to the limitations of Firebase, it uses intermediate and nested documents 
- * 
- * @param {*} jegtyGameId 
- */
 export const getFriendsByJegtyUserId = async (jegtyUserId) => {
-    let gameIdList = [];
-
-    if (jegtyUserId) {
-        gameIdList = await db.collection('friendZone').doc(jegtyUserId).collection("friends").get();
+    if (!jegtyUserId) {
+        return toQuery([]);
     }
 
-    return gameIdList;
+    const friendIdList = await pb.collection('friendships').getFullList({ filter: `user = "${jegtyUserId}"` });
+    return toQuery(friendIdList, (record) => ({ id: record.friend }));
 }

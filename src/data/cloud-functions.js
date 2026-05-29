@@ -1,21 +1,11 @@
-import {
-  baseFirebaseUrl,
-  currentIdToken
-} from "./../data/firebase"
+import { pb } from './pocketbase';
 
 export const sendInviteMail = (email) => {
   if (email) {
-
-    const url = `${baseFirebaseUrl()}/sendMail?dest=${email}`;
-    return fetch(url, {
+    return pb.send('/api/jegty/send-mail', {
       method: 'GET',
-      headers: {
-        authorization: 'Bearer ' + currentIdToken,
-        'Content-Type': 'application/json',
-      },
-    }).then(error => {
-      return new Error("Error while sending email");
-    });
+      query: { dest: email },
+    }).then(() => true);
   }
-  return new Error("E-mail is empty");
+  return Promise.reject(new Error("E-mail is empty"));
 }

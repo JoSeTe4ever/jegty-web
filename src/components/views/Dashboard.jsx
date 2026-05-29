@@ -7,13 +7,12 @@ import { GameDetails } from "../../components/views/dashboard/GameDetails";
 import { Games } from "../../components/views/dashboard/Games";
 import { Profile } from "../../components/views/dashboard/Profile";
 import { Tournaments } from "../../components/views/dashboard/Tournaments";
-import { getGamesByJegtyUserId } from "../../data/jegty-api";
+import { getGamesByJegtyUserId, getJegtyUserById } from "../../data/jegty-api";
+import { pb } from "../../data/pocketbase";
 import GuardedRoute from '../shared/GuardedRoute';
 import { AvatarBadge } from '../shared/mollecules/AvatarBadge';
 import { Home } from '../views/dashboard/Home';
 import { NavigationMenu } from './../../components/shared/mollecules/NavigationMenu';
-import { db, realTimeDb } from "./../../data/firebase";
-import { emailEncoder } from "./../../helpers/idEncoder";
 import {
     addGameidToUserList, addJegtyUser,
     setHasPending
@@ -55,18 +54,23 @@ export const Dashboard = () => {
             });
 
 
-            // listen to the realtime database 
-            var pendingRequestsRef = realTimeDb.ref(`pendingRequests/${emailEncoder(user.email)}`);
-            pendingRequestsRef.on('value', (snapshot) => {
-                const data = snapshot.val();
+            const syncPending = async () => {
+                const pending = await pb.collection('pending_requests').getFullList({
+                    filter: `status = "pending" && (toUser = "${user.uid}" || toEmail = "${user.email}")`,
+                });
+                const data = pending.length > 0;
                 navitagionElemens[1].isPending = data; // set the menu badge 
                 setNavigationElemens([...navitagionElemens]);
                 dispatch(setHasPending(data));
+            };
+            syncPending();
+            pb.collection('pending_requests').subscribe('*', syncPending, {
+                filter: `status = "pending" && (toUser = "${user.uid}" || toEmail = "${user.email}")`,
             });
         }
 
         if (jegtyUser.id === undefined) {
-            db.collection('users').doc(user.uid).get().then(jegtyUser => {
+            getJegtyUserById(user.uid).then(jegtyUser => {
                 jegtyUser = { ...jegtyUser.data() };
                 dispatch(addJegtyUser(jegtyUser));
             }).catch(function (error) {
@@ -74,7 +78,9 @@ export const Dashboard = () => {
             });
         }
 
-        return undefined;
+        return () => {
+            pb.collection('pending_requests').unsubscribe('*');
+        };
     }, [])
 
     useEffect(() => {

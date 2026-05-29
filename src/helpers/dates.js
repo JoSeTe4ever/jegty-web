@@ -1,4 +1,18 @@
-export const getDateFromSeconds = (seconds) => new Date(seconds * 1000);
+export const getDateFromSeconds = (value) => {
+    if (!value) {
+        return new Date();
+    }
+
+    if (value.seconds !== undefined) {
+        return new Date(value.seconds * 1000);
+    }
+
+    if (typeof value === 'number') {
+        return new Date(value * 1000);
+    }
+
+    return new Date(value);
+};
 
 export const getDateFromFirebaseString = (stringDate) => {
     const intDate = parseInt(stringDate)

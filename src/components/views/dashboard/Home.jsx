@@ -3,7 +3,7 @@ import MuiAlert from '@material-ui/lab/Alert';
 import { addFriendPendingRequest, removeFriend } from 'data/jegty-api';
 import { default as React, useRef, useState, useEffect } from 'react';
 import { connect, useDispatch, useSelector } from "react-redux";
-import { app } from "../../../data/firebase";
+import { pb } from "../../../data/pocketbase";
 import { acceptPendingFriendRequest, removePendingFriendRequest, getFriendsByJegtyUserId, getPendingFriendRequesFromUserEmail } from '../../../data/jegty-api';
 import { addFriendidToFriendList, removeFriendidfromFriendList, removeFriendRequest, addFriendRequestidToPendingList } from '../../../redux/actions/actions';
 import { sendInviteMail } from "./../../../data/cloud-functions";
@@ -89,9 +89,9 @@ export const Home = (props) => {
     const addUser = () => {
         //check if the user exist jopi
         const inviteEmail = inviteFriendEmailRef.current.value;
-        app.auth().fetchSignInMethodsForEmail(inviteEmail)
-            .then(providers => {
-                if (providers.length === 0) {
+        pb.collection('users').getFullList({ filter: `email = "${inviteEmail}"` })
+            .then(users => {
+                if (users.length === 0) {
                     // this email hasn't signed up yet
                     sendRecommendEmail(inviteEmail);
                 } else {
