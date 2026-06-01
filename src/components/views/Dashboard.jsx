@@ -5,6 +5,7 @@ import { ReactComponent as IconSvg } from '../../assets/icons/icono.svg';
 import { CreateGame } from "../../components/views/dashboard/CreateGame";
 import { GameDetails } from "../../components/views/dashboard/GameDetails";
 import { Games } from "../../components/views/dashboard/Games";
+import { GamesCatalogue } from "../../components/views/dashboard/GamesCatalogue";
 import { Profile } from "../../components/views/dashboard/Profile";
 import { Tournaments } from "../../components/views/dashboard/Tournaments";
 import { getGamesByJegtyUserId, getJegtyUserById } from "../../data/jegty-api";
@@ -123,6 +124,7 @@ export const Dashboard = () => {
                                 <LoggedRoute exact path="/" component={Home} />
                                 <LoggedRoute exact path="/profile" component={Profile} />
                                 <LoggedRoute exact path="/tournaments" component={Tournaments} />
+                                <LoggedRoute exact path="/games-catalogue" component={GamesCatalogue} />
                                 <LoggedRoute exact path="/games" component={Games} />
                                 <LoggedRoute exact path="/new-game" component={CreateGame} />
                                 <LoggedRoute exact path="/game-details" component={GameDetails} />

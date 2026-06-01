@@ -1,0 +1,18 @@
+services:
+  app:
+    build: .
+    container_name: jegty-web
+    env_file:
+      - .env
+    environment:
+      HOST: 0.0.0.0
+      PORT: 5000
+      WDS_SOCKET_PORT: 5000
+      CHOKIDAR_USEPOLLING: "true"
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    stdin_open: true
+    tty: true
