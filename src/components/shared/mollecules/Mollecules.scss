@@ -94,7 +94,8 @@ li.navigationElemnList {
 
     .MuiChip-icon {
         color: #39ea91 !important;
-        margin-left: 14px !important;
+        margin-left: 20px !important;
+        margin-right: 4px !important;
         text-shadow: 0 0 18px rgba(57, 234, 145, 0.58);
     }
 
@@ -286,7 +287,7 @@ div.descriptionContainer {
     width: 35px;
     height: 35px;
     top: 110px;
-    left: -6px;
+    left: 100px;
     position: relative;
     z-index: 2;
     box-shadow: 0 8px 10px rgba(0, 0, 0, 0.22);

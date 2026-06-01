@@ -199,53 +199,87 @@ export const CreateGame = () => {
                     {message}
                 </Alert>
             </Snackbar>
-            <div className="container d-flex flex-column">
-                <InputField id={NAME_INPUT_ID} labelText="Name" variant="outlined" innerRef={inputName} helperText="The name of your room" required></InputField>
-                <DateTimePicker
+            <section className="newGameArena">
+                <div className="newGameHero">
+                    <span className="newGameKicker">Squad launcher</span>
+                    <h2>New game room</h2>
+                    <p>Configura la partida, selecciona un titulo de RAWG y prepara a tu escuadron.</p>
+                </div>
+
+                <div className="newGamePanel">
+                    <div className="newGameFormGrid">
+                        <div className="newGameField newGameFieldWide">
+                            <span className="newGameStep">01</span>
+                            <InputField id={NAME_INPUT_ID} labelText="Room name" variant="outlined" innerRef={inputName} helperText="The name of your room" required></InputField>
+                        </div>
+
+                        <div className="newGameField">
+                            <span className="newGameStep">02</span>
+                            <DateTimePicker
                                 variant="inline"
-                                label="Cake date"
+                                label="Match date"
                                 value={selectedDate}
                                 onChange={setSelectedDate}
                                 inputVariant="outlined" />
+                        </div>
 
-                <SearchInput innerRef={inputSelectedGame}></SearchInput>
-                <InputField id={DESCRIPTION_INPUT_ID} labelText="Description" variant="outlined" innerRef={inputDescription} helperText="Some insights" required></InputField>
-                <InputField id={DISCORD_INPUT_ID} labelText="DiscordLink" variant="outlined" innerRef={inputDiscord} helperText="Share it with discord" required></InputField>
+                        <div className="newGameField newGameFieldWide newGameSearchField">
+                            <span className="newGameStep">03</span>
+                            <SearchInput innerRef={inputSelectedGame}></SearchInput>
+                        </div>
 
-                <div className="friendsAgregator mt-3 border">
+                        <div className="newGameField newGameFieldWide">
+                            <span className="newGameStep">04</span>
+                            <InputField id={DESCRIPTION_INPUT_ID} labelText="Description" variant="outlined" innerRef={inputDescription} helperText="Some insights" required></InputField>
+                        </div>
 
-                    <InputLabel htmlFor="outlined-age-native-simple">Friends</InputLabel>
-                    <Select
-                        native
-                        value={selectedFriend}
-                        onChange={handleSelectFriend}
-                        label="Friends"
-                        inputProps={{
-                            name: 'friends',
-                            id: SEARCH_FRIENDS_INPUT_ID,
-                        }}>
+                        <div className="newGameField newGameFieldWide">
+                            <span className="newGameStep">05</span>
+                            <InputField id={DISCORD_INPUT_ID} labelText="Discord link" variant="outlined" innerRef={inputDiscord} helperText="Share it with discord" required></InputField>
+                        </div>
+                    </div>
 
-                        {partyFriends.map((user, index) =>
-                            <option key={index} value={user.id}>
-                                {user.name}
-                            </option>)}
-                    </Select>
-                    <Fab color="primary" aria-label="add" onClick={ ()=> addNewGameFriend()}>
-                        <AddIcon />
-                    </Fab>
-                    <AvatarList friends={newGameFriends} acceptable={false} deletable={true} onDelete={onDeleteFriend}></AvatarList>
+                    <div className="friendsAgregator newGameSquadPanel">
+                        <div className="newGameSquadHeader">
+                            <div>
+                                <span className="newGameKicker">Party invite</span>
+                                <h3>Assemble squad</h3>
+                            </div>
+                            <Fab color="primary" aria-label="add" onClick={() => addNewGameFriend()}>
+                                <AddIcon />
+                            </Fab>
+                        </div>
+
+                        <InputLabel htmlFor="outlined-age-native-simple">Friends</InputLabel>
+                        <Select
+                            native
+                            value={selectedFriend}
+                            onChange={handleSelectFriend}
+                            label="Friends"
+                            inputProps={{
+                                name: 'friends',
+                                id: SEARCH_FRIENDS_INPUT_ID,
+                            }}>
+
+                            {partyFriends.map((user, index) =>
+                                <option key={index} value={user.id}>
+                                    {user.name}
+                                </option>)}
+                        </Select>
+                        <AvatarList friends={newGameFriends} acceptable={false} deletable={true} onDelete={onDeleteFriend}></AvatarList>
+                    </div>
                 </div>
-            </div>
-            <div className="d-flex justify-content-center">
-                {severity !== "success" ? <button
-                    data-toggle="modal" data-target="#myModal"
-                    onClick={() => createGame()}
-                    className="btn btn-custom btn-lg mt-5"
-                >
-                    Create
-                      </button> : null}
 
-            </div>
+                <div className="newGameActions">
+                    {severity !== "success" ? <button
+                        data-toggle="modal" data-target="#myModal"
+                        onClick={() => createGame()}
+                        className="btn btn-custom btn-lg newGameLaunchButton"
+                    >
+                        Launch room
+                    </button> : null}
+                </div>
+            </section>
         </>
     )
 }

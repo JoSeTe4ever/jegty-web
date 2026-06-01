@@ -29,9 +29,11 @@ const persistedReducer = persistReducer(persistConfig, rootReducer)
 //  : f => f)
 // );
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
  const initialState = createStore(
    persistedReducer,
-   compose(applyMiddleware(thunk),window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+   composeEnhancers(applyMiddleware(thunk))
  );
 
 let persistor = persistStore(initialState)
