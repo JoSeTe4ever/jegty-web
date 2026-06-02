@@ -2,10 +2,11 @@ FROM node:14-bullseye
 
 WORKDIR /app
 
+ENV NPM_CONFIG_REGISTRY=https://registry.npmjs.org/
+
 COPY package*.json ./
-RUN sed -i 's#https://pkgs.dev.azure.com/basf4Businesses/CustomerFacingDataServices/_packaging/CFDS/npm/registry/#https://registry.npmjs.org/#g' package-lock.json \
-  && npm install -g npm@9 \
-  && npm ci --legacy-peer-deps --registry=https://registry.npmjs.org/
+RUN npm install -g npm@9 \
+  && npm ci --legacy-peer-deps
 
 COPY . .
 
